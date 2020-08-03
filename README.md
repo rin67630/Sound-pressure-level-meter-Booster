@@ -23,7 +23,8 @@ Evaluate the noise level according to following time response standards (simulta
 -	Impulse
 -	Real peak value by the minute (not the maximum of readings)
 Statistics according to residential aircraft noise standards:
-        (steady noise equivalents)
+
+(steady noise equivalents)
 -	Leq 1 minute
 -	Leq for each hour of the day
 -	Leq for 24h
@@ -31,7 +32,8 @@ Statistics according to residential aircraft noise standards:
 -	Leq nighttime 22:00 to 6:00
 -	Leq 22:00 to 24:00
 -	Lden
-        (number above threshold)
+
+(number above threshold)
 -	NAT for each hour of the day
 -	NAT for 24h
 -	NAT daytime 06:00 to 22:00
