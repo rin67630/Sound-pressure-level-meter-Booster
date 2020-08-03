@@ -18,10 +18,13 @@ With soldiering skills, you can do the job in less than 10 minutes.
 Your modified GM1358 will then provide USB and WiFi connectivity and be programmable to do the coolest things that only high-end devices will provide:
 
 Evaluate the noise level according to following time response standards (simultaneously):
--	Fast
--	Slow 
--	Impulse
+-	Fast     (125mS)
+-	Slow     (attack 1S low pass filter, decay linear 4,3dB/Sec)
+-	Impulse  (attack no filter,          decay linear 2,9dB/Sec)
 -	Real peak value by the minute (not the maximum of readings)
+- Background level (low pass filter 2000s, ignoring events above threshold)
+
+
 Statistics according to residential aircraft noise standards:
 
 (steady noise equivalents)
