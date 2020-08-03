@@ -1,8 +1,10 @@
 # Swiss-Army-Knife-for-GM1380-Sound-Pressure-Meter
 Pimp your cheap GM1380 Sound Pressure Meter with professional features...
-Digest
+
 There is a large choice of sound pressure level meters on the market, from pretty cheap to awfully expensive ones.
-The cheap ones have frequently a sufficient accuracy for many purposes (albeit not being suitable for a legal enforcement). Most of them have however either no, or extremely bad reporting abilities.
+The cheap ones have frequently a sufficient accuracy for many purposes (albeit not being suitable for a legal enforcement). 
+
+Most of them have however either no, or extremely bad reporting abilities.
 
 The purpose of this development is to provide networking and reporting abilities as close to 
 IEC 61672-1:2013 specifications as possible to an extremely cheap sound pressure level meter 
