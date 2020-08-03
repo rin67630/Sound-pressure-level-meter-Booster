@@ -45,7 +45,7 @@ Statistics according to residential aircraft noise standards:
 Additionally the program can grab weather information from openweathermap.org and provide the corresponding meteorological conditions.
 
 With a little more hardware and a separate casing, you may also build the system with the ability to be solar powered including a solar power monitor to report all information about the battery condition and the power fed by the solar panel.
-You will then operate the system without electrical connection to your computer, using the Cloud service Thinger.io.
+You will then operate the system without electrical connection to your computer, using the Cloud service Thinger.io (free for 2 devices and 4 dashboards...)
 
 You can also build a split system with the SPL meter (+ the solar power circuitry) being located outside gathering and transmitting the sound (and battery)  values over WiFi/ UDP (Long Range LoRa is planned)  to  another bare ESP8266 located inside that will provide the statistics over USB.
 
