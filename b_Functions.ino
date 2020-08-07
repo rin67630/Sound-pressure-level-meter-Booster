@@ -5,8 +5,6 @@
 
 // Instantiate classes
 WiFiUDP UDP;
-char packet[8];
-char reply[] = "Packet received!";
 
 TridentTD_OpenWeather  myPlace(OPEN_WEATHER_MAP_APP_ID);
 
@@ -17,12 +15,35 @@ ThingerESP8266 thing(THINGER_USERNAME, HOST_NAME, THINGER_CREDENTIALS);
 #endif
 
 // Functions
-/*
-void getWiFiOld()
+#if defined (SMARTCONFIG)
+void getWiFi()
 {
-  //  WiFi.softAPdisconnect(true);
-  //  WiFi.setAutoConnect(true);
-  //  WiFi.setAutoReconnect(true);
+  WiFi.mode(WIFI_STA);
+  //WiFi.disconnect();
+  wifi_station_set_auto_connect(true);
+  wifi_station_set_hostname(HOST_NAME);
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    int cnt = 0;
+    //    Serial.print(".");
+    if (cnt++ >= wifiMaxTries) {
+      WiFi.beginSmartConfig();
+      while (1) {
+        delay(wifiRepeatInterval);
+        if (WiFi.smartConfigDone())
+        {
+          Serial.println("SmartConfig Success");
+          break;
+        }
+      }
+    }
+  }
+  ip = WiFi.localIP();
+}
+#else
+void getWiFi()
+{
   WiFi.begin(WIFI_SSID, WIFI_PASS);
   wifi_station_set_auto_connect(true);
   wifi_station_set_hostname(HOST_NAME);
@@ -39,32 +60,17 @@ void getWiFiOld()
   }
   ip = WiFi.localIP();
 }
-*/
-void getWiFi()
-{
-  WiFi.mode(WIFI_STA);
-  //WiFi.disconnect();
-  wifi_station_set_auto_connect(true);
-  wifi_station_set_hostname(HOST_NAME);
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-    int cnt = 0;
-    //    Serial.print(".");
-    if (cnt++ >= 10) {
-      WiFi.beginSmartConfig();
-      while (1) {
-        delay(1000);
-        if (WiFi.smartConfigDone())
-        {
-          Serial.println("SmartConfig Success");
-          break;
-        }
-      }
-    }
-  }
+#endif
 
-  ip = WiFi.localIP();
+void disConnect()
+{
+  //  WiFi.disconnect(); //temporarily disconnect WiFi as it's no longer needed
+  WiFi.mode(WIFI_OFF);
+}
+
+void myIP()
+{
+  sprintf(charbuff, "IP= %03d.%03d.%03d.%03d", ip[0], ip[1], ip[2], ip[3]);
 }
 
 void getNTP()
@@ -79,6 +85,7 @@ void getEpoch()
   now = time(nullptr);
   Epoch = now;
 }
+
 void getTimeData()
 {
   timeinfo  = localtime(&now);  // cf: https://www.cplusplus.com/reference/ctime/localtime/
@@ -93,16 +100,4 @@ void getTimeData()
   strftime (MonthName, 12, "%B", timeinfo);
   strftime (Time, 10, "%T", timeinfo);
   strftime (Date, 12, "%d/%m/%Y", timeinfo);
-}
-
-
-void disConnect()
-{
-  //  WiFi.disconnect(); //temporarily disconnect WiFi as it's no longer needed
-  WiFi.mode(WIFI_OFF);
-}
-
-void myIP()
-{
-  sprintf(charbuff, "IP= %03d.%03d.%03d.%03d", ip[0], ip[1], ip[2], ip[3]);
 }
