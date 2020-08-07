@@ -1,6 +1,6 @@
 void menuRun()
 {
-  // Serial.print("Me");
+  // ConOut.print("Me");
   if (Serial.available())   inbyte = Serial.read(); //Serial input available
   if (inbyte >= 31 & (inbyte < 128)) stopAK = true;
   switch (inbyte)
@@ -28,60 +28,60 @@ void menuRun()
     //====(Serial Menu)======
     case '0': //Display mode 0
       displayPage = 0;
-      Serial.println ("Off");
+      ConOut.println ("Off");
       break;
     case '1': //Display mode 1
       displayPage = 1;
-      Serial.println ("D=1");
+      ConOut.println ("D=1");
       break;
     case '2': //Display mode 2
       displayPage = 2;
-      Serial.println ("D=2");
+      ConOut.println ("D=2");
       break;
     case '3': //Display mode 3
       displayPage = 3;
-      Serial.println ("D=3");
+      ConOut.println ("D=3");
       break;
     case '?': //List parameters
-      Serial.printf("Par.List \n @94= %d @47= %d DAC= %d Corr= %d \nDPage: %d DSPage: %d SPage: %d\n", A094, A047, A0Raw, corrdB, displayPage, displaySubPage, serialPage);
+      ConOut.printf("Par.List \n @94= %d @47= %d DAC= %d Corr= %d \nDPage: %d DSPage: %d SPage: %d\n", A094, A047, A0Raw, corrdB, displayPage, displaySubPage, serialPage);
       break;
       break;
     case 'Z':  //Reset
-      Serial.println ("\nwill reset in 10s...");
+      ConOut.println ("\nwill reset in 10s...");
       delay(10000);
       ESP.restart();
       break;
     case 'C': //Apply 94dB Calibration
-      Serial.print ("\nCal94=");
+      ConOut.print ("\nCal94=");
       corrdB = 0;
       A094 = A0Raw;
-      Serial.println (A094);
+      ConOut.println (A094);
       break;
     case 'c': //Apply 47dB Calibration
-      Serial.print ("Cal47=");
+      ConOut.print ("Cal47=");
       corrdB = 0;
       A047 = A0Raw;
-      Serial.println (A047);
+      ConOut.println (A047);
       break;
     case 'U': //Apply 94&47dB Defaults
     case 'u':
       A094 = Ao94;
       A047 = Ao47;
-      Serial.println ("\nUncal");
+      ConOut.println ("\nUncal");
       break;
     case '+': //Increase Offset
       corrdB ++;
-      Serial.print ("+1dB=");
-      Serial.println (corrdB);
+      ConOut.print ("+1dB=");
+      ConOut.println (corrdB);
       break;
     case '-': //Reduce Offset
       corrdB --;
-      Serial.print ("-1dB=");
-      Serial.println (corrdB);
+      ConOut.print ("-1dB=");
+      ConOut.println (corrdB);
       break;
     case 'A': //serialPage AK
       serialPage = 'A';
-      Serial.println ("\nSer=AK");
+      ConOut.println ("\nSer=AK");
       break;
 
     // ***Options for periodical Reports**
@@ -109,10 +109,10 @@ void menuRun()
     case 's': //No Second Report
       serialSec = false;
       break;
-    case 'N': //NAT Report
+    case 'E': //Events
       serialNAT = true;
       break;
-    case 'n': //No NAT Report
+    case 'e': //No Events
       serialNAT = false;
       break;
 
@@ -126,20 +126,28 @@ void menuRun()
 
     case 'L': //serialPage Leq one shot
       serialPage = 'L';
-      Serial.print ("\nLeq");
+      ConOut.print ("\nLeq :");
+      break;
+    case 'N': //serialPage NAT List one shot
+      serialPage = 'N';
+      ConOut.print ("\nNAT :");
       break;
     case 'W':  //Weather Report
       serialPage = 'W';
-      Serial.println ("\nWeather Report");
+      ConOut.print ("\nWeather Report :");
       break;
    case 'B':  //Battery Report one shot
       serialPage = 'B';
-      Serial.println ("\nBattery History");
+      ConOut.println ("\nBattery History :");
+      break;
+   case 'b':  //Battery Report one shot
+      serialPage = 'b';
+      ConOut.println ("\nBattery Status :");
       break;
     case '~':
       WiFi.printDiag(Serial);
-     Serial.printf("\nmac address: %s , \nHostname: %s\n", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
-     Serial.print("\nIP address: "); Serial.println(WiFi.localIP());         
+     ConOut.printf("\nmac address: %s , \nHostname: %s\n", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
+     ConOut.print("\nIP address: "); ConOut.println(WiFi.localIP());         
       break;
 /*
     default:
