@@ -23,8 +23,8 @@ Evaluate the noise level according to following time response standards (simulta
 -	Impulse  (attack no filter,          decay linear 2,9dB/Sec)
 -	Real peak value by the minute (not the maximum of readings)
 - Background level (low pass filter 2000s, ignoring events above threshold)
-
-
+ 
+ 
 Statistics according to residential aircraft noise standards:
 
 (steady noise equivalents)
