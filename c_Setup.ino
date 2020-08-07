@@ -111,7 +111,7 @@ void setup()
 
   thing["DAY"] >> [](pson & out)
   {
-    out["mAhBat[26]"] = mAhBat[26];
+    out["AhBat[26]"] = AhBat[26];
     out["voltageAt4h"] = voltageAt4h;
     out["voltageDelta"] = voltageDelta;
   };
@@ -124,7 +124,7 @@ void setup()
     out["wind"]        = outdoor_wind_speed;
     out["direction"]   = outdoor_wind_direction;
     out["summary"]     = weather_summary;
-#if defined BATTERY_MONITORING
+#if (defined BATTERY_SOURCE_INA) || (defined BATTERY_SOURCE_UDP)
     out["current"]     = battery.current;
     out["voltage"]     = battery.voltage;
     out["resistance"]  = internal_resistance;
@@ -138,7 +138,7 @@ void setup()
     out["LEq"]     = A0dBLeq1min;
     out["max"]     = A0dBMax1min;
 
-#if defined BATTERY_MONITORING
+#if (defined BATTERY_SOURCE_INA) || (defined BATTERY_SOURCE_UDP)
     out["voltage"] = battery.voltage;
     out["power"]   = battery.power;
 #endif
@@ -162,14 +162,15 @@ void setup()
   // Retrieve Persistance values
 
   pson persistance;
-#if defined BATTERY_MONITORING
+#if (defined BATTERY_SOURCE_INA) || (defined BATTERY_SOURCE_UDP)
   thing.get_property("persistance", persistance);
   currentInt          = persistance["currentInt"];
   nCurrent            = persistance["nCurrent"];;
-  mAhBat[27]          = persistance["Ah/hour"];
-  mAhBat[26]          = persistance["Ah/yesterday"];
+  AhBat[27]          = persistance["Ah/hour"];
+  AhBat[26]          = persistance["Ah/yesterday"];
   voltageDelta        = persistance["voltageDelta"];
   voltageAt4h         = persistance["voltageAt4h"];
+  internal_resistance = persistance["resistance"];
 #endif
   leq[25]             = persistance["A0dBLEQ"];
   A0dBSumExp60min     = persistance["A0dBSumExp"];
@@ -216,6 +217,7 @@ void setup()
   leq[27] = lequ["Daytime"];
   leq[28] = lequ["Nighttime"];
   leq[29] = lequ["Lden"];
+  leq[30] = lequ["L22-24h"];
 
   pson NATu;
   thing.get_property("NATu", NATu);  // 0..23=hour, 25=current, 26=NATu 24h, 27= NATDay, 28=NATNight, 29=NAT22-24
@@ -250,45 +252,45 @@ void setup()
   NAT[29] = NATu["NAT22-24"];
 
   pson BATmAh;
-  thing.get_property("BAT", BATmAh);  // 0..23=hour, 25=current, 26=BATmAh 24h, 27= mAhBatDay, 28=mAhBatNight, 29=mAhBat22-24
-  mAhBat[0]  = BATmAh["00h"];
-  mAhBat[1]  = BATmAh["01h"];
-  mAhBat[2]  = BATmAh["02h"];
-  mAhBat[3]  = BATmAh["03h"];
-  mAhBat[4]  = BATmAh["04h"];
-  mAhBat[5]  = BATmAh["05h"];
-  mAhBat[6]  = BATmAh["06h"];
-  mAhBat[7]  = BATmAh["09h"];
-  mAhBat[8]  = BATmAh["08h"];
-  mAhBat[9]  = BATmAh["09h"];
-  mAhBat[10] = BATmAh["10h"];
-  mAhBat[11] = BATmAh["11h"];
-  mAhBat[12] = BATmAh["12h"];
-  mAhBat[13] = BATmAh["13h"];
-  mAhBat[14] = BATmAh["14h"];
-  mAhBat[15] = BATmAh["15h"];
-  mAhBat[16] = BATmAh["16h"];
-  mAhBat[17] = BATmAh["17h"];
-  mAhBat[18] = BATmAh["18h"];
-  mAhBat[19] = BATmAh["19h"];
-  mAhBat[20] = BATmAh["20h"];
-  mAhBat[21] = BATmAh["21h"];
-  mAhBat[22] = BATmAh["22h"];
-  mAhBat[23] = BATmAh["23h"];
-  mAhBat[25] = BATmAh["LastHour"];
-  mAhBat[26] = BATmAh["Yesterday"];
-  mAhBat[27] = BATmAh["Today"];
+  thing.get_property("BAT", BATmAh);  // 0..23=hour, 25=current, 26=BATmAh 24h, 27= AhBatDay, 28=AhBatNight, 29=AhBat22-24
+  AhBat[0]  = BATmAh["00h"];
+  AhBat[1]  = BATmAh["01h"];
+  AhBat[2]  = BATmAh["02h"];
+  AhBat[3]  = BATmAh["03h"];
+  AhBat[4]  = BATmAh["04h"];
+  AhBat[5]  = BATmAh["05h"];
+  AhBat[6]  = BATmAh["06h"];
+  AhBat[7]  = BATmAh["09h"];
+  AhBat[8]  = BATmAh["08h"];
+  AhBat[9]  = BATmAh["09h"];
+  AhBat[10] = BATmAh["10h"];
+  AhBat[11] = BATmAh["11h"];
+  AhBat[12] = BATmAh["12h"];
+  AhBat[13] = BATmAh["13h"];
+  AhBat[14] = BATmAh["14h"];
+  AhBat[15] = BATmAh["15h"];
+  AhBat[16] = BATmAh["16h"];
+  AhBat[17] = BATmAh["17h"];
+  AhBat[18] = BATmAh["18h"];
+  AhBat[19] = BATmAh["19h"];
+  AhBat[20] = BATmAh["20h"];
+  AhBat[21] = BATmAh["21h"];
+  AhBat[22] = BATmAh["22h"];
+  AhBat[23] = BATmAh["23h"];
+  AhBat[25] = BATmAh["LastHour"];
+  AhBat[26] = BATmAh["Yesterday"];
+  AhBat[27] = BATmAh["Today"];
 
 #endif  //THINGER
 
-// Initialisations.
-  A094 = Ao94;
-  A047 = Ao47;
+  // Initialisations.
+  if (A094 == 0) A094 = Ao94; // uninitialized or no Thinger
+  if (A047 == 0) A047 = Ao47; // uninitialized or no Thinger
+
   state = 'e';
   serialPage = '0';           // default reporting page
-  sound.A0dBBgr = sound.A0dBMin = 40;     // default background and minimum level
+  sound.A0dBMin = 40;     // default background and minimum level
 
-  
 #if defined (OFFLINE)
   Serial.println(F("Going off-line "));
   disConnect();
