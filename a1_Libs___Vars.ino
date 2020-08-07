@@ -11,6 +11,7 @@
 #include <Base64.h>
 #if defined(THINGER)
 #include <ThingerESP8266.h>
+//#include <ThingerConsole.h>
 #endif
 
 // ESP8266 Lolin (see definitions for other boards in Parked code)
@@ -79,7 +80,7 @@ float voltageDelta ;
 float currentInt = 0;
 int  nCurrent;
 int   ind = 0;
-float mAhBat[30];
+float AhBat[30];
 
 struct battery {
 float current ;
@@ -115,7 +116,6 @@ struct sound {
   char  tResponse = 'S';
 }sound;
 char soundPayload[sizeof(sound)];  //  Array of characters as image of the structure for UDP xmit/rcv
-char soundPayload64[2*sizeof(sound)];  //  Array of characters as image of the structure for UDP xmit/rcv
 
 float A0dB60;
 float A0dB6S;
@@ -131,9 +131,7 @@ byte  nA0dB6S;
 byte  corrdB;
 int   A094;
 int   A047;
-boolean sendNoise;
-boolean writeNoiseBucket;
-float leq[30];         // 0..23=hour, 25=current, 26=Lequ 24h, 27= LeqDay, 28=LeqNight, 29=Lden
+float leq[31];         // 0..23=hour, 25=current, 26=Lequ 24h, 27= LeqDay, 28=LeqNight, 29=Lden, 30=L22-24h
 
 // Mumber above threshold
 
