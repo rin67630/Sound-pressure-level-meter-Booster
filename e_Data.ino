@@ -1,7 +1,7 @@
 void data125mSRun()
 {
-  //  Serial.print("'");
-#if defined (SOUNDSOURCE_ANAIN)
+  //  ConOut.print("'");
+#if defined (SOUND_SOURCE_ANAIN)
   // === ( Short Leq from A0 ) ===
   // Performing 3 reads to get a reliable reading.
   A0Raw = analogRead(A0); // 1st read  0...1V = 0 ..1023
@@ -18,8 +18,8 @@ void data125mSRun()
   sound.A0dBMax  = max(sound.A0dBFast, sound.A0dBMax);
   A0dBMin1min = min(sound.A0dBFast, A0dBMin1min);
   A0dBMax1min = max(sound.A0dBFast, A0dBMax1min);
-  
-// Slow (attack t=1s, decay 2,9dB/s)
+
+  // Slow (attack t=1s, decay 2,9dB/s)
   if ( sound.A0dBFast > sound.A0dBSlow)              //A0 in dB with impulse response
   {
     sound.A0dBSlow += (sound.A0dBFast - sound.A0dBSlow) / 8; // Low Pass filter 1s
@@ -28,7 +28,7 @@ void data125mSRun()
   {
     sound.A0dBSlow = sound.A0dBSlow - 0.3625;        //Linear decay 2,9db /sec
   }
-// Impulse (attack t=0,35s, decay 4,3dB/s)
+  // Impulse (attack t=0,35s, decay 4,3dB/s)
   if ( A0dBAvg > sound.A0dBImpulse)           //A0 in dB with impulse response
   {
     sound.A0dBImpulse = A0dBAvg;              //No filter, the response of the SPL is slower
@@ -37,14 +37,14 @@ void data125mSRun()
   {
     sound.A0dBImpulse = sound.A0dBImpulse - 0.5375 ; //Linear decay 4,3db /sec
   }
-  sound.A0dBImpulse = max(sound.A0dBImpulse,sound.A0dBSlow);
+  sound.A0dBImpulse = max(sound.A0dBImpulse, sound.A0dBSlow);
 
-// Background 
+  // Background
   if ( sound.A0dBFast < EVENT_THRESHOLD_LEVEL)  //Low pass filter ignoring events
   {
-    sound.A0dBBgr += (sound.A0dBFast - sound.A0dBBgr) /16000;   // Low Pass filter 2000s
+    sound.A0dBBgr += (sound.A0dBSlow - sound.A0dBBgr) / 16000;  // Low Pass filter 2000s
   }
-  
+
 #else
   yield();
 #endif
@@ -53,10 +53,10 @@ void data125mSRun()
 void data1SRun()
 {
   yield();
-  //  Serial.print("Da");
+  //  ConOut.print("Da");
 
   // Fetching Noise level from URL
-#if defined (SOUNDSOURCE_URL)   // must be a JSON from DFLD.de
+#if defined (SOUND_SOURCE_URL)   // must be a JSON from DFLD.de
   HTTPClient http;              //Declare an object of class HTTPClient
   http.begin(DFLDjsonURL);      //Specify request destination
   int httpCode = http.GET();    //Send the request
@@ -77,25 +77,34 @@ void data1SRun()
   http.end();   //Close connection
 #endif
 
-#if defined (SOUNDSOURCE_UDP)
+#if defined (SOUND_SOURCE_UDP) || defined (BATTERY_SOURCE_UDP)  // getting Sound / Battery values from another ESP over UDP.
 
-int packetSize = UDP.parsePacket();
-if (packetSize)
-{
- UDP.read(soundPayload, UDP_TX_PACKET_MAX_SIZE);
-}
-if (packetSize == sizeof(sound))
-{
-// Serial.print(" soundPayload: ");
-// Serial.println(soundPayload);
- memcpy(&sound, soundPayload, sizeof(sound)); 
-}
-if (packetSize == sizeof(battery))
-{
-// Serial.print(" batteryPayload: ");
-// Serial.println(batteryPayload);
- memcpy(&battery, batteryPayload, sizeof(battery)); 
-}
+  // I use a quick and dirty method called 'type punning' copying the memory block of a structure into an array of chars,
+  // transmitting this array, and copying back the memory block of the array into the same structure on the other side.
+  // I dont use any header info, only the difference of size permits to assing the received packets to sound or battery.
+  // it is quick and damn efficient, but NOT portable and YOU must take care to have the same structures on both systems
+  // and different sizes for Battery and Sound...
+
+  int packetSize = UDP.parsePacket();
+//  if (packetSize) ConOut.println(packetSize);
+  if (packetSize == sizeof(sound))
+  {
+    UDP.read(soundPayload, UDP_TX_PACKET_MAX_SIZE);
+    memcpy(&sound, soundPayload, sizeof(sound));
+    // ConOut.printf("Min:%2.1f Max:%2.1f Imp:%2.1f  Bgr:%2.1f Slow:%2.1f\n", sound.A0dBMin, sound.A0dBMax, sound.A0dBImpulse, sound.A0dBBgr, sound.A0dBSlow);
+//     ConOut.print("s");
+  }
+  if (packetSize == sizeof(battery))
+  {
+    float m = battery.voltage;
+    float n = battery.current;
+    UDP.read(batteryPayload, UDP_TX_PACKET_MAX_SIZE);
+    memcpy(&battery, batteryPayload, sizeof(battery));
+    delta_voltage = battery.voltage - m;
+    delta_current = battery.current - n;
+    // ConOut.printf("Ah: %2.1f, Volt: %2.1f, Amp: %2.1f, Watt: %2.1f, %%Batt: %2.1f\n", AhBat, battery.voltage , battery.current , battery.power , percent_charged);
+//     ConOut.print("b");
+  }
 
 #endif
 
@@ -116,9 +125,6 @@ if (packetSize == sizeof(battery))
   {
     sound.A0dBImpulse = sound.A0dBImpulse + (A0dB6S - sound.A0dBImpulse) / 150;
   }
-  // Noise Lequ integration
-  A0dBSumExp60min =  A0dBSumExp60min + pow(10, sound.A0dBFast / 10);    // 1.Computation of Lequ Sum of Exp...
-  A0dBSumExp1min  =  A0dBSumExp1min  + pow(10, sound.A0dBFast / 10);    // 1.Computation of Lequ Sum of Exp...
 
   //===============================================
 
@@ -234,12 +240,17 @@ if (packetSize == sizeof(battery))
       state = 'e';
   } // end Switch
 
+  //===============================================
+  // Noise Lequ integration
+
+  A0dBSumExp1min  =  A0dBSumExp1min  + pow(10, sound.A0dBSlow / 10);    // 1.Computation of Lequ Sum of Exp...
   if (MinuteExpiring)
   {
     // Noise Lequ Hourly result
     A0dBLeq1min = 10 * log10(A0dBSumExp1min / 60);   // 2.Computation of Lequ Log of Sum of Exp
   }
 
+  A0dBSumExp60min =  A0dBSumExp60min + pow(10, sound.A0dBSlow / 10);    // 1.Computation of Lequ Sum of Exp...
   if (HourExpiring)
   {
     // Noise Lequ Hourly result
@@ -264,36 +275,57 @@ if (packetSize == sizeof(battery))
       leq[29] = (2 * leq[27] + leq[28] + 10) / 3; // 29=Lden
 
       leq[26] = (2 * leq[27] + leq[28]) / 3;        // 26=Leq24h
+
+      leq[30] = (leq[22] + leq[23]) / 2;            // 30 =L22-24h
+
+
+      NAT[27] = 0;                              // 27=NATuDaylight 6:00 - 22:00
+      for  (byte n = 6; n < 22; n++)
+      {
+        NAT[27] = NAT[27] + NAT[n];
+      }
+      NAT[28] = NAT[22] + NAT[23] ;              // 28=NATuNight 22:00 - 06:00
+      for  (byte n = 0; n < 6; n++)
+      {
+        NAT[28] = NAT[28] + NAT[n];
+      }
+      NAT[26] = NAT[27] + NAT[28];        // 26=NAT24h
+
+      NAT[29] = (NAT[22] + NAT[23]);            // 30 =L22-24h
     }
   }
   // end of just before new hour
 
 
-#if defined BATTERY_MONITORING
+#if defined BATTERY_SOURCE_INA
   //===============================================
-
-  // Battery measurements from INA226
-  delta_voltage = INA.getBusMilliVolts(0) - ina_voltage;
-  ina_voltage = INA.getBusMilliVolts(0);
-  ina_shunt   = INA.getShuntMicroVolts(0);
-  delta_current = INA.getBusMicroAmps(0)  - ina_current;
-  ina_current = INA.getBusMicroAmps(0);
-  ina_power   = INA.getBusMicroWatts(0);
-
-  battery.voltage += (ina_voltage / 1000 - battery.voltage) / 50;      // Low Pass filter 50 sec
-  percent_charged = map(battery.voltage * 100, MIN_VOLT * 100, MAX_VOLT * 100, 0, 100);
-  battery.current += (ina_current / -1000000 - battery.current) / 50;  // -"-
-  battery.power = battery.voltage * battery.current;
-
-  // Evaluate internal resistance of the battery
-  if (fabs(delta_current) > 10000 && ina_voltage < 13800 && ina_voltage > 12000) internal_resistance = fabs(delta_voltage * 1000 / delta_current);
-  if (SecondOfDay == 14400) voltageAt4h = battery.voltage;   // taking the voltage at 04:00 to evaluate if the battery gained/lost during the previous day.
-  // Daily Battery voltage comparison
-  if (SecondOfDay == 14399) // set ranges at 003:59:59
+  if (NewMinute)
   {
-    voltageDelta = battery.voltage - voltageAt4h;
-    voltageAt4h = battery.voltage;
+    float m = battery.voltage;
+    float n = battery.current;
+    // Battery measurements from INA226
+    ina_voltage   = INA.getBusMilliVolts(0);
+    ina_shunt     = INA.getShuntMicroVolts(0);
+    ina_current   = INA.getBusMicroAmps(0);
+    ina_power     = INA.getBusMicroWatts(0);
+
+    battery.voltage += (ina_voltage / 1000 - battery.voltage) / 50;      // Low Pass filter 50 sec
+    battery.current += (ina_current / -1000000 - battery.current) / 50;  // -"-
+    battery.power = battery.voltage * battery.current;
+    delta_voltage = battery.voltage - m;
+    delta_current = battery.current - n;
   }
+#endif
+
+  // continuing either with values from above, or from UDP transmission
+  // Evaluate battery health
+  percent_charged = map(battery.voltage * 100, MIN_VOLT * 100, MAX_VOLT * 100, 0, 100);
+  // Calculate battery internal resistance if inside regular limits
+  if (fabs(delta_current) > 0.002 && battery.voltage < (MAX_VOLT - 0.5) && battery.voltage > (MIN_VOLT + 0.5)) internal_resistance = fabs(delta_voltage / delta_current);
+
+  // Daily Battery voltage comparison
+  if (SecondOfDay == 14400) voltageAt4h  = battery.voltage;   // taking the voltage at 04:00 to evaluate if the battery gained/lost during the previous day.
+  if (SecondOfDay == 14399) voltageDelta = battery.voltage - voltageAt4h;// set ranges at 03:59:59
 
   // Battery Stat integration
   currentInt = currentInt + battery.current;
@@ -301,42 +333,35 @@ if (packetSize == sizeof(battery))
 
   if (HourExpiring)
   {
-    mAhBat[Hour] = currentInt / nCurrent;
+    AhBat[Hour] = currentInt / nCurrent;
     nCurrent = 0;
-    mAhBat[25] = mAhBat[Hour];   //last hour
-    mAhBat[27] = 0;              // today (0h->current hour)
+    currentInt = 0;
+    AhBat[25] = AhBat[Hour];   //last hour
+    AhBat[27] = 0;              // today (0h->current hour)
     for  (byte n = 0; n < Hour; n++)
     {
-      mAhBat[27] = mAhBat[27] + mAhBat[n];
+      AhBat[27] = AhBat[27] + AhBat[n];
     }
   }
 
   if (DayExpiring)
   {
-    mAhBat[26] = mAhBat[27];
+    AhBat[26] = AhBat[27];
   }
 
-#else  // No Battery Monitoring
-  battery.voltage = 0;
-  battery.current = 0;
-  battery.power = 0;
-  delta_voltage = 0;
-  delta_current = 0;
-#endif
-
-#if defined GRAB_WEATHER
-  // Getting Weather from OpenWeatherMap every 5 minutes
+#if defined WEATHER_SOURCE_URL
+  //===============================================  Getting Weather from OpenWeatherMap every 5 minutes
   if (Minute % 5 == 1 && Second == 32)   // call every 5 minutes
   { //check here: https://github.com/TridentTD/TridentTD_OpenWeather/blob/master/examples/WeatherNow/WeatherNow.ino
     myPlace.weatherNow();
-    outdoor_temperature = myPlace.readTemperature();
-    outdoor_humidity = myPlace.readHumidity();
-    outdoor_pressure = myPlace.readPressure();
-    outdoor_wind_speed = myPlace.readWindSpeed();
+    outdoor_temperature  = myPlace.readTemperature();
+    outdoor_humidity     = myPlace.readHumidity();
+    outdoor_pressure     = myPlace.readPressure();
+    outdoor_wind_speed   = myPlace.readWindSpeed();
     outdoor_wind_direction = myPlace.readWindDeg();
-    weather_summary =  myPlace.readWeather();
-    sunrise = myPlace.readSunrise(TZ);
-    sunset = myPlace.readSunset(TZ);
+    weather_summary      = myPlace.readWeather();
+    sunrise              = myPlace.readSunrise(TZ);
+    sunset               = myPlace.readSunset(TZ);
   }
 #endif
 }
