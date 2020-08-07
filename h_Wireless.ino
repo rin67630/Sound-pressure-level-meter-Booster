@@ -1,27 +1,39 @@
 void wirelessRun()
 {
   yield();
-  //  Serial.print("Wi");
-
-#if defined (UDPOUT)
-  memcpy(soundPayload, &sound, sizeof(sound));
+  //  ConOut.print("Wi");
+#if defined (PUBLISH_DFLD)
   UDP.beginPacket(UDP_TARGET, UDP_PORT);
-  UDP.write(soundPayload, sizeof(sound));
+  UDP.write(sound.A0dBAK);
   UDP.endPacket();
-  if (newMinute)
+#endif
+
+  if (NewMinute)
   {
+#if defined (PUBLISH_BATTERY)
     memcpy(batteryPayload, &battery, sizeof(battery));
     UDP.beginPacket(UDP_TARGET, UDP_PORT);
     UDP.write(batteryPayload, sizeof(battery));
     UDP.endPacket();
-  }
+#else
+    yield();
 #endif
+  } else {
+#if defined (PUBLISH_SOUND)
+    memcpy(soundPayload, &sound, sizeof(sound));
+    UDP.beginPacket(UDP_TARGET, UDP_PORT);
+    UDP.write(soundPayload, sizeof(sound));
+    UDP.endPacket();
+#else
+    yield();
+#endif
+  }
 
 #if defined (THINGER)
   yield();
   thing.handle();
 
-#if (defined (SOUNDSOURCE_URL) || defined (SOUNDSOURCE_ANAIN))
+#if (defined (SOUND_SOURCE_URL) || defined (SOUND_SOURCE_ANAIN))
   thing.stream("noise");
 #endif
 
@@ -31,7 +43,7 @@ void wirelessRun()
     battery.voltage = MIN_VOLT;
     battery.current = MIN_AMP;
     battery.power   = MIN_WATT;
-    sound.A0dBSlow = 30;
+    sound.A0dBImpulse = 30;
     thing.stream("noise");
   }
   if (SecondOfDay == 14460) // set high range at 04:01
@@ -39,18 +51,19 @@ void wirelessRun()
     battery.voltage = MAX_VOLT;
     battery.current = MAX_AMP;
     battery.power   = MAX_WATT;
-    sound.A0dBSlow = 94;
+    sound.A0dBImpulse = 94;
     thing.stream("noise");
   }
   if (SecondOfDay == 14520) // set regular value back at 04:02
   {
     battery.voltage = ina_voltage / 1000;
     battery.current = ina_current / -1000000;
-    sound.A0dBSlow = sound.A0dBFast;
+    sound.A0dBImpulse = sound.A0dBSlow;
     thing.stream("noise");
   }
 
-#if defined (BUCKET)
+
+#if defined (WRITE_BUCKETS)
   if (trigNAT)   thing.write_bucket("EVENT", "EVENT");
   if (NewDay)    thing.write_bucket("DAY", "DAY");
   if (NewHour)   thing.write_bucket("HOUR", "HOUR");
@@ -61,13 +74,14 @@ void wirelessRun()
   {
     //Persistance
     pson persistance;
-#if defined BATTERY_MONITORING
+#if (defined BATTERY_SOURCE_INA) || (defined BATTERY_SOURCE_UDP)
     persistance["currentInt"]    = currentInt ;
     persistance["nCurrent"]      = nCurrent;
-    persistance["Ah/hour"]       = mAhBat[27];
-    persistance["Ah/yesterday"]  = mAhBat[26];
+    persistance["Ah/hour"]       = AhBat[27];
+    persistance["Ah/yesterday"]  = AhBat[26];
     persistance["voltageDelta"]  = voltageDelta;
     persistance["voltageAt4h"]   = voltageAt4h;
+    persistance["resistance"]    = internal_resistance;
 #endif
     persistance["A0dBSumExp"]    = A0dBSumExp60min;
     persistance["A0dBBgr"]       = sound.A0dBBgr;
@@ -114,6 +128,7 @@ void wirelessRun()
     lequ["Daytime"] = leq[27];
     lequ["Nighttime"] = leq[28];
     lequ["Lden"] = leq[29];
+    lequ["L22-24h"] = leq[30];
     thing.set_property("lequ", lequ);
 
     pson NATu;// 0..23=hour, 25=current, 26=NATu 24h, 27= NATDay, 28=NATNight, 29=22-24
@@ -148,34 +163,34 @@ void wirelessRun()
     NATu["NAT22-24"] = NAT[29];
     thing.set_property("NATu", NATu);
 
-    pson BATmAh;// 0..23=hour, 25=current, 26=BATmAh 24h, 27= mAhBatDay, 28=mAhBatNight, 29=22-24
-    BATmAh["00h"] = mAhBat[0];
-    BATmAh["01h"] = mAhBat[1];
-    BATmAh["02h"] = mAhBat[2];
-    BATmAh["03h"] = mAhBat[3];
-    BATmAh["04h"] = mAhBat[4];
-    BATmAh["05h"] = mAhBat[5];
-    BATmAh["06h"] = mAhBat[6];
-    BATmAh["07h"] = mAhBat[7];
-    BATmAh["08h"] = mAhBat[8];
-    BATmAh["09h"] = mAhBat[9];
-    BATmAh["10h"] = mAhBat[10];
-    BATmAh["11h"] = mAhBat[11];
-    BATmAh["12h"] = mAhBat[12];
-    BATmAh["13h"] = mAhBat[13];
-    BATmAh["14h"] = mAhBat[14];
-    BATmAh["15h"] = mAhBat[15];
-    BATmAh["16h"] = mAhBat[16];
-    BATmAh["17h"] = mAhBat[17];
-    BATmAh["18h"] = mAhBat[18];
-    BATmAh["19h"] = mAhBat[19];
-    BATmAh["20h"] = mAhBat[20];
-    BATmAh["21h"] = mAhBat[21];
-    BATmAh["22h"] = mAhBat[22];
-    BATmAh["23h"] = mAhBat[23];
-    BATmAh["LastHour"] = mAhBat[25];
-    BATmAh["Yesterday"] = mAhBat[26];
-    BATmAh["Today"] = mAhBat[27];
+    pson BATmAh;// 0..23=hour, 25=current, 26=BATmAh 24h, 27= AhBatDay, 28=AhBatNight, 29=22-24
+    BATmAh["00h"] = AhBat[0];
+    BATmAh["01h"] = AhBat[1];
+    BATmAh["02h"] = AhBat[2];
+    BATmAh["03h"] = AhBat[3];
+    BATmAh["04h"] = AhBat[4];
+    BATmAh["05h"] = AhBat[5];
+    BATmAh["06h"] = AhBat[6];
+    BATmAh["07h"] = AhBat[7];
+    BATmAh["08h"] = AhBat[8];
+    BATmAh["09h"] = AhBat[9];
+    BATmAh["10h"] = AhBat[10];
+    BATmAh["11h"] = AhBat[11];
+    BATmAh["12h"] = AhBat[12];
+    BATmAh["13h"] = AhBat[13];
+    BATmAh["14h"] = AhBat[14];
+    BATmAh["15h"] = AhBat[15];
+    BATmAh["16h"] = AhBat[16];
+    BATmAh["17h"] = AhBat[17];
+    BATmAh["18h"] = AhBat[18];
+    BATmAh["19h"] = AhBat[19];
+    BATmAh["20h"] = AhBat[20];
+    BATmAh["21h"] = AhBat[21];
+    BATmAh["22h"] = AhBat[22];
+    BATmAh["23h"] = AhBat[23];
+    BATmAh["LastHour"] = AhBat[25];
+    BATmAh["Yesterday"] = AhBat[26];
+    BATmAh["Today"] = AhBat[27];
 
     thing.set_property("BAT", BATmAh);
   }
