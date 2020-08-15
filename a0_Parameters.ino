@@ -1,4 +1,4 @@
-// GITHUB
+#define HOST_NAME "GITHUB"
 
 // ***Functional Configuration***
 #define WEATHER_SOURCE_URL  //_URL _NONE (UDP planned)
@@ -6,14 +6,14 @@
 #define SOUND_SOURCE_UDP    //_ANAIN _URL _UDP _NONE
 //#define DFLDjsonURL "http://api.dfld.de/noise/dfld.de/004/027"  //"http://api.dfld.de/noise/dfld.de/001/161"  //Frankfurt Offenbach 1
 
-//#define THINGER
-//#define WRITE_BUCKETS     //(Comment out, if second device @ Thinger)
+#define THINGER
+#define WRITE_BUCKETS        //(Comment out, if second device @ Thinger)
 
-#define ConOut Serial       //(console to Thinger planned)
+#define ConOut Serial         // change to Serial1 to report on second UART on D2
 //#define PUBLISH_DFLD        //If this is the DFLD master, comment out else
 //#define PUBLISH_BATTERY     //If this is the battery master, comment out else
 //#define PUBLISH_SOUND       //If this is the sound master, comment out else
-//#define UDP_TARGET "192.168.188.75"  // DFLD20_04_CLI
+#define UDP_TARGET "192.168.xxx.xxx"  // Client address for Sound or Battery if defined
 #define UDP_PORT   4211
 
 //  ***Credentials***
@@ -23,8 +23,6 @@
 //#define WIFI_PASS "Enter Yout Password"
 #define wifiMaxTries 30
 #define wifiRepeatInterval 1000
-
-#define HOST_NAME   "DFLD20_04_CLI"  // "ESP_LP" "ESP_HP" "ESP_DEV" "ESP_NOISE" "GM1358" "DFLD20_04_CLI"
 
 String OPEN_WEATHER_MAP_APP_ID =      "Application ID";
 String OPEN_WEATHER_MAP_LOCATION_ID = "Location Id";
@@ -39,17 +37,17 @@ boolean IS_METRIC =                   true;
 #define MYTZ TZ_Europe_Paris
 #define TZ   1                              // (utc+) TZ in hours
 
-
 // ***Acoustical parameters***
-#define Ao94 1024  // 747  for AK with offset and 2,5v  1050 for linear 0..1V
-#define Ao47 530   // 458  for AK with offset and 2,5v  550 for linear 0..1V
+#define Ao94 1024  // 747  for AK module with offset and 2,5v | 1050 for linear 0..1V
+#define Ao47 530   // 458  for AK module with offset and 2,5v |  550 for linear 0..1V
 
-#define  EVENT_THRESHOLD_LEVEL 52       // Begin of Exceedance level
+#define  UPPER_LIMIT_DB              78 // Just defines the upper/lower limit of plots
+#define  LOWER_LIMIT_DB              31
+#define  EVENT_THRESHOLD_LEVEL       52 // Begin of Exceedance level
 #define  MEASUREMENT_THRESHOLD_LEVEL 48 // Begin of measurement level
-#define  MIN_EXCEEDANCE_TIME 15         // Minimum duration of an event
-#define  MAX_EXCEEDANCE_TIME 60         // Maximum duration of an event
-#define  LISTENING_TIME 50              // mimimum time between events
-
+#define  MIN_EXCEEDANCE_TIME         15 // Minimum duration of an event
+#define  MAX_EXCEEDANCE_TIME         60 // Maximum duration of an event
+#define  LISTENING_TIME              50 // mimimum time between events
 
 // ***Electrical parameters***
 //#define DEVICES_FOUND INA.begin(3, 40000) //3A Max, 40mOhm Shunt
