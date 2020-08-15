@@ -8,17 +8,22 @@
 #include <ESP8266WiFi.h>  // default from Espressif
 #include <ESP8266HTTPClient.h>
 #include <TZ.h>           // default from Espressif
-#include <Base64.h>
 #if defined(THINGER)
 #include <ThingerESP8266.h>
 //#include <ThingerConsole.h>
 #endif
+#include <EEPROM.h>
 
 // ESP8266 Lolin (see definitions for other boards in Parked code)
-#define SCL 5  // GPIO for I2C (Wire) System Clock
-#define SDA 4  // GPIO for I2C (Wire) System Data
-#define RST 0  // GPIO0
-#define RELAY 27
+#define SCL 5           // D1 GPIO05 for I2C (Wire) System Clock
+#define SDA 4           // D2 GPIO04 for I2C (Wire) System Data
+#define RST 0           // GPIO0
+#define PUSHBUTTON D2   // GPIO04
+#define RELAY      D1   // GPIO05
+#define STDLED     D4   // GPIO02 (& Serial1 TX)
+#define REDLED     D8   // GPIO15
+#define GRNLED     D6   // GPIO12
+#define BLULED     D7   // GPIO13
 
 //***Variables for Time***
 tm*        timeinfo;                 //localtime returns a pointer to a tm struct static int Second;
@@ -94,8 +99,7 @@ float outdoor_temperature;
 float outdoor_humidity;
 float outdoor_pressure;
 float outdoor_wind_speed;
-float outdoor_wind_direction;
-float outdoor_noise;
+int outdoor_wind_direction;
 String weather_summary;
 String sunrise;
 String sunset;
@@ -148,8 +152,8 @@ float peakValue;
 char state;
 String peakTime;
 float  EVENT[MAX_EXCEEDANCE_TIME];     // flashback record of an event
-byte   NAT[30];        // Number Above Treshold 0..23=hour 25=current event 26=Nat24h
-//byte   TAT[30];         // Time Above Treshold   0..23=hour 25=current event 26=TAT24h
+byte   NAT[30];        // Number Above Treshold 0..23=hour 25=current event 26=Nat24h 27= Daytime 28= Nighttime
+
 
 //Sound level from URL
 //#define DFLDjsonURL "http://api.dfld.de/noise/dfld.de/001/161"  //Frankfurt Offenbach 1
