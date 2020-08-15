@@ -1,11 +1,11 @@
 void wirelessRun()
 {
   yield();
-  //  ConOut.print("Wi");
 #if defined (PUBLISH_DFLD)
   UDP.beginPacket(UDP_TARGET, UDP_PORT);
   UDP.write(sound.A0dBAK);
   UDP.endPacket();
+
 #endif
 
   if (NewMinute)
@@ -19,6 +19,7 @@ void wirelessRun()
     yield();
 #endif
   } else {
+    
 #if defined (PUBLISH_SOUND)
     memcpy(soundPayload, &sound, sizeof(sound));
     UDP.beginPacket(UDP_TARGET, UDP_PORT);
@@ -32,36 +33,10 @@ void wirelessRun()
 #if defined (THINGER)
   yield();
   thing.handle();
-
 #if (defined (SOUND_SOURCE_URL) || defined (SOUND_SOURCE_ANAIN))
   thing.stream("noise");
+  thing.stream("energy");
 #endif
-
-  // pushing the signals at limits to set plot ranges and stats until Thinger manages fixed ranges.
-  if (SecondOfDay == 14400) // set low range at 04:00
-  {
-    battery.voltage = MIN_VOLT;
-    battery.current = MIN_AMP;
-    battery.power   = MIN_WATT;
-    sound.A0dBImpulse = 30;
-    thing.stream("noise");
-  }
-  if (SecondOfDay == 14460) // set high range at 04:01
-  {
-    battery.voltage = MAX_VOLT;
-    battery.current = MAX_AMP;
-    battery.power   = MAX_WATT;
-    sound.A0dBImpulse = 94;
-    thing.stream("noise");
-  }
-  if (SecondOfDay == 14520) // set regular value back at 04:02
-  {
-    battery.voltage = ina_voltage / 1000;
-    battery.current = ina_current / -1000000;
-    sound.A0dBImpulse = sound.A0dBSlow;
-    thing.stream("noise");
-  }
-
 
 #if defined (WRITE_BUCKETS)
   if (trigNAT)   thing.write_bucket("EVENT", "EVENT");
@@ -103,7 +78,7 @@ void wirelessRun()
     lequ["01h"] = leq[1];
     lequ["02h"] = leq[2];
     lequ["03h"] = leq[3];
-    lequ["04h"] = lequ[4];
+    lequ["04h"] = leq[4];
     lequ["05h"] = leq[5];
     lequ["06h"] = leq[6];
     lequ["07h"] = leq[7];
@@ -125,7 +100,7 @@ void wirelessRun()
     lequ["23h"] = leq[23];
     lequ["Leq"] = leq[25];
     lequ["Day"] = leq[26];
-    lequ["Daytime"] = leq[27];
+    lequ["Daytime"] = leq[27]; 
     lequ["Nighttime"] = leq[28];
     lequ["Lden"] = leq[29];
     lequ["L22-24h"] = leq[30];
@@ -156,9 +131,9 @@ void wirelessRun()
     NATu["21h"] = NAT[21];
     NATu["22h"] = NAT[22];
     NATu["23h"] = NAT[23];
-    NATu["NAT"] = NAT[25];
+    NATu["NAT"] = NAT[25];     //25=current event 26=Nat24h 27= Daytime 28= Nighttime 29= 22h-24h
     NATu["Day"] = NAT[26];
-    NATu["Daytime"] = NAT[27];
+    NATu["Daytime"] = NAT[27]; 
     NATu["Nighttime"] = NAT[28];
     NATu["NAT22-24"] = NAT[29];
     thing.set_property("NATu", NATu);
@@ -191,8 +166,7 @@ void wirelessRun()
     BATmAh["LastHour"] = AhBat[25];
     BATmAh["Yesterday"] = AhBat[26];
     BATmAh["Today"] = AhBat[27];
-
     thing.set_property("BAT", BATmAh);
   }
-#endif
+#endif // defined Thinger
 }
