@@ -2,37 +2,38 @@ void setup()
 {
   delay(3000); // Wait for serial monitor to be started
   // Serial initialisation
-  Serial.begin(SERIAL_SPEED);
+  Serial.begin (SERIAL_SPEED);
+  Serial1.begin(SERIAL_SPEED);
   Wire.begin(SDA, SCL);
-  Serial.print("\n\n\n");
-  Serial.print(F("Here is ESP-Karajan at work,\nHello Serial! @"));
-  Serial.println(SERIAL_SPEED);
-  slice = 1;
+  Serial.printf("\n\r\n\r\n\rESP-Karajan at work,\n\rHello Serial! @ %u Baud\n\r", SERIAL_SPEED);
 
-  pinMode(RELAY, OUTPUT);
-
-  // Networking and Time
+  EEPROM.begin(512);
+  pinMode(RELAY , OUTPUT);
+  pinMode(STDLED, OUTPUT);
+  // Witty Color LEDs
+  pinMode(REDLED, OUTPUT);
+  pinMode(GRNLED, OUTPUT);
+  pinMode(BLULED, OUTPUT);    
+ 
+   // Networking and Time
   getWiFi();
   ArduinoOTA.setHostname(HOST_NAME);
 
   //WiFi.printDiag(Serial);
-  Serial.printf("MAC address: %s , \nHostname: %s", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
-  Serial.print("\nIP address: "); Serial.println(WiFi.localIP());
+  Serial.printf("MAC address: %s , \n\rHostname: %s \n\rIP address::", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
+  Serial.println(WiFi.localIP());
   getNTP();
   delay(3000);
 
   getEpoch();            // writes the Epoch (Numbers of seconds till 1.1.1970...
   getTimeData();         // breaks down the Epoch into discrete values.
-
-  sprintf(charbuff, "Now is %02d:%02d:%02d. The Epoch is: %10lu" , Hour , Minute, Second, Epoch);
-  Serial.println(charbuff);
-  sprintf(charbuff, "Date is %s, %02d %s %04d ", DayName , Day , MonthName, Year);
+  sprintf(charbuff, "Now is %02d:%02d:%02d. The Epoch is: %10lu\r\nDate is %s, %02d %s %04d" , Hour , Minute, Second, Epoch,DayName , Day , MonthName, Year);
   Serial.println(charbuff);
 
   //  delay(3000);
   getEpoch();            // writes the Epoch (Numbers of seconds till 1.1.1970...
   getTimeData();         // breaks down the Epoch into discrete values.
-  //  Serial.print(F("\nNow, 3 seconds later it is "));   Serial.println( Time );
+  //  Serial.print(F("\n\rNow, 3 seconds later it is "));   Serial.println( Time );
 
   // Over the Air Framework
   ArduinoOTA.onStart([]() {
@@ -46,7 +47,7 @@ void setup()
     Serial.println("Start updating " + type);
   });
   ArduinoOTA.onEnd([]() {
-    Serial.println("\nEnd");
+    Serial.println("\n\rEnd");
   });
   ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
     Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
@@ -68,13 +69,14 @@ void setup()
 
   // Begin listening to UDP port
   UDP.begin(UDP_PORT);
-  Serial.print("\nCommunicating on UDP port ");
+  Serial.print("Communicating on UDP port: ");
   Serial.print(UDP_PORT);
 
   // Weather
   myPlace.setLocation( 51.3683, 6.9293 );
   myPlace.setUnit("metric");
 
+#if defined BATTERY_SOURCE_INA
   // INA 226 Battery Sensor
   devicesFound = INA.begin( AMPERE , SHUNT); // Define max Ampere and Shunt value
   INA.setBusConversion(8500);            // Maximum conversion time 8.244ms
@@ -87,7 +89,10 @@ void setup()
   ina_current = INA.getBusMicroAmps(0);
   battery.voltage = ina_voltage / 1000;
   battery.current = ina_current / 1000000;
-  battery.current = battery.current * -1;  // if shunt wired reversed.
+#else
+  battery.voltage = (MAX_VOLT + MIN_VOLT) / 2;
+  battery.current = 0;
+#endif
 
   // Wireless initialisation
 #if defined (THINGER)
@@ -107,6 +112,16 @@ void setup()
     out["max"]       = sound.A0dBMax;
     out["fast"]      = sound.A0dBFast;
     out["impulse"]   = sound.A0dBImpulse;
+    out["limit"]    = UPPER_LIMIT_DB;
+  };
+
+  thing["energy"] >> [](pson & out)
+  {
+    out["voltage"]           = battery.voltage;
+    out["current"]           = battery.current;
+    out["power"]             = battery.power;
+    out["interal_resitance"] = internal_resistance;
+    out["percent_charged"]   = percent_charged;
   };
 
   thing["DAY"] >> [](pson & out)
@@ -137,10 +152,12 @@ void setup()
     out["min"]     = A0dBMin1min;
     out["LEq"]     = A0dBLeq1min;
     out["max"]     = A0dBMax1min;
+    out["backgr"]  = sound.A0dBBgr;
 
 #if (defined BATTERY_SOURCE_INA) || (defined BATTERY_SOURCE_UDP)
     out["voltage"] = battery.voltage;
     out["power"]   = battery.power;
+    out["voltage"]     = battery.voltage;    
 #endif
   };
 
@@ -166,8 +183,8 @@ void setup()
   thing.get_property("persistance", persistance);
   currentInt          = persistance["currentInt"];
   nCurrent            = persistance["nCurrent"];;
-  AhBat[27]          = persistance["Ah/hour"];
-  AhBat[26]          = persistance["Ah/yesterday"];
+  AhBat[27]           = persistance["Ah/hour"];
+  AhBat[26]           = persistance["Ah/yesterday"];
   voltageDelta        = persistance["voltageDelta"];
   voltageAt4h         = persistance["voltageAt4h"];
   internal_resistance = persistance["resistance"];
@@ -281,6 +298,13 @@ void setup()
   AhBat[26] = BATmAh["Yesterday"];
   AhBat[27] = BATmAh["Today"];
 
+#else // no Thinger
+
+  // to be done: Persistance over Structure and memcpy.
+  //EEPROM.get(addr,data);
+  //EEPROM.put(addr,data);
+  //EEPROM.commit();
+
 #endif  //THINGER
 
   // Initialisations.
@@ -288,9 +312,10 @@ void setup()
   if (A047 == 0) A047 = Ao47; // uninitialized or no Thinger
 
   state = 'e';
-  serialPage = '0';           // default reporting page
-  sound.A0dBMin = 40;     // default background and minimum level
-
+  serialPage = 'A';           // default reporting page
+  sound.A0dBMin = LOWER_LIMIT_DB;     // default background and minimum level
+  digitalWrite(STDLED, true);
+  
 #if defined (OFFLINE)
   Serial.println(F("Going off-line "));
   disConnect();
@@ -298,6 +323,6 @@ void setup()
 #endif
 
   ArduinoOTA.begin();
-  Serial.println("\nOTA-Ready");
+  Serial.println("\n\rOTA-Ready");
 }
 //end Setup
