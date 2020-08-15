@@ -5,9 +5,7 @@
 
 // Instantiate classes
 WiFiUDP UDP;
-
 TridentTD_OpenWeather  myPlace(OPEN_WEATHER_MAP_APP_ID);
-
 INA_Class INA;
 
 #if defined(THINGER)
