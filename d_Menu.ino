@@ -1,6 +1,6 @@
 void menuRun()
 {
-  if (Serial.available())   inbyte = Serial.read(); //Serial input available
+  if (Console0.available())   inbyte = Console0.read(); //Serial input available
   if (inbyte >= 31 & (inbyte < 128)) stopAK = true;
   switch (inbyte)
   {
@@ -9,77 +9,77 @@ void menuRun()
       break;
     case 1: //Switch to mode 1
       delay(10);
-      Serial.write (inbyte) ;     inbyte = 0 ; stopAK = false;
+      Console0.write (inbyte) ;     inbyte = 0 ; stopAK = false;
       break;
     case 2: //Switch to mode 2
       delay(10);
-      Serial.write (inbyte) ;     inbyte = 0 ; stopAK = false;
+      Console0.write (inbyte) ;     inbyte = 0 ; stopAK = false;
       break;
     case 27: //Serial query
       delay(10);
-      Serial.write (inbyte) ;     inbyte = 0 ;  stopAK = true;
+      Console0.write (inbyte) ;     inbyte = 0 ;  stopAK = true;
       break;
     case 11: //Query of operation mode
       delay(10);
-      Serial.write (1) ;     inbyte = 0 ;  stopAK = false;
+      Console0.write (1) ;     inbyte = 0 ;  stopAK = false;
       break;
 
     //====(Serial Menu)======
     case '0': //Display mode 0
       displayPage = 0;
-      ConOut.println ("Off");
+      Console1.println ("Off");
       break;
     case '1': //Display mode 1
       displayPage = 1;
-      ConOut.println ("D=1");
+      Console1.println ("D=1");
       break;
     case '2': //Display mode 2
       displayPage = 2;
-      ConOut.println ("D=2");
+      Console1.println ("D=2");
       break;
     case '3': //Display mode 3
       displayPage = 3;
-      ConOut.println ("D=3");
+      Console1.println ("D=3");
       break;
     case '?': //List parameters
-      ConOut.printf("Par.List \n\r @94= %d @47= %d DAC= %d Corr= %d \n\rDPage: %d DSPage: %d SPage: %d\n\r", A094, A047, A0Raw, corrdB, displayPage, displaySubPage, serialPage);
+      Console1.printf("Par.List \n @94= %d @47= %d DAC= %d Corr= %d \nDPage: %d DSPage: %d SPage: %d\n", A094, A047, A0Raw, corrdB, displayPage, displaySubPage, serialPage);
       break;
     case 'Z':  //Reset
-      ConOut.println ("\n\rwill reset in 10s...");
+      Console1.println ("\nwill reset in 10s...");
       delay(10000);
       ESP.restart();
       break;
     case 'C': //Apply 94dB Calibration
-      ConOut.print ("\n\rCal94=");
+      Console1.print ("\nCal94=");
       corrdB = 0;
       A094 = A0Raw;
-      ConOut.println (A094);
+      Console1.println (A094);
       break;
     case 'c': //Apply 47dB Calibration
-      ConOut.print ("Cal47=");
+      Console1.print ("Cal47=");
       corrdB = 0;
       A047 = A0Raw;
-      ConOut.println (A047);
+      Console1.println (A047);
       break;
     case 'U': //Apply 94&47dB Defaults
     case 'u':
       A094 = Ao94;
       A047 = Ao47;
-      ConOut.println ("\n\rUncal");
+      Console1.println ("\nUncal");
       break;
     case '+': //Increase Offset
       corrdB ++;
-      ConOut.print ("+1dB=");
-      ConOut.println (corrdB);
+      Console1.print ("+1dB=");
+      Console1.println (corrdB);
       break;
     case '-': //Reduce Offset
       corrdB --;
-      ConOut.print ("-1dB=");
-      ConOut.println (corrdB);
+      Console1.print ("-1dB=");
+      Console1.println (corrdB);
       break;
     case 'A': //serialPage AK
       serialPage = 'A';
-      ConOut.println ("\n\rSer=AK");
+      Console1.println ("\nSer=AK");
       break;
 
     // ***Options for periodical Reports**
@@ -115,6 +115,9 @@ void menuRun()
       break;
 
     // ***On/Off for periodical Reports**
+    case 'R': //Daily Report
+      serialPage = 'R';
+      break;
     case 'P': //Periodical Reports
       serialPage = 'P';
       break;
@@ -124,28 +127,28 @@ void menuRun()
 
     case 'L': //serialPage Leq one shot
       serialPage = 'L';
-      ConOut.print ("\n\rLeq :");
+      Console1.print ("\nLeq :");
       break;
     case 'N': //serialPage NAT List one shot
       serialPage = 'N';
-      ConOut.print ("\n\rNAT :");
+      Console1.print ("\nNAT :");
       break;
     case 'T':  //Trace Report
       serialPage = 'T';
-      ConOut.print ("\n\rTrace Report :");
+      Console1.print ("\nTrace Report :");
       break;
    case 'B':  //Battery Report one shot
       serialPage = 'B';
-      ConOut.println ("\n\rBattery History :");
+      Console1.println ("\nBattery History :");
       break;
    case 'b':  //Battery Report one shot
       serialPage = 'b';
-      ConOut.println ("\n\rBattery Status :");
+      Console1.println ("\nBattery Status :");
       break;
     case '~':
       WiFi.printDiag(Serial);
-     ConOut.printf("\n\rmac address: %s , \n\rHostname: %s\n\r", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
-     ConOut.print("\n\rIP address: "); ConOut.println(WiFi.localIP());         
+     Console1.printf("\nmac address: %s , \nHostname: %s\n", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
+     Console1.print("\nIP address: "); Console1.println(WiFi.localIP());         
       break;
   } //end switch (inbyte)
 
