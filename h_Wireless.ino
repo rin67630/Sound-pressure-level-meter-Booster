@@ -5,7 +5,37 @@ void wirelessRun()
   UDP.beginPacket(UDP_TARGET, UDP_PORT);
   UDP.write(sound.A0dBAK);
   UDP.endPacket();
+#endif
 
+#if defined (PUBLISH_REPORT)  // Read with NetCat Bash command nc -u -l [UDP_PORT +1]
+  if (DayExpiring || trigNAT)
+  {
+    UDP.beginPacket(UDP_TARGET, UDP_PORT + 1);
+    if (DayExpiring)
+    {
+      sprintf(charbuff, " \nDaily Report for \n%s, %02d %s %04d ", DayName , Day , MonthName, Year);
+      UDP.print(charbuff);
+
+      UDP.print("\nHour| Leq  |  NAT  |  Ah    |\n");
+      for  (byte n = 0; n < 30; n++)
+      {
+        if (n == 24)
+        {
+          UDP.print("Extra ""hours"" cf. Man.\n");
+        }
+        else
+        {
+          UDP.printf("%02u  | %02.1f |  %03u  | %+02.3f |\n", n, leq[n], NAT[n], AhBat[n]);
+        }
+      }
+      UDP.print("\nNAT|PKTime  |PKdB|Leq4|t10|Leq3|tAT|\n");
+    }
+    if (trigNAT)
+    {
+      UDP.printf(" %02u|", NAT[Hour]);  UDP.print(peakTime);  UDP.printf("|%2.1f|%2.1f|%02u |%2.1f|%02u |\n", peakValue , less10dBLEq , less10dBDuration,  aboveThreshLEq , aboveThreshDuration);
+    }
+    UDP.endPacket();
+  }
 #endif
 
   if (NewMinute)
@@ -19,7 +49,7 @@ void wirelessRun()
     yield();
 #endif
   } else {
-    
+
 #if defined (PUBLISH_SOUND)
     memcpy(soundPayload, &sound, sizeof(sound));
     UDP.beginPacket(UDP_TARGET, UDP_PORT);
@@ -100,7 +130,7 @@ void wirelessRun()
     lequ["23h"] = leq[23];
     lequ["Leq"] = leq[25];
     lequ["Day"] = leq[26];
-    lequ["Daytime"] = leq[27]; 
+    lequ["Daytime"] = leq[27];
     lequ["Nighttime"] = leq[28];
     lequ["Lden"] = leq[29];
     lequ["L22-24h"] = leq[30];
@@ -133,7 +163,7 @@ void wirelessRun()
     NATu["23h"] = NAT[23];
     NATu["NAT"] = NAT[25];     //25=current event 26=Nat24h 27= Daytime 28= Nighttime 29= 22h-24h
     NATu["Day"] = NAT[26];
-    NATu["Daytime"] = NAT[27]; 
+    NATu["Daytime"] = NAT[27];
     NATu["Nighttime"] = NAT[28];
     NATu["NAT22-24"] = NAT[29];
     thing.set_property("NATu", NATu);
