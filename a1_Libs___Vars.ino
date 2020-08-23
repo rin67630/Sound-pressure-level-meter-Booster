@@ -8,6 +8,7 @@
 #include <ESP8266WiFi.h>  // default from Espressif
 #include <ESP8266HTTPClient.h>
 #include <TZ.h>           // default from Espressif
+#include <FS.h>
 #if defined(THINGER)
 #include <ThingerESP8266.h>
 //#include <ThingerConsole.h>
@@ -20,7 +21,7 @@
 #define RST 0           // GPIO0
 #define PUSHBUTTON D2   // GPIO04
 #define RELAY      D1   // GPIO05
-#define STDLED     D4   // GPIO02 (& Serial1 TX)
+#define STDLED     D4   // GPIO02 (& Console2 TX)
 #define REDLED     D8   // GPIO15
 #define GRNLED     D6   // GPIO12
 #define BLULED     D7   // GPIO13
@@ -74,6 +75,8 @@ static IPAddress remip;
 byte devicesFound =      0; ///< Number of INAs found
 float ina_current;
 float ina_voltage;
+float current ;
+float voltage ;
 float delta_current;
 float delta_voltage;
 float ina_shunt;
@@ -85,7 +88,7 @@ float voltageDelta ;
 float currentInt = 0;
 int  nCurrent;
 int   ind = 0;
-float AhBat[30];
+float AhBat[31];
 
 struct battery {
 float current ;
@@ -120,7 +123,6 @@ struct sound {
   char  tResponse = 'S';
 }sound;
 char soundPayload[sizeof(sound)];  //  Array of characters as image of the structure for UDP xmit/rcv
-
 float A0dB60;
 float A0dB6S;
 
@@ -132,7 +134,7 @@ float A0dBLeq1min;
 float A0dBMin1min;
 float A0dBMax1min;
 byte  nA0dB6S;
-byte  corrdB;
+int  corrdB;
 int   A094;
 int   A047;
 float leq[31];         // 0..23=hour, 25=current, 26=Lequ 24h, 27= LeqDay, 28=LeqNight, 29=Lden, 30=L22-24h
@@ -152,7 +154,7 @@ float peakValue;
 char state;
 String peakTime;
 float  EVENT[MAX_EXCEEDANCE_TIME];     // flashback record of an event
-byte   NAT[30];        // Number Above Treshold 0..23=hour 25=current event 26=Nat24h 27= Daytime 28= Nighttime
+byte   NAT[31];        // Number Above Treshold 0..23=hour 25=current event 26=Nat24h 27= Daytime 28= Nighttime
 
 
 //Sound level from URL
