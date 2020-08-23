@@ -2,38 +2,45 @@ void setup()
 {
   delay(3000); // Wait for serial monitor to be started
   // Serial initialisation
-  Serial.begin (SERIAL_SPEED);
-  Serial1.begin(SERIAL_SPEED);
+  Serial.begin (SERIAL_SPEED); // On USB port
+  Serial1.begin(SERIAL_SPEED); // On GPIO2 / D4
   Wire.begin(SDA, SCL);
-  Serial.printf("\n\r\n\r\n\rESP-Karajan at work,\n\rHello Serial! @ %u Baud\n\r", SERIAL_SPEED);
+  Console3.printf("\n\n\nESP-Karajan at work,\nHello Serial! @ %u Baud\n", SERIAL_SPEED);
 
   EEPROM.begin(512);
+  if (!SPIFFS.begin()) 
+{
+  Console3.println("Failed to mount file system");
+  return;
+}
   pinMode(RELAY , OUTPUT);
-  pinMode(STDLED, OUTPUT);
+//  pinMode(STDLED, OUTPUT);
   // Witty Color LEDs
+  /*
   pinMode(REDLED, OUTPUT);
   pinMode(GRNLED, OUTPUT);
-  pinMode(BLULED, OUTPUT);    
+  pinMode(BLULED, OUTPUT); 
+  */   
  
    // Networking and Time
   getWiFi();
   ArduinoOTA.setHostname(HOST_NAME);
 
   //WiFi.printDiag(Serial);
-  Serial.printf("MAC address: %s , \n\rHostname: %s \n\rIP address::", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
-  Serial.println(WiFi.localIP());
+  Console3.printf("MAC address: %s , \nHostname: %s \nIP address::", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
+  Console3.println(WiFi.localIP());
   getNTP();
   delay(3000);
 
   getEpoch();            // writes the Epoch (Numbers of seconds till 1.1.1970...
   getTimeData();         // breaks down the Epoch into discrete values.
   sprintf(charbuff, "Now is %02d:%02d:%02d. The Epoch is: %10lu\r\nDate is %s, %02d %s %04d" , Hour , Minute, Second, Epoch,DayName , Day , MonthName, Year);
-  Serial.println(charbuff);
+  Console3.println(charbuff);
 
   //  delay(3000);
   getEpoch();            // writes the Epoch (Numbers of seconds till 1.1.1970...
   getTimeData();         // breaks down the Epoch into discrete values.
-  //  Serial.print(F("\n\rNow, 3 seconds later it is "));   Serial.println( Time );
+  //  Console3.print(F("\nNow, 3 seconds later it is "));   Console3.println( Time );
 
   // Over the Air Framework
   ArduinoOTA.onStart([]() {
@@ -44,33 +51,33 @@ void setup()
       type = "filesystem";
     }
     // NOTE: if updating FS this would be the place to unmount FS using FS.end()
-    Serial.println("Start updating " + type);
+    Console3.println("Start updating " + type);
   });
   ArduinoOTA.onEnd([]() {
-    Serial.println("\n\rEnd");
+    Console3.println("\nEnd");
   });
   ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
-    Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
+    Console3.printf("Progress: %u%%\r", (progress / (total / 100)));
   });
   ArduinoOTA.onError([](ota_error_t error) {
-    Serial.printf("Error[%u]: ", error);
+    Console3.printf("Error[%u]: ", error);
     if (error == OTA_AUTH_ERROR) {
-      Serial.println("Auth Failed");
+      Console3.println("Auth Failed");
     } else if (error == OTA_BEGIN_ERROR) {
-      Serial.println("Begin Failed");
+      Console3.println("Begin Failed");
     } else if (error == OTA_CONNECT_ERROR) {
-      Serial.println("Connect Failed");
+      Console3.println("Connect Failed");
     } else if (error == OTA_RECEIVE_ERROR) {
-      Serial.println("Receive Failed");
+      Console3.println("Receive Failed");
     } else if (error == OTA_END_ERROR) {
-      Serial.println("End Failed");
+      Console3.println("End Failed");
     }
   });
 
   // Begin listening to UDP port
   UDP.begin(UDP_PORT);
-  Serial.print("Communicating on UDP port: ");
-  Serial.print(UDP_PORT);
+  Console3.print("Communicating on UDP port: ");
+  Console3.print(UDP_PORT);
 
   // Weather
   myPlace.setLocation( 51.3683, 6.9293 );
@@ -112,7 +119,7 @@ void setup()
     out["max"]       = sound.A0dBMax;
     out["fast"]      = sound.A0dBFast;
     out["impulse"]   = sound.A0dBImpulse;
-    out["limit"]    = UPPER_LIMIT_DB;
+    out["limit"]     = UPPER_LIMIT_DB;
   };
 
   thing["energy"] >> [](pson & out)
@@ -313,16 +320,18 @@ void setup()
 
   state = 'e';
   serialPage = 'A';           // default reporting page
+  if (sound.A0dBBgr < LOWER_LIMIT_DB) sound.A0dBBgr = LOWER_LIMIT_DB;
   sound.A0dBMin = LOWER_LIMIT_DB;     // default background and minimum level
-  digitalWrite(STDLED, true);
+//  digitalWrite(STDLED, true);
   
 #if defined (OFFLINE)
-  Serial.println(F("Going off-line "));
+  Console3.println(F("Going off-line "));
   disConnect();
-  Serial.println (F("Sketch is now running offline with own time"));
+  Console3.println (F("Sketch is now running offline with own time"));
 #endif
 
   ArduinoOTA.begin();
-  Serial.println("\n\rOTA-Ready");
+  Console3.println("\nOTA-Ready");
+  Console2.print("\nNAT|PKTime  |PKdB|Leq4|t10|Leq3|\n");
 }
 //end Setup
