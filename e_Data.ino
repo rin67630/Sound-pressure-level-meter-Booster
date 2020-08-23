@@ -79,14 +79,14 @@ void data1SRun()
   // and different sizes for Battery and Sound...
 
   int packetSize = UDP.parsePacket();
-  // if (packetSize) Serial.printf("Packet size: %u, Sound size: %u , Battery size; %u \n\r", packetSize, sizeof(sound), sizeof(battery));
+  // if (packetSize) Console3.printf("Packet size: %u, Sound size: %u , Battery size; %u \n", packetSize, sizeof(sound), sizeof(battery));
   if (packetSize) digitalWrite(STDLED, false);    // Blink built-in LED on received packets
-    if (packetSize == sizeof(sound))
+  if (packetSize == sizeof(sound))
   {
     UDP.read(soundPayload, UDP_TX_PACKET_MAX_SIZE);
     memcpy(&sound, soundPayload, sizeof(sound));
-    // ConOut.printf("Min:%2.1f Max:%2.1f Imp:%2.1f  Bgr:%2.1f Slow:%2.1f\n\r", sound.A0dBMin, sound.A0dBMax, sound.A0dBImpulse, sound.A0dBBgr, sound.A0dBSlow);
-    //     ConOut.print("s");
+    // Console1.printf("Min:%2.1f Max:%2.1f Imp:%2.1f  Bgr:%2.1f Slow:%2.1f\n", sound.A0dBMin, sound.A0dBMax, sound.A0dBImpulse, sound.A0dBBgr, sound.A0dBSlow);
+    //     Console1.print("s");
   }
   if (packetSize == sizeof(battery))
   {
@@ -96,8 +96,8 @@ void data1SRun()
     memcpy(&battery, batteryPayload, sizeof(battery));
     delta_voltage = battery.voltage - m;
     delta_current = battery.current - n;
-    // ConOut.printf("Ah: %2.1f, Volt: %2.1f, Amp: %2.1f, Watt: %2.1f, %%Batt: %2.1f\n\r", AhBat, battery.voltage , battery.current , battery.power , percent_charged);
-    delay(3);    // let built-in LED blink slightly stronger on battery packet 
+    // Console1.printf("Ah: %2.1f, Volt: %2.1f, Amp: %2.1f, Watt: %2.1f, %%Batt: %2.1f\n", AhBat, battery.voltage , battery.current , battery.power , percent_charged);
+    delay(3);    // let built-in LED blink slightly stronger on battery packet
   }
   digitalWrite(STDLED, true);
 #endif
@@ -120,9 +120,9 @@ void data1SRun()
   A0dBMin1min = min(sound.A0dBSlow, A0dBMin1min);
   A0dBMax1min = max(sound.A0dBImpulse, A0dBMax1min);
 
-//===============================================
-// Process NAT statistics
-  
+  //===============================================
+  // Process NAT statistics
+
   if (sound.A0dBSlow > EVENT_THRESHOLD_LEVEL && state != 'e') //
   {
     if (sound.A0dBSlow > peakValue)
@@ -234,16 +234,16 @@ void data1SRun()
       state = 'e';
   } // end Switch
 
-//===============================================
-// Process Noise Lequ integration
+  //===============================================
+  // Process Noise Lequ integration
 
   A0dBSumExp1min  =  A0dBSumExp1min  + pow(10, sound.A0dBSlow / 10);    // 1.Computation of Lequ Sum of Exp...
   if (MinuteExpiring)
   {
     // Noise Lequ Minute result
     A0dBLeq1min = 10 * log10(A0dBSumExp1min / 60);                      // 2.Computation of Lequ Log of Sum of Exp
-  if  (A0dBLeq1min < 26)  A0dBLeq1min = LOWER_LIMIT_DB;                 // Initialize at 26dB minimum
-  A0dBSumExp60min  =  A0dBSumExp60min  + pow(10, A0dBLeq1min / 10);     // 1.Computation of Lequ Sum of Exp...
+    if  (A0dBLeq1min < LOWER_LIMIT_DB)  A0dBLeq1min = LOWER_LIMIT_DB;     // Catch errors at LOWER_LIMIT_DB
+    A0dBSumExp60min  =  A0dBSumExp60min  + pow(10, A0dBLeq1min / 10);     // 1.Computation of Lequ Sum of Exp...
   }
 
   if (HourExpiring)
@@ -291,35 +291,37 @@ void data1SRun()
   }
   // end of just before new hour
 
-//===============================================
-// Measure Battery
-
+  //===============================================
+  // Measure Battery
 #if defined BATTERY_SOURCE_INA
+  // Battery measurements from INA226
+  ina_voltage   = INA.getBusMilliVolts(0);
+  ina_shunt     = INA.getShuntMicroVolts(0);
+  ina_current   = INA.getBusMicroAmps(0);
+  ina_power     = INA.getBusMicroWatts(0);
+  voltage += (ina_voltage / 1000 - voltage) / 10;      // Low Pass filter 2min
+  current += (ina_current / -1000000 - current) / 10;  // -"-
   if (NewMinute)
   {
     float m = battery.voltage;
     float n = battery.current;
-    // Battery measurements from INA226
-    ina_voltage   = INA.getBusMilliVolts(0);
-    ina_shunt     = INA.getShuntMicroVolts(0);
-    ina_current   = INA.getBusMicroAmps(0);
-    ina_power     = INA.getBusMicroWatts(0);
-
-    battery.voltage += (ina_voltage / 1000 - battery.voltage) / 50;      // Low Pass filter 50 sec
-    battery.current += (ina_current / -1000000 - battery.current) / 50;  // -"-
-    battery.power = battery.voltage * battery.current;
+    battery.voltage = voltage;
+    battery.current = current;
+    battery.power = voltage * current;
     delta_voltage = battery.voltage - m;
     delta_current = battery.current - n;
   }
 #endif
 
   // continuing either with values from above, or from UDP transmission
-  // Evaluate battery health
+  if (NewMinute)
+  {
+  // Evaluate battery charge
   percent_charged = map(battery.voltage * 100, MIN_VOLT * 100, MAX_VOLT * 100, 0, 100);
-  
-  // Calculate battery internal resistance (r = dv / di) if inside regular limits and smooth it.
+  // Evaluate battery internal resistance (r = dv / di) if inside regular limits and smooth it.
   if (fabs(delta_current) > 0.005 && battery.voltage < (MAX_VOLT - 0.5) && battery.voltage > (MIN_VOLT + 0.5)) internal_resistance = internal_resistance + ((fabs(delta_voltage / delta_current)) - internal_resistance) / 10;
-
+  }
+  
   // Daily Battery voltage comparison
   if (SecondOfDay == 14400) voltageAt4h  = battery.voltage;   // taking the voltage at 04:00 to evaluate if the battery gained/lost during the previous day.
   if (SecondOfDay == 14399) voltageDelta = battery.voltage - voltageAt4h;// set ranges at 03:59:59
@@ -346,8 +348,8 @@ void data1SRun()
     AhBat[26] = AhBat[27];
   }
 
-//===============================================
-// Getting Weather from OpenWeatherMap every 5 minutes
+  //===============================================
+  // Getting Weather from OpenWeatherMap every 5 minutes
 #if defined WEATHER_SOURCE_URL
   if (Minute % 5 == 1 && Second == 32)   // call every 5 minutes
   { //check here: https://github.com/TridentTD/TridentTD_OpenWeather/blob/master/examples/WeatherNow/WeatherNow.ino
