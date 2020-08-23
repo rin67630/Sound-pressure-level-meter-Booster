@@ -9,7 +9,7 @@ TridentTD_OpenWeather  myPlace(OPEN_WEATHER_MAP_APP_ID);
 INA_Class INA;
 
 #if defined(THINGER)
-ThingerESP8266 thing(THINGER_USERNAME, HOST_NAME, THINGER_CREDENTIALS);
+ThingerESP8266 thing(THINGER_USERNAME, THINGER_DEVICE, THINGER_CREDENTIALS);
 #endif
 
 // Functions
@@ -24,14 +24,14 @@ void getWiFi()
   {
     delay(500);
     int cnt = 0;
-    //    Serial.print(".");
+    //    Console3.print(".");
     if (cnt++ >= wifiMaxTries) {
       WiFi.beginSmartConfig();
       while (1) {
         delay(wifiRepeatInterval);
         if (WiFi.smartConfigDone())
         {
-          Serial.println("SmartConfig Success");
+          Console3.println("SmartConfig Success");
           break;
         }
       }
@@ -46,10 +46,10 @@ void getWiFi()
   wifi_station_set_auto_connect(true);
   wifi_station_set_hostname(HOST_NAME);
   wifiConnectCounter = 1;
-  Serial.println();
+  Console3.println();
   while (WiFi.status() != WL_CONNECTED) {
     delay(wifiRepeatInterval);
-    Serial.print(".");
+    Console3.print(".");
     wifiConnectCounter++;
     if (wifiConnectCounter > wifiMaxTries) {
       delay(wifiRepeatInterval * 1000 * 1000);
@@ -59,6 +59,8 @@ void getWiFi()
   ip = WiFi.localIP();
 }
 #endif
+
+
 
 void disConnect()
 {
