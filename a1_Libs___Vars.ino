@@ -156,10 +156,6 @@ String peakTime;
 float  EVENT[MAX_EXCEEDANCE_TIME];     // flashback record of an event
 byte   NAT[31];        // Number Above Treshold 0..23=hour 25=current event 26=Nat24h 27= Daytime 28= Nighttime
 
-
-//Sound level from URL
-//#define DFLDjsonURL "http://api.dfld.de/noise/dfld.de/001/161"  //Frankfurt Offenbach 1
-#define DFLDjsonURL "http://api.dfld.de/noise/dfld.de/004/027"
 String JSONpayload;
 byte wifiConnectCounter;
 
