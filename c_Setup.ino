@@ -80,8 +80,8 @@ void setup()
   Console3.print(UDP_PORT);
 
   // Weather
-  myPlace.setLocation( 51.3683, 6.9293 );
-  myPlace.setUnit("metric");
+  //myPlace.setLocation( 51.3683, 6.9293 );
+  //myPlace.setUnit("metric");
 
 #if defined BATTERY_SOURCE_INA
   // INA 226 Battery Sensor
@@ -136,6 +136,78 @@ void setup()
     out["AhBat[26]"] = AhBat[26];
     out["voltageAt4h"] = voltageAt4h;
     out["voltageDelta"] = voltageDelta;
+    out["L00h"] = leq[0];
+    out["L01h"] = leq[1];
+    out["L02h"] = leq[2];
+    out["L03h"] = leq[3];
+    out["L04h"] = leq[4];
+    out["L05h"] = leq[5];
+    out["L06h"] = leq[6];
+    out["L07h"] = leq[7];
+    out["L08h"] = leq[8];
+    out["L09h"] = leq[9];
+    out["L10h"] = leq[10];
+    out["L11h"] = leq[11];
+    out["L12h"] = leq[12];
+    out["L13h"] = leq[13];
+    out["L14h"] = leq[14];
+    out["L15h"] = leq[15];
+    out["L16h"] = leq[16];
+    out["L17h"] = leq[17];
+    out["L18h"] = leq[18];
+    out["L19h"] = leq[19];
+    out["L20h"] = leq[20];
+    out["L21h"] = leq[21];
+    out["L22h"] = leq[22];
+    out["L23h"] = leq[23];
+    out["N00h"] = NAT[0];
+    out["N01h"] = NAT[1];
+    out["N02h"] = NAT[2];
+    out["N03h"] = NAT[3];
+    out["N04h"] = NAT[4];
+    out["N05h"] = NAT[5];
+    out["N06h"] = NAT[6];
+    out["N07h"] = NAT[7];
+    out["N08h"] = NAT[8];
+    out["N09h"] = NAT[9];
+    out["N10h"] = NAT[10];
+    out["N11h"] = NAT[11];
+    out["N12h"] = NAT[12];
+    out["N13h"] = NAT[13];
+    out["N14h"] = NAT[14];
+    out["N15h"] = NAT[15];
+    out["N16h"] = NAT[16];
+    out["N17h"] = NAT[17];
+    out["N18h"] = NAT[18];
+    out["N19h"] = NAT[19];
+    out["N20h"] = NAT[20];
+    out["N21h"] = NAT[21];
+    out["N22h"] = NAT[22];
+    out["N23h"] = NAT[23];
+    out["B00h"] = AhBat[0];
+    out["B01h"] = AhBat[1];
+    out["B02h"] = AhBat[2];
+    out["B03h"] = AhBat[3];
+    out["B04h"] = AhBat[4];
+    out["B05h"] = AhBat[5];
+    out["B06h"] = AhBat[6];
+    out["B07h"] = AhBat[7];
+    out["B08h"] = AhBat[8];
+    out["B09h"] = AhBat[9];
+    out["B10h"] = AhBat[10];
+    out["B11h"] = AhBat[11];
+    out["B12h"] = AhBat[12];
+    out["B13h"] = AhBat[13];
+    out["B14h"] = AhBat[14];
+    out["B15h"] = AhBat[15];
+    out["B16h"] = AhBat[16];
+    out["B17h"] = AhBat[17];
+    out["B18h"] = AhBat[18];
+    out["B19h"] = AhBat[19];
+    out["B20h"] = AhBat[20];
+    out["B21h"] = AhBat[21];
+    out["B22h"] = AhBat[22];
+    out["B23h"] = AhBat[23];
   };
 
   thing["HOUR"] >> [](pson & out)
@@ -143,8 +215,8 @@ void setup()
     out["temperature"] = outdoor_temperature;
     out["humidity"]    = outdoor_humidity;
     out["pressure"]    = outdoor_pressure;
-    out["wind"]        = outdoor_wind_speed;
-    out["direction"]   = outdoor_wind_direction;
+    out["wind"]        = wind_speed;
+    out["direction"]   = wind_direction;
     out["summary"]     = weather_summary;
 #if (defined BATTERY_SOURCE_INA) || (defined BATTERY_SOURCE_UDP)
     out["current"]     = battery.current;
@@ -206,8 +278,8 @@ void setup()
   outdoor_temperature = persistance["temperature"];
   outdoor_humidity    = persistance["humidity"];
   outdoor_pressure    = persistance["pressure"];
-  outdoor_wind_speed  = persistance["wind"];
-  outdoor_wind_direction = persistance["direction"];
+  wind_speed  = persistance["wind"];
+  wind_direction = persistance["direction"];
   // weather_summary     = persistance["summary"];  //ambiguous overload for 'operator=' (operand types are 'String' and 'protoson::pson')
 
   pson lequ;
@@ -306,13 +378,14 @@ void setup()
   AhBat[27] = BATmAh["Today"];
 
 #else // no Thinger
+/*
+  // Persistance over Structure and memcpy.
+EEPROM.get(addr,data);
+EEPROM.put(addr,data);
+EEPROM.commit();
+*/
 
-  // to be done: Persistance over Structure and memcpy.
-  //EEPROM.get(addr,data);
-  //EEPROM.put(addr,data);
-  //EEPROM.commit();
-
-#endif  //THINGER
+#endif  //end #if defined THINGER
 
   // Initialisations.
   if (A094 == 0) A094 = Ao94; // uninitialized or no Thinger
@@ -326,7 +399,7 @@ void setup()
   
 #if defined (OFFLINE)
   Console3.println(F("Going off-line "));
-  disConnect();
+  WiFi.mode(WIFI_OFF); 
   Console3.println (F("Sketch is now running offline with own time"));
 #endif
 
