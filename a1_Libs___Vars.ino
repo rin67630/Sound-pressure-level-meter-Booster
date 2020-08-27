@@ -1,8 +1,8 @@
 // *** libraries***
-#include <Wire.h> // Libs for INA 226
+#include <Wire.h> // Libs for  in
 #include <INA.h>  // Zanshin INA Library
 #include <ArduinoJson.h> // Libs for Webscraping
-#include <TridentTD_OpenWeather.h>
+//#include <TridentTD_OpenWeather.h>
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
 #include <ESP8266WiFi.h>  // default from Espressif
@@ -25,6 +25,13 @@
 #define REDLED     D8   // GPIO15
 #define GRNLED     D6   // GPIO12
 #define BLULED     D7   // GPIO13
+
+// Concatenate URLs
+#define OPEN_WEATHER_MAP_URL  "http://api.openweathermap.org/data/2.5/weather?id=" OPEN_WEATHER_MAP_LOCATION_ID "&appid=" OPEN_WEATHER_MAP_APP_ID "&units="OPEN_WEATHER_MAP_UNITS "&lang=" OPEN_WEATHER_MAP_LANGUAGE
+//#define OPEN_WEATHER_MAP_URL   "http://api.openweathermap.org/data/2.5/weather?id=2928810&appid=208085abb5a3859d1e32341d6e1f9079&lang=de&units=metric"
+#define DFLDjsonURL "http://api.dfld.de/noise/dfld.de/" DFLD_REGION "/" DFLD_STATION" 
+//#define DFLDjsonURL "http://api.dfld.de/noise/dfld.de/004/020"
+ 
 
 //***Variables for Time***
 tm*        timeinfo;                 //localtime returns a pointer to a tm struct static int Second;
@@ -52,12 +59,12 @@ boolean NewDay;
 boolean DayExpiring;
 
 // ***Variables for Menu***
-byte inbyte;
-byte displayPage;
-byte displaySubPage;
-byte serialPage;
-byte serialPageMem;
-byte wirelessPage;
+byte    inbyte;
+byte    displayPage;
+byte    displaySubPage;
+byte    serialPage;
+byte    serialPageMem;
+byte    wirelessPage;
 boolean stopAK;
 boolean serialDay;
 boolean serialHur;
@@ -65,7 +72,6 @@ boolean serialMin;
 boolean serialSec;
 boolean serialNAT;
 boolean trigNAT;
-
 
 static IPAddress ip;
 static IPAddress remip;
@@ -86,7 +92,7 @@ float percent_charged = 100;
 float voltageAt4h ;
 float voltageDelta ;
 float currentInt = 0;
-int  nCurrent;
+int   nCurrent;
 int   ind = 0;
 float AhBat[31];
 
@@ -101,17 +107,18 @@ char batteryPayload[sizeof(battery)];  //  Array of characters as image of the s
 float outdoor_temperature;
 float outdoor_humidity;
 float outdoor_pressure;
-float outdoor_wind_speed;
-int outdoor_wind_direction;
-String weather_summary;
-String sunrise;
-String sunset;
+float wind_speed;
+int   wind_direction;
+int   cloudiness;
+const char* weather_summary;
+long  sunrise;
+long  sunset;
 
 // Sound level
-int   A0Raw;
-long  A0Inst;
-float A0dBAvg;
-struct sound {
+int     A0Raw;
+long    A0Inst;
+float   A0dBAvg;
+struct  sound {
   float A0dBFast;
   float A0dBMin;
   float A0dBBgr;
@@ -123,41 +130,42 @@ struct sound {
   char  tResponse = 'S';
 }sound;
 char soundPayload[sizeof(sound)];  //  Array of characters as image of the structure for UDP xmit/rcv
-float A0dB60;
-float A0dB6S;
+float   A0dB60;
+float   A0dB6S;
 
-byte  A0dBArray[3610];  // one hour of A0dBAK values
-float A0dBSum6S;
-float A0dBSumExp60min;
-float A0dBSumExp1min;
-float A0dBLeq1min;
-float A0dBMin1min;
-float A0dBMax1min;
-byte  nA0dB6S;
-int  corrdB;
-int   A094;
-int   A047;
-float leq[31];         // 0..23=hour, 25=current, 26=Lequ 24h, 27= LeqDay, 28=LeqNight, 29=Lden, 30=L22-24h
+byte    A0dBArray[3610];  // one hour of A0dBAK values
+float   A0dBSum6S;
+float   A0dBSumExp60min;
+float   A0dBSumExp1min;
+float   A0dBLeq1min;
+float   A0dBMin1min;
+float   A0dBMax1min;
+byte    nA0dB6S;
+int     corrdB;
+int     A094;
+int     A047;
+float   leq[31];         // 0..23=hour, 25=current, 26=Lequ 24h, 27= LeqDay, 28=LeqNight, 29=Lden, 30=L22-24h
 
-// Mumber above threshold
-
-float maxLevelNAT;
-byte  listeningTimer;
-byte  minExceedingTimer;
-byte  maxExceedingTimer;
+// Number above threshold
+float   maxLevelNAT;
+byte    listeningTimer;
+byte    minExceedingTimer;
+byte    maxExceedingTimer;
 
 unsigned int  aboveThreshDuration;
-float aboveThreshLEq;
+float   aboveThreshLEq;
 unsigned int  less10dBDuration;
-float less10dBLEq;
-float peakValue;
-char state;
-String peakTime;
-float  EVENT[MAX_EXCEEDANCE_TIME];     // flashback record of an event
-byte   NAT[31];        // Number Above Treshold 0..23=hour 25=current event 26=Nat24h 27= Daytime 28= Nighttime
+float   less10dBLEq;
+float   peakValue;
+char    state;
+String  peakTime;
+float   EVENT[MAX_EXCEEDANCE_TIME];     // flashback record of an event
+byte    NAT[31];        // Number Above Treshold 0..23=hour 25=current event 26=Nat24h 27= Daytime 28= Nighttime
 
-String JSONpayload;
-byte wifiConnectCounter;
+
+//Sound level from URL
+String  JSONpayload;
+byte    wifiConnectCounter;
 
 //*** Buffers ***
 static char charbuff[80];    //Char buffer for many functions
