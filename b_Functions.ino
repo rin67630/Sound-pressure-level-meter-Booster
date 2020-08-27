@@ -5,7 +5,7 @@
 
 // Instantiate classes
 WiFiUDP UDP;
-TridentTD_OpenWeather  myPlace(OPEN_WEATHER_MAP_APP_ID);
+HTTPClient http;
 INA_Class INA;
 
 #if defined(THINGER)
@@ -66,6 +66,8 @@ void disConnect()
 {
   //  WiFi.disconnect(); //temporarily disconnect WiFi as it's no longer needed
   WiFi.mode(WIFI_OFF);
+  // WiFi.forceSleepBegin();  can it save power?
+  // WiFi.forceSleepWake();
 }
 
 void myIP()
