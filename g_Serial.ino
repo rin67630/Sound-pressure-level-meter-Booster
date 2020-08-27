@@ -19,11 +19,11 @@ void serialRun()
         Console2.printf("%02u  | %02.1f |  %03u  | %+02.3f |\n", n, leq[n], NAT[n], AhBat[n]);
       }
     }
-    Console2.print("\nNAT | PKTime   |  PKdB | Leq4 |\n");
+    Console2.print("\nNAT|PKTime  |PKdB|Leq4|t10|Leq3|\n");
   }
   if (trigNAT)
   {
-    Console2.printf("%02u  | ", NAT[Hour]);  Console2.print(peakTime);  Console2.printf(" |  %2.1f | %2.1f |\n", peakValue , less10dBLEq);
+    Console2.printf(" %02u|", NAT[Hour]);  UDP.print(peakTime);  UDP.printf("|%2.1f|%2.1f|%03u|%2.1f|\n", peakValue , less10dBLEq , less10dBDuration,  aboveThreshLEq);
   }
   switch (serialPage)
   {
@@ -53,7 +53,7 @@ void serialRun()
       }
       if (HourExpiring && serialHur)
       {
-        Console1.printf("BatAhBat:%1.3f A0dBLEQ:%2.1f WindSpeed:%2.1f Direction:%3.0f\n", AhBat, leq[25] , outdoor_wind_speed , outdoor_wind_direction);
+        Console1.printf("BatAhBat:%1.3f A0dBLEQ:%2.1f WindSpeed:%2.1f Direction:%3.0f\n", AhBat, leq[25] , wind_speed , wind_direction);
       }
       if (MinuteExpiring && serialMin)
       {
@@ -144,7 +144,8 @@ void serialRun()
       break;
 
     case 'W': //Weather Report
-      Console1.printf("Temp: %2.1f Hum: %u Press: %u @94=%u WindSpeed: %2.1f Direction: %u\n", outdoor_temperature, outdoor_humidity, outdoor_pressure, outdoor_wind_speed, outdoor_wind_direction);
+      Console1.printf("Temp: %2.1f Hum: %2.1f Press: %4.0f WindSpeed: %2.1f Direction: %u Weather: ", outdoor_temperature, outdoor_humidity, outdoor_pressure, wind_speed, wind_direction);
+      Console1.println(weather_summary);
       serialPage = 0;
       break;
 
