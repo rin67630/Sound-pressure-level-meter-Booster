@@ -145,6 +145,10 @@ void menuRun()
       serialPage = 'b';
       Console1.println ("\nBattery Status :");
       break;
+   case 'W':  //Weather Report one shot
+      serialPage = 'W';
+      Console1.println ("\nWeather report :");
+      break;
     case '~':
       WiFi.printDiag(Serial);
      Console1.printf("\nmac address: %s , \nHostname: %s\n", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
