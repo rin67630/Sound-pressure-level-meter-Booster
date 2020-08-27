@@ -33,7 +33,7 @@ void loop()
             }
           }
         }
-        if (Second == 59 )        // Finishing the Minute..
+        if (Second == 58 )        // Finishing the Minute next second..
         {
           MinuteExpiring = true;
           if (Minute == 59)       // Finishing the hour..
@@ -47,22 +47,22 @@ void loop()
         }
         break;
       case 2:
-        digitalWrite(GRNLED, true);
+       //digitalWrite(GRNLED, true);
         data1SRun();
-        digitalWrite(GRNLED, false);
+       //digitalWrite(GRNLED, false);
         break;
       case 3:
         displayRun();
         break;
       case 5:
-        digitalWrite(BLULED, true);
+       //digitalWrite(BLULED, true);
         serialRun();
-        digitalWrite(BLULED, false);
+       //digitalWrite(BLULED, false);
         break;
       case 7:
-        digitalWrite(REDLED, true);
+       //digitalWrite(REDLED, true);
         wirelessRun();
-        digitalWrite(REDLED, false);
+       //digitalWrite(REDLED, false);
         break;
       case 8:          // Reinitializations
         if (Second % 10 == 5) // every 6 seconds
@@ -92,9 +92,6 @@ void loop()
         trigNAT = false;
         break;
     } // end Switch slice
-
   } // end Every 125mS
-
-
 }
 //end loop
