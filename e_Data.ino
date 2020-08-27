@@ -46,7 +46,6 @@ void data1SRun()
   yield();
   // Fetching Noise level from URL with reduced resolution
 #if defined (SOUND_SOURCE_URL)   // must be a JSON from DFLD.de
-  HTTPClient http;              //Declare an object of class HTTPClient
   http.begin(DFLDjsonURL);      //Specify request destination
   int httpCode = http.GET();    //Send the request
   if (httpCode > 0)             //Check the returning code
@@ -80,7 +79,7 @@ void data1SRun()
 
   int packetSize = UDP.parsePacket();
   // if (packetSize) Console3.printf("Packet size: %u, Sound size: %u , Battery size; %u \n", packetSize, sizeof(sound), sizeof(battery));
-  if (packetSize) digitalWrite(STDLED, false);    // Blink built-in LED on received packets
+  //  if (packetSize) digitalWrite(STDLED, false);    // Blink built-in LED on received packets
   if (packetSize == sizeof(sound))
   {
     UDP.read(soundPayload, UDP_TX_PACKET_MAX_SIZE);
@@ -99,7 +98,7 @@ void data1SRun()
     // Console1.printf("Ah: %2.1f, Volt: %2.1f, Amp: %2.1f, Watt: %2.1f, %%Batt: %2.1f\n", AhBat, battery.voltage , battery.current , battery.power , percent_charged);
     delay(3);    // let built-in LED blink slightly stronger on battery packet
   }
-  digitalWrite(STDLED, true);
+  //digitalWrite(STDLED, true);
 #endif
 
   //DFLD Formatting (AK Modulbus format)
@@ -110,7 +109,7 @@ void data1SRun()
   // Computing Background noise level with a low pass filter ignoring events
   if ( sound.A0dBFast < EVENT_THRESHOLD_LEVEL)
   {
-    sound.A0dBBgr += (sound.A0dBSlow - sound.A0dBBgr) / 16000;  // Low Pass filter 2000s
+    sound.A0dBBgr += (sound.A0dBSlow - sound.A0dBBgr) / 2000;  // Low Pass filter 2000s
   }
 
   // Noise averaging & 60s Max-Min
@@ -122,118 +121,119 @@ void data1SRun()
 
   //===============================================
   // Process NAT statistics
-
-  if (sound.A0dBSlow > EVENT_THRESHOLD_LEVEL && state != 'e') //
+  if (wind_speed < WIND_LIMIT)
   {
-    if (sound.A0dBSlow > peakValue)
+    if (sound.A0dBSlow > EVENT_THRESHOLD_LEVEL && state != 'e') //
     {
-      peakValue = sound.A0dBSlow;
-      peakTime = Time;
+      if (sound.A0dBSlow > peakValue)
+      {
+        peakValue = sound.A0dBSlow;
+        peakTime = Time;
+      }
     }
-  }
 
-  // Handling of timers (countdown to 0)
+    // Handling of timers (countdown to 0)
 
-  if (minExceedingTimer > 0) minExceedingTimer--;
-  if (maxExceedingTimer > 0) maxExceedingTimer--;
-  if (listeningTimer > 0) listeningTimer--;
+    if (minExceedingTimer > 0) minExceedingTimer--;
+    if (maxExceedingTimer > 0) maxExceedingTimer--;
+    if (listeningTimer > 0) listeningTimer--;
 
-  // Recording flashback (in reverse order, but it does not matter)
-  EVENT[maxExceedingTimer] = sound.A0dBSlow;   //
+    // Recording flashback (in reverse order, but it does not matter)
+    EVENT[maxExceedingTimer] = sound.A0dBSlow;   //
 
-  // Handling of states
-  switch (state)
-  {
-    case 'e':  // Idle state
-      minExceedingTimer = 0;
-      maxExceedingTimer = 0;
-      listeningTimer = 0;
-      aboveThreshDuration = 0;
-      peakValue = 0;
+    // Handling of states
+    switch (state)
+    {
+      case 'e':  // Idle state
+        minExceedingTimer = 0;
+        maxExceedingTimer = 0;
+        listeningTimer = 0;
+        aboveThreshDuration = 0;
+        peakValue = 0;
 
-      if (sound.A0dBSlow > MEASUREMENT_THRESHOLD_LEVEL)
-      {
-        state = 'a';
-        for  (byte n = 0; n < MAX_EXCEEDANCE_TIME; n++)
+        if (sound.A0dBSlow > MEASUREMENT_THRESHOLD_LEVEL)
         {
-          EVENT[n] = 0; // clear flashback record
+          state = 'a';
+          for  (byte n = 0; n < MAX_EXCEEDANCE_TIME; n++)
+          {
+            EVENT[n] = 0; // clear flashback record
+          }
         }
-      }
-      break;
-    case 'a':
-      if (sound.A0dBSlow < MEASUREMENT_THRESHOLD_LEVEL) state = 'e';
-      if (sound.A0dBSlow > EVENT_THRESHOLD_LEVEL)
-      {
-        state = 'b';
-        minExceedingTimer = MIN_EXCEEDANCE_TIME;
-        maxExceedingTimer = MAX_EXCEEDANCE_TIME;
-      }
-      break;
-    case 'b':
-      if (sound.A0dBSlow < MEASUREMENT_THRESHOLD_LEVEL)
-      {
-        if (not minExceedingTimer && maxExceedingTimer) //(longer than min, less than max time)
+        break;
+      case 'a':
+        if (sound.A0dBSlow < MEASUREMENT_THRESHOLD_LEVEL) state = 'e';
+        if (sound.A0dBSlow > EVENT_THRESHOLD_LEVEL)
         {
-          listeningTimer = LISTENING_TIME;
-          NAT[Hour]++;     // dont't need to wait longer we have an event to record
-          state = 'c';
+          state = 'b';
+          minExceedingTimer = MIN_EXCEEDANCE_TIME;
+          maxExceedingTimer = MAX_EXCEEDANCE_TIME;
         }
-        if ( minExceedingTimer || not maxExceedingTimer) //(less than min, longer than max time)
+        break;
+      case 'b':
+        if (sound.A0dBSlow < MEASUREMENT_THRESHOLD_LEVEL)
         {
-          listeningTimer = LISTENING_TIME;
+          if (not minExceedingTimer && maxExceedingTimer) //(longer than min, less than max time)
+          {
+            listeningTimer = LISTENING_TIME;
+            NAT[Hour]++;     // dont't need to wait longer we have an event to record
+            state = 'c';
+          }
+          if ( minExceedingTimer || not maxExceedingTimer) //(less than min, longer than max time)
+          {
+            listeningTimer = LISTENING_TIME;
+            state = 'e';
+          }
+        }
+        break;
+      case 'c':   // just wait for MAX_EXCEEDANCE_TIME to expire
+        if (not maxExceedingTimer)
+        {
+          state = 'd';
+        }
+        break;
+      case 'd':
+        if (not listeningTimer) // just wait for MAX_EXCEEDANCE_TIME to expire
+        {
+          float m = 0;    // determining the max-10 Leq.
+          float l = 0;    // delogarithmed sound energy
+          byte k = 0;     // counter for Less10dBDuration
+          for  (byte n = 0; n < MAX_EXCEEDANCE_TIME; n++)
+          {
+            m = max(EVENT[n], m); //scan flashback for max
+          }
+          m = m - 10; //substract 10dB  //peakValue - 10dB
+          for  (byte n = 0; n < MAX_EXCEEDANCE_TIME; n++)
+          {
+            if (EVENT[n] >= m)
+            {
+              //rescan flashback to integrate 10dBdown LEq
+              l =  l + pow(10, EVENT[n] / 10);   // integration of delogarithmed sound energy
+              k++;
+            }
+          }
+          less10dBLEq = 10 * log10(l / k);
+          less10dBDuration = k;
+
+          m = EVENT_THRESHOLD_LEVEL;
+          for  (byte n = 0; n < MAX_EXCEEDANCE_TIME; n++)
+          {
+            if (EVENT[n] >= m)
+            {
+              //rescan flashback to integrate aboveThreshLEq
+              l =  l + pow(10, EVENT[n] / 10);   // integration of delogarithmed sound energy
+              k++;
+            }
+          }
+          aboveThreshLEq = 10 * log10(l / k);
+          aboveThreshDuration = k;
+          trigNAT = true;
           state = 'e';
         }
-      }
-      break;
-    case 'c':   // just wait for MAX_EXCEEDANCE_TIME to expire
-      if (not maxExceedingTimer)
-      {
-        state = 'd';
-      }
-      break;
-    case 'd':
-      if (not listeningTimer) // just wait for MAX_EXCEEDANCE_TIME to expire
-      {
-        float m = 0;    // determining the max-10 Leq.
-        float l = 0;    // delogarithmed sound energy
-        byte k = 0;     // counter for Less10dBDuration
-        for  (byte n = 0; n < MAX_EXCEEDANCE_TIME; n++)
-        {
-          m = max(EVENT[n], m); //scan flashback for max
-        }
-        m = m - 10; //substract 10dB  //peakValue - 10dB
-        for  (byte n = 0; n < MAX_EXCEEDANCE_TIME; n++)
-        {
-          if (EVENT[n] >= m)
-          {
-            //rescan flashback to integrate 10dBdown LEq
-            l =  l + pow(10, EVENT[n] / 10);   // integration of delogarithmed sound energy
-            k++;
-          }
-        }
-        less10dBLEq = 10 * log10(l / k);
-        less10dBDuration = k;
-
-        m = EVENT_THRESHOLD_LEVEL;
-        for  (byte n = 0; n < MAX_EXCEEDANCE_TIME; n++)
-        {
-          if (EVENT[n] >= m)
-          {
-            //rescan flashback to integrate aboveThreshLEq
-            l =  l + pow(10, EVENT[n] / 10);   // integration of delogarithmed sound energy
-            k++;
-          }
-        }
-        aboveThreshLEq = 10 * log10(l / k);
-        aboveThreshDuration = k;
-        trigNAT = true;
+        break;
+      default:   // catch evtl. wrong states
         state = 'e';
-      }
-      break;
-    default:   // catch evtl. wrong states
-      state = 'e';
-  } // end Switch
-
+    } // end Switch
+  } //end if wind_speed
   //===============================================
   // Process Noise Lequ integration
 
@@ -316,12 +316,12 @@ void data1SRun()
   // continuing either with values from above, or from UDP transmission
   if (NewMinute)
   {
-  // Evaluate battery charge
-  percent_charged = map(battery.voltage * 100, MIN_VOLT * 100, MAX_VOLT * 100, 0, 100);
-  // Evaluate battery internal resistance (r = dv / di) if inside regular limits and smooth it.
-  if (fabs(delta_current) > 0.005 && battery.voltage < (MAX_VOLT - 0.5) && battery.voltage > (MIN_VOLT + 0.5)) internal_resistance = internal_resistance + ((fabs(delta_voltage / delta_current)) - internal_resistance) / 10;
+    // Evaluate battery charge
+    percent_charged = map(battery.voltage * 100, MIN_VOLT * 100, MAX_VOLT * 100, 0, 100);
+    // Evaluate battery internal resistance (r = dv / di) if inside regular limits and smooth it.
+    if (fabs(delta_current) > 0.005 && battery.voltage < (MAX_VOLT - 0.5) && battery.voltage > (MIN_VOLT + 0.5)) internal_resistance = internal_resistance + ((fabs(delta_voltage / delta_current)) - internal_resistance) / 10;
   }
-  
+
   // Daily Battery voltage comparison
   if (SecondOfDay == 14400) voltageAt4h  = battery.voltage;   // taking the voltage at 04:00 to evaluate if the battery gained/lost during the previous day.
   if (SecondOfDay == 14399) voltageDelta = battery.voltage - voltageAt4h;// set ranges at 03:59:59
@@ -352,16 +352,29 @@ void data1SRun()
   // Getting Weather from OpenWeatherMap every 5 minutes
 #if defined WEATHER_SOURCE_URL
   if (Minute % 5 == 1 && Second == 32)   // call every 5 minutes
-  { //check here: https://github.com/TridentTD/TridentTD_OpenWeather/blob/master/examples/WeatherNow/WeatherNow.ino
-    myPlace.weatherNow();
-    outdoor_temperature  = myPlace.readTemperature();
-    outdoor_humidity     = myPlace.readHumidity();
-    outdoor_pressure     = myPlace.readPressure();
-    outdoor_wind_speed   = myPlace.readWindSpeed();
-    outdoor_wind_direction = myPlace.readWindDeg();
-    weather_summary      = myPlace.readWeather();
-    sunrise              = myPlace.readSunrise(TZ);
-    sunset               = myPlace.readSunset(TZ);
+    http.begin(OPEN_WEATHER_MAP_URL);
+  int httpCode = http.GET();
+  if (httpCode > 0)
+  {
+    if (httpCode == HTTP_CODE_OK)
+    {
+      String payload = http.getString();
+      http.end();
+      DynamicJsonDocument doc(1024);
+      auto error = deserializeJson(doc, payload.c_str());
+      if ( not error)
+      {
+        outdoor_temperature  = doc["main"]["temp"];
+        outdoor_pressure     = doc["main"]["pressure"];
+        outdoor_humidity     = doc["main"]["humidity"];
+        wind_speed   = doc["wind"]["speed"];
+        wind_direction = doc["wind"]["deg"];
+        cloudiness   = doc["clouds"]["all"];  // %
+        weather_summary      = doc["weather"][0]["description"];
+        sunrise              = doc["sys"]["sunrise"];
+        sunset               = doc["sys"]["sunset"];
+      }
+    }
   }
 #endif
 } // end of 1S run
