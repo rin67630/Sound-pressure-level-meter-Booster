@@ -47,8 +47,8 @@ void data1SRun()
   // Fetching Noise level from URL with reduced resolution
 #if defined (SOUND_SOURCE_URL)   // must be a JSON from DFLD.de
   http.begin(DFLDjsonURL);      //Specify request destination
-  int httpCode = http.GET();    //Send the request
-  if (httpCode > 0)             //Check the returning code
+  int httpCode1 = http.GET();    //Send the request
+  if (httpCode1 > 0)             //Check the returning code
   {
     JSONpayload = http.getString();          //Get the request response payload
     // it should be like: {"generator":"DFLD_LIVE","version":"0.9","time":1587592375,"access-control":"ignoredWrongPWD","027":32.0}
@@ -352,11 +352,12 @@ void data1SRun()
   // Getting Weather from OpenWeatherMap every 5 minutes
 #if defined WEATHER_SOURCE_URL
   if (Minute % 5 == 1 && Second == 32)   // call every 5 minutes
-    http.begin(OPEN_WEATHER_MAP_URL);
-  int httpCode = http.GET();
-  if (httpCode > 0)
   {
-    if (httpCode == HTTP_CODE_OK)
+    http.begin(OPEN_WEATHER_MAP_URL);
+  int httpCode2 = http.GET();
+  if (httpCode2 > 0)
+  {
+    if (httpCode2 == HTTP_CODE_OK)
     {
       String payload = http.getString();
       http.end();
@@ -375,6 +376,7 @@ void data1SRun()
         sunset               = doc["sys"]["sunset"];
       }
     }
+  }
   }
 #endif
 } // end of 1S run
