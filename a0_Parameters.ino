@@ -36,8 +36,8 @@
 #define OPEN_WEATHER_MAP_LANGUAGE    "de"
 #define OPEN_WEATHER_MAP_UNITS       "metric"
 
-#define DFLD_REGION  "004"
-#define DFLD_STATION "020"
+#define DFLD_REGION  "001"
+#define DFLD_STATION "061"
 
 #define THINGER_USERNAME    "User"     
 #define THINGER_CREDENTIALS "Credential"  
@@ -64,7 +64,6 @@
 // ***Electrical parameters***
 #define SHUNT    40000    // 16666 = 0,1 Ohm +// 0,02Ohm  or 40000
 #define AMPERE   5        // 10 or 5
-#define SERIAL_SPEED 9600 //9600  115200 230400
 #define MIN_VOLT 11.8     // 11.8 for Lead Battery,  9.6 for 3x18360 Lithium
 #define MAX_VOLT 14.2     // 14.2 for Lead Battery, 12.8 for 3x18360 Lithium
 #define MIN_AMP  -0.8
