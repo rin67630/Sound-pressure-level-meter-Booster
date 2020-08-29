@@ -1,6 +1,6 @@
 void data125mSRun()
 {
-#if defined (SOUND_SOURCE_ANAIN)
+#if defined (SOUND_SOURCE_IS_A0)
   // === ( Short Leq from A0 ) ===
   // Performing 3 reads to get a reliable reading.
   A0Raw = analogRead(A0); // 1st read  0...1V = 0 ..1023
@@ -44,11 +44,41 @@ void data125mSRun()
 void data1SRun()
 {
   yield();
+  // Getting Weather from OpenWeatherMap every 5 minutes
+#if defined WEATHER_SOURCE_IS_URL
+  if (Minute % 5 == 1 && Second == 32)   // call every 5 minutes
+  {
+    HTTPClient http;
+    http.begin(OPEN_WEATHER_MAP_URL);
+    int httpCode2 = http.GET();
+    if (httpCode2 == HTTP_CODE_OK)
+    {
+      JSONpayload = http.getString();
+      DynamicJsonDocument doc(1024);
+      auto error = deserializeJson(doc, JSONpayload.c_str());
+      if ( not error)
+      {
+        outdoor_temperature  = doc["main"]["temp"];
+        outdoor_pressure     = doc["main"]["pressure"];
+        outdoor_humidity     = doc["main"]["humidity"];
+        wind_speed           = doc["wind"]["speed"];
+        wind_direction       = doc["wind"]["deg"];
+        cloudiness           = doc["clouds"]["all"];  // % Clouds
+        weather_summary      = doc["weather"][0]["description"];
+        sunrise              = doc["sys"]["sunrise"];
+        sunset               = doc["sys"]["sunset"];
+      }
+    }
+    http.end();
+  }
+#endif
+
   // Fetching Noise level from URL with reduced resolution
-#if defined (SOUND_SOURCE_URL)   // must be a JSON from DFLD.de
-  http.begin(DFLDjsonURL);      //Specify request destination
-  int httpCode1 = http.GET();    //Send the request
-  if (httpCode1 > 0)             //Check the returning code
+#if defined (SOUND_SOURCE_IS_URL)   // must be a JSON from DFLD.de
+  HTTPClient http;
+  http.begin(DFLD_URL);             //Specify request destination
+  int httpCode1 = http.GET();       //Send the request
+  if (httpCode1 == HTTP_CODE_OK)    //Check the returning code
   {
     JSONpayload = http.getString();          //Get the request response payload
     // it should be like: {"generator":"DFLD_LIVE","version":"0.9","time":1587592375,"access-control":"ignoredWrongPWD","027":32.0}
@@ -69,7 +99,7 @@ void data1SRun()
   http.end();   //Close connection
 #endif
 
-#if defined (SOUND_SOURCE_UDP) || defined (BATTERY_SOURCE_UDP)  // getting Sound / Battery values from another ESP over UDP.
+#if defined (SOUND_SOURCE_IS_UDP) || defined (BATTERY_SOURCE_IS_UDP)  // getting Sound / Battery values from another ESP over UDP.
 
   // I use a quick and dirty method called 'type punning' copying the memory block of a structure into an array of chars,
   // transmitting this array, and copying back the memory block of the array into the same structure on the other side.
@@ -293,7 +323,7 @@ void data1SRun()
 
   //===============================================
   // Measure Battery
-#if defined BATTERY_SOURCE_INA
+#if defined BATTERY_SOURCE_IS_INA
   // Battery measurements from INA226
   ina_voltage   = INA.getBusMilliVolts(0);
   ina_shunt     = INA.getShuntMicroVolts(0);
@@ -348,35 +378,4 @@ void data1SRun()
     AhBat[26] = AhBat[27];
   }
 
-  //===============================================
-  // Getting Weather from OpenWeatherMap every 5 minutes
-#if defined WEATHER_SOURCE_URL
-  if (Minute % 5 == 1 && Second == 32)   // call every 5 minutes
-  {
-    http.begin(OPEN_WEATHER_MAP_URL);
-  int httpCode2 = http.GET();
-  if (httpCode2 > 0)
-  {
-    if (httpCode2 == HTTP_CODE_OK)
-    {
-      String payload = http.getString();
-      http.end();
-      DynamicJsonDocument doc(1024);
-      auto error = deserializeJson(doc, payload.c_str());
-      if ( not error)
-      {
-        outdoor_temperature  = doc["main"]["temp"];
-        outdoor_pressure     = doc["main"]["pressure"];
-        outdoor_humidity     = doc["main"]["humidity"];
-        wind_speed   = doc["wind"]["speed"];
-        wind_direction = doc["wind"]["deg"];
-        cloudiness   = doc["clouds"]["all"];  // %
-        weather_summary      = doc["weather"][0]["description"];
-        sunrise              = doc["sys"]["sunrise"];
-        sunset               = doc["sys"]["sunset"];
-      }
-    }
-  }
-  }
-#endif
 } // end of 1S run
