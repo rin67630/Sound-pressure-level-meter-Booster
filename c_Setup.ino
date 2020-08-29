@@ -5,7 +5,7 @@ void setup()
   Serial.begin (SERIAL_SPEED); // On USB port
   Serial1.begin(SERIAL_SPEED); // On GPIO2 / D4
   Wire.begin(SDA, SCL);
-  Console3.printf("\n\n\nESP-Karajan at work,\nHello Serial! @ %u Baud\n", SERIAL_SPEED);
+  Console3.printf("\n\n\nESP-Karajan at work,\nSerial @ %u Baud\n", SERIAL_SPEED);
 
   EEPROM.begin(512);
   if (!SPIFFS.begin()) 
@@ -13,10 +13,11 @@ void setup()
   Console3.println("Failed to mount file system");
   return;
 }
-  pinMode(RELAY , OUTPUT);
-//  pinMode(STDLED, OUTPUT);
-  // Witty Color LEDs
+  pinMode(RELAY , OUTPUT);  
+ 
   /*
+  // Witty Color LEDs
+  pinMode(STDLED, OUTPUT);
   pinMode(REDLED, OUTPUT);
   pinMode(GRNLED, OUTPUT);
   pinMode(BLULED, OUTPUT); 
@@ -34,13 +35,8 @@ void setup()
 
   getEpoch();            // writes the Epoch (Numbers of seconds till 1.1.1970...
   getTimeData();         // breaks down the Epoch into discrete values.
-  sprintf(charbuff, "Now is %02d:%02d:%02d. The Epoch is: %10lu\r\nDate is %s, %02d %s %04d" , Hour , Minute, Second, Epoch,DayName , Day , MonthName, Year);
+  sprintf(charbuff, "Now is %02d:%02d:%02d. The Epoch is: %10lu\r\nDate is %s, %02d %s %04d", Hour, Minute, Second, Epoch, DayName, Day, MonthName, Year);
   Console3.println(charbuff);
-
-  //  delay(3000);
-  getEpoch();            // writes the Epoch (Numbers of seconds till 1.1.1970...
-  getTimeData();         // breaks down the Epoch into discrete values.
-  //  Console3.print(F("\nNow, 3 seconds later it is "));   Console3.println( Time );
 
   // Over the Air Framework
   ArduinoOTA.onStart([]() {
@@ -83,7 +79,7 @@ void setup()
   //myPlace.setLocation( 51.3683, 6.9293 );
   //myPlace.setUnit("metric");
 
-#if defined BATTERY_SOURCE_INA
+#if defined BATTERY_SOURCE_IS_INA
   // INA 226 Battery Sensor
   devicesFound = INA.begin( AMPERE , SHUNT); // Define max Ampere and Shunt value
   INA.setBusConversion(8500);            // Maximum conversion time 8.244ms
@@ -101,7 +97,7 @@ void setup()
   battery.current = 0;
 #endif
 
-  // Wireless initialisation
+  // IOT initialisation
 #if defined (THINGER)
   // definition of structures for transmission
   // digital pin control example (i.e. turning on/off a light, a relay, configuring a parameter, etc)
@@ -218,7 +214,7 @@ void setup()
     out["wind"]        = wind_speed;
     out["direction"]   = wind_direction;
     out["summary"]     = weather_summary;
-#if (defined BATTERY_SOURCE_INA) || (defined BATTERY_SOURCE_UDP)
+#if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
     out["current"]     = battery.current;
     out["voltage"]     = battery.voltage;
     out["resistance"]  = internal_resistance;
@@ -233,7 +229,7 @@ void setup()
     out["max"]     = A0dBMax1min;
     out["backgr"]  = sound.A0dBBgr;
 
-#if (defined BATTERY_SOURCE_INA) || (defined BATTERY_SOURCE_UDP)
+#if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
     out["voltage"] = battery.voltage;
     out["power"]   = battery.power;
     out["voltage"]     = battery.voltage;    
@@ -251,14 +247,13 @@ void setup()
     out["NAT"] = NAT[Hour];
   };
 
-
   //Communication with Thinger.io
   thing.handle();
   delay(1000); // Wait for contact to happen.
   // Retrieve Persistance values
 
   pson persistance;
-#if (defined BATTERY_SOURCE_INA) || (defined BATTERY_SOURCE_UDP)
+#if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
   thing.get_property("persistance", persistance);
   currentInt          = persistance["currentInt"];
   nCurrent            = persistance["nCurrent"];;
@@ -385,7 +380,7 @@ EEPROM.put(addr,data);
 EEPROM.commit();
 */
 
-#endif  //end #if defined THINGER
+#endif  //end if defined THINGER
 
   // Initialisations.
   if (A094 == 0) A094 = Ao94; // uninitialized or no Thinger
