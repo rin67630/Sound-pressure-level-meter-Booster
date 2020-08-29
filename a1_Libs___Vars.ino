@@ -1,13 +1,12 @@
 // *** libraries***
-#include <Wire.h> // Libs for  in
-#include <INA.h>  // Zanshin INA Library
-#include <ArduinoJson.h> // Libs for Webscraping
-//#include <TridentTD_OpenWeather.h>
+#include <Wire.h>          // Libs for I2C
+#include <INA.h>           // Zanshin INA Library
+#include <ArduinoJson.h>   // Libs for Webscraping
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
-#include <ESP8266WiFi.h>  // default from Espressif
+#include <ESP8266WiFi.h>   // default from Espressif
 #include <ESP8266HTTPClient.h>
-#include <TZ.h>           // default from Espressif
+#include <TZ.h>            // default from Espressif
 #include <FS.h>
 #if defined(THINGER)
 #include <ThingerESP8266.h>
@@ -29,8 +28,8 @@
 // Concatenate URLs
 #define OPEN_WEATHER_MAP_URL  "http://api.openweathermap.org/data/2.5/weather?id=" OPEN_WEATHER_MAP_LOCATION_ID "&appid=" OPEN_WEATHER_MAP_APP_ID "&units="OPEN_WEATHER_MAP_UNITS "&lang=" OPEN_WEATHER_MAP_LANGUAGE
 //#define OPEN_WEATHER_MAP_URL   "http://api.openweathermap.org/data/2.5/weather?id=2928810&appid=208085abb5a3859d1e32341d6e1f9079&lang=de&units=metric"
-#define DFLDjsonURL "http://api.dfld.de/noise/dfld.de/" DFLD_REGION "/" DFLD_STATION 
-//#define DFLDjsonURL "http://api.dfld.de/noise/dfld.de/004/020"
+#define DFLD_URL "http://api.dfld.de/noise/dfld.de/" DFLD_REGION "/" DFLD_STATION 
+//#define DFLD_URL "http://api.dfld.de/noise/dfld.de/004/020"
  
 
 //***Variables for Time***
