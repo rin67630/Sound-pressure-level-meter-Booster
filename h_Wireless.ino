@@ -63,7 +63,7 @@ void wirelessRun()
 #if defined (THINGER)
   yield();
   thing.handle();
-#if (defined (SOUND_SOURCE_URL) || defined (SOUND_SOURCE_ANAIN))
+#if (defined (SOUND_SOURCE_IS_URL) || defined (SOUND_SOURCE_IS_A0))
   thing.stream("noise");
   thing.stream("energy");
 #endif
@@ -79,7 +79,7 @@ void wirelessRun()
   {
     //Persistance
     pson persistance;
-#if (defined BATTERY_SOURCE_INA) || (defined BATTERY_SOURCE_UDP)
+#if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
     persistance["currentInt"]    = currentInt ;
     persistance["nCurrent"]      = nCurrent;
     persistance["Ah/hour"]       = AhBat[27];
