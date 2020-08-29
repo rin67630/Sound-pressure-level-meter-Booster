@@ -1,9 +1,9 @@
 #define HOST_NAME "GITHUB"
 
 // ***Functional Configuration***
-#define WEATHER_SOURCE_URL  //_URL _NONE              Change end accordingly
-#define BATTERY_SOURCE_UDP   //_INA _UDP _NONE         Change end accordingly
-#define SOUND_SOURCE_ANAIN    //_ANAIN _URL _UDP _NONE  Change end accordingly
+#define WEATHER_SOURCE_IS_URL   //_URL _NONE              Change end accordingly
+#define BATTERY_SOURCE_IS_NONE  //_INA _UDP _NONE         Change end accordingly
+#define SOUND_SOURCE_IS_URL     //_A0 _URL _UDP _NONE     Change end accordingly
 
 #define THINGER            //(Comment out, if no thinger used)
 #define WRITE_BUCKETS      //(Comment out, if this is the second device for Thinger)
@@ -13,14 +13,14 @@
 #define Console2 Serial1     // Port for midnight report e.g. on thermal printer
 #define Console3 Serial      // Port for boot messages
 #define Console4 Serial      // Port for AK-Outputs
-#define SERIAL_SPEED            9600 //9600  115200 230400
+#define SERIAL_SPEED           115200 //9600  115200 230400
 
 #define PUBLISH_REPORT      // Issue events&midnight reports to UDP Port + 1, comment out else
 //#define PUBLISH_DFLD        // Issue DFLD byte to UDP Port, comment out else
-//#define PUBLISH_BATTERY       // If this is the battery master, comment out else
+//#define PUBLISH_BATTERY     // If this is the battery master, comment out else
 //#define PUBLISH_SOUND       // If this is the sound master, comment out else
-#define UDP_TARGET "192.168.188.43"  // RasPi 3a Bare
-#define UDP_PORT   4210
+#define UDP_TARGET "192.168.xxx.xxx"  // Enter a target system for UDP publications
+#define UDP_PORT   4210      // Enter a target port for UDP (that port +1 will be used for midnight reports)
 
 //  ***Credentials***
 #define SMARTCONFIG  // (WiFi Credentials over GogglePlay/Apple App SmartConfig)
@@ -29,7 +29,7 @@
 //#define WIFI_SSID          "SSID"
 //#define WIFI_PASS          "Password"
 #define wifiMaxTries         30
-#define wifiRepeatInterval   100
+#define wifiRepeatInterval   30
 
 #define OPEN_WEATHER_MAP_APP_ID      "208085abb5a3859d1e32341d6e1f9079"
 #define OPEN_WEATHER_MAP_LOCATION_ID "2928810"
@@ -58,8 +58,8 @@
 #define  EVENT_THRESHOLD_LEVEL       57 // Begin of Exceedance level
 #define  MEASUREMENT_THRESHOLD_LEVEL 55 // Begin of measurement level
 #define  MIN_EXCEEDANCE_TIME         10 // Minimum duration of an event
-#define  MAX_EXCEEDANCE_TIME         60 // Maximum duration of an event
-#define  LISTENING_TIME              50 // mimimum time between events
+#define  MAX_EXCEEDANCE_TIME         50 // Maximum duration of an event
+#define  LISTENING_TIME              30 // mimimum time between events
 
 // ***Electrical parameters***
 #define SHUNT    40000    // 16666 = 0,1 Ohm +// 0,02Ohm  or 40000
