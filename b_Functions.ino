@@ -5,7 +5,6 @@
 
 // Instantiate classes
 WiFiUDP UDP;
-HTTPClient http;
 INA_Class INA;
 
 #if defined(THINGER)
@@ -13,6 +12,8 @@ ThingerESP8266 thing(THINGER_USERNAME, THINGER_DEVICE, THINGER_CREDENTIALS);
 #endif
 
 // Functions
+
+// WiFi Managemement
 #if defined (SMARTCONFIG)
 void getWiFi()
 {
@@ -60,8 +61,6 @@ void getWiFi()
 }
 #endif
 
-
-
 void disConnect()
 {
   //  WiFi.disconnect(); //temporarily disconnect WiFi as it's no longer needed
@@ -75,6 +74,7 @@ void myIP()
   sprintf(charbuff, "IP= %03d.%03d.%03d.%03d", ip[0], ip[1], ip[2], ip[3]);
 }
 
+// Time management
 void getNTP()
 {
   configTime(MYTZ, NTP_SERVER);
