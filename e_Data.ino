@@ -64,7 +64,7 @@ void data1SRun()
         wind_speed           = doc["wind"]["speed"];
         wind_direction       = doc["wind"]["deg"];
         cloudiness           = doc["clouds"]["all"];  // % Clouds
-        weather_summary      = doc["weather"][0]["description"];
+        const char* w        = doc["weather"][0]["description"]; weather_summary = w;
         sunrise              = doc["sys"]["sunrise"];
         sunset               = doc["sys"]["sunset"];
       }
