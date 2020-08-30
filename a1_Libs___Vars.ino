@@ -109,7 +109,7 @@ float outdoor_pressure;
 float wind_speed;
 int   wind_direction;
 int   cloudiness;
-const char* weather_summary;
+String weather_summary;
 long  sunrise;
 long  sunset;
 
