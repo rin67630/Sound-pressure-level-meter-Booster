@@ -65,8 +65,8 @@ void wirelessRun()
   thing.handle();
 #if (defined (SOUND_SOURCE_IS_URL) || defined (SOUND_SOURCE_IS_A0))
   thing.stream("noise");
-  thing.stream("energy");
 #endif
+if (MinuteExpiring) thing.stream("energy");
 
 #if defined (WRITE_BUCKETS)
   if (trigNAT)   thing.write_bucket("EVENT", "EVENT");
@@ -75,7 +75,7 @@ void wirelessRun()
   if (NewMinute) thing.write_bucket("MIN", "MIN");
 #endif
 
-  if (Minute % 6 == 3)           //every 10 minutes update persistance data
+  if (Minute % 6 == 2)           //every 10 minutes update persistance data
   {
     //Persistance
     pson persistance;
@@ -102,7 +102,9 @@ void wirelessRun()
     persistance["summary"]       = weather_summary;
     persistance["last_update"]   = SecondOfDay;
     thing.set_property("persistance", persistance, true);
-
+  }
+  if (Minute % 6 == 4)           //every 10 minutes update persistance data
+  {
     pson lequ;// 0..23=hour, 25=current, 26=lequ 24h, 27= leqDay, 28=leqNight, 29=Lden
     lequ["00h"] = leq[0];
     lequ["01h"] = leq[1];
@@ -135,7 +137,9 @@ void wirelessRun()
     lequ["Lden"] = leq[29];
     lequ["L22-24h"] = leq[30];
     thing.set_property("lequ", lequ);
-
+  }
+  if (Minute % 6 == 6)           //every 10 minutes update persistance data
+  {
     pson NATu;// 0..23=hour, 25=current, 26=NATu 24h, 27= NATDay, 28=NATNight, 29=22-24
     NATu["00h"] = NAT[0];
     NATu["01h"] = NAT[1];
@@ -167,7 +171,9 @@ void wirelessRun()
     NATu["Nighttime"] = NAT[28];
     NATu["NAT22-24"] = NAT[29];
     thing.set_property("NATu", NATu);
-
+  }
+  if (Minute % 6 == 8)           //every 10 minutes update persistance data
+  {
     pson BATmAh;// 0..23=hour, 25=current, 26=BATmAh 24h, 27= AhBatDay, 28=AhBatNight, 29=22-24
     BATmAh["00h"] = AhBat[0];
     BATmAh["01h"] = AhBat[1];
