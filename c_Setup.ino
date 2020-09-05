@@ -388,8 +388,7 @@ EEPROM.commit();
 
   state = 'e';
   serialPage = 'A';           // default reporting page
-  if (sound.A0dBBgr < LOWER_LIMIT_DB) sound.A0dBBgr = LOWER_LIMIT_DB;
-  sound.A0dBMin = LOWER_LIMIT_DB;     // default background and minimum level
+  if (sound.A0dBBgr < LOWER_LIMIT_DB) sound.A0dBBgr = LOWER_LIMIT_DB;   // default background and minimum level
 //  digitalWrite(STDLED, true);
   
 #if defined (OFFLINE)
