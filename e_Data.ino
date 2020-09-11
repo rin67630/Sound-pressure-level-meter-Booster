@@ -181,7 +181,7 @@ void data1SRun()
         aboveThreshDuration = 0;
         peakValue = 0;
 
-        if (sound.A0dBSlow > MEASUREMENT_THRESHOLD_LEVEL)
+        if (sound.A0dBSlow >= MEASUREMENT_THRESHOLD_LEVEL)
         {
           state = 'a';
           for  (byte n = 0; n < MAX_EXCEEDANCE_TIME; n++)
@@ -347,10 +347,24 @@ void data1SRun()
   if (NewMinute)
   {
     // Evaluate battery charge
-    percent_charged = map(battery.voltage * 100, MIN_VOLT * 100, MAX_VOLT * 100, 0, 100);
-    // Evaluate battery internal resistance (r = dv / di) if inside regular limits and smooth it.
-    if (fabs(delta_current) > 0.005 && battery.voltage < (MAX_VOLT - 0.5) && battery.voltage > (MIN_VOLT + 0.5)) internal_resistance = internal_resistance + ((fabs(delta_voltage / delta_current)) - internal_resistance) / 10;
+    float d = 0;
+    if (battery.current >= 0.3)
+    {
+      d = 500;   // mV
+    }
+    else if (battery.current <= 0.3)
+    {
+      d = -500;   // mV
+    }
+    percent_charged = map(battery.voltage * 1000, MIN_VOLT * 1000 + d, MAX_VOLT * 1000 + d - 800, 0, 100);
+    percent_charged = constrain( percent_charged, 0, 100);
+    if (battery.current < 0 && battery.voltage < 12.8 &&  battery.voltage > (MIN_VOLT + 0.5))
+    {
+      // Evaluate battery internal resistance (r = dv / di) if inside regular limits and smooth it.
+      if (fabs(delta_current) > 0.005) internal_resistance = internal_resistance + ((fabs(delta_voltage / delta_current)) - internal_resistance) / 10;
+    }
   }
+
 
   // Daily Battery voltage comparison
   if (SecondOfDay == 14400) voltageAt4h  = battery.voltage;   // taking the voltage at 04:00 to evaluate if the battery gained/lost during the previous day.
