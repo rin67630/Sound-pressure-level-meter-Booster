@@ -14,7 +14,7 @@
 #endif
 #include <EEPROM.h>
 
-// ESP8266 Lolin (see definitions for other boards in Parked code)
+// ESP8266 Lolin / D1 /Witty (see definitions for other boards in Parked code)
 #define SCL 5           // D1 GPIO05 for I2C (Wire) System Clock
 #define SDA 4           // D2 GPIO04 for I2C (Wire) System Data
 #define RST 0           // GPIO0
@@ -26,11 +26,10 @@
 #define BLULED     D7   // GPIO13
 
 // Concatenate URLs
-#define OPEN_WEATHER_MAP_URL  "http://api.openweathermap.org/data/2.5/weather?id=" OPEN_WEATHER_MAP_LOCATION_ID "&appid=" OPEN_WEATHER_MAP_APP_ID "&units="OPEN_WEATHER_MAP_UNITS "&lang=" OPEN_WEATHER_MAP_LANGUAGE
+#define OPEN_WEATHER_MAP_URL  "http://api.openweathermap.org/data/2.5/weather?id=" OPEN_WEATHER_MAP_LOCATION_ID "&appid=" OPEN_WEATHER_MAP_APP_ID "&units=" OPEN_WEATHER_MAP_UNITS "&lang="  OPEN_WEATHER_MAP_LANGUAGE
 //#define OPEN_WEATHER_MAP_URL   "http://api.openweathermap.org/data/2.5/weather?id=2928810&appid=208085abb5a3859d1e32341d6e1f9079&lang=de&units=metric"
 #define DFLD_URL "http://api.dfld.de/noise/dfld.de/" DFLD_REGION "/" DFLD_STATION 
 //#define DFLD_URL "http://api.dfld.de/noise/dfld.de/004/020"
- 
 
 //***Variables for Time***
 tm*        timeinfo;                 //localtime returns a pointer to a tm struct static int Second;
@@ -87,12 +86,11 @@ float delta_voltage;
 float ina_shunt;
 float ina_power;
 float internal_resistance = 0;
-float percent_charged = 100;
+float percent_charged = 50;
 float voltageAt4h ;
 float voltageDelta ;
 float currentInt = 0;
 int   nCurrent;
-int   ind = 0;
 float AhBat[31];
 
 struct battery {
@@ -131,7 +129,6 @@ struct  sound {
 char soundPayload[sizeof(sound)];  //  Array of characters as image of the structure for UDP xmit/rcv
 float   A0dB60;
 float   A0dB6S;
-
 byte    A0dBArray[3610];  // one hour of A0dBAK values
 float   A0dBSum6S;
 float   A0dBSumExp60min;
