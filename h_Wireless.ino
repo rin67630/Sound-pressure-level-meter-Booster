@@ -75,14 +75,14 @@ if (MinuteExpiring) thing.stream("energy");
   if (NewMinute) thing.write_bucket("MIN", "MIN");
 #endif
 
-  if (Minute % 6 == 2)           //every 10 minutes update persistance data
+  if (Minute % 6 == 2)           //every 6 minutes update persistance data
   {
     //Persistance
     pson persistance;
 #if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
     persistance["currentInt"]    = currentInt ;
     persistance["nCurrent"]      = nCurrent;
-    persistance["Ah/hour"]       = AhBat[27];
+    persistance["Ah/hour"]       = AhBat[25];
     persistance["Ah/yesterday"]  = AhBat[26];
     persistance["voltageDelta"]  = voltageDelta;
     persistance["voltageAt4h"]   = voltageAt4h;
@@ -103,7 +103,7 @@ if (MinuteExpiring) thing.stream("energy");
     persistance["last_update"]   = SecondOfDay;
     thing.set_property("persistance", persistance, true);
   }
-  if (Minute % 6 == 4)           //every 10 minutes update persistance data
+  if (Minute % 6 == 3)           //every 6 minutes update persistance data
   {
     pson lequ;// 0..23=hour, 25=current, 26=lequ 24h, 27= leqDay, 28=leqNight, 29=Lden
     lequ["00h"] = leq[0];
@@ -138,7 +138,7 @@ if (MinuteExpiring) thing.stream("energy");
     lequ["L22-24h"] = leq[30];
     thing.set_property("lequ", lequ);
   }
-  if (Minute % 6 == 6)           //every 10 minutes update persistance data
+  if (Minute % 6 == 4)           //every 6 minutes update persistance data
   {
     pson NATu;// 0..23=hour, 25=current, 26=NATu 24h, 27= NATDay, 28=NATNight, 29=22-24
     NATu["00h"] = NAT[0];
@@ -172,9 +172,9 @@ if (MinuteExpiring) thing.stream("energy");
     NATu["NAT22-24"] = NAT[29];
     thing.set_property("NATu", NATu);
   }
-  if (Minute % 6 == 8)           //every 10 minutes update persistance data
+  if (Minute % 6 == 5)           //every 6 minutes update persistance data
   {
-    pson BATmAh;// 0..23=hour, 25=current, 26=BATmAh 24h, 27= AhBatDay, 28=AhBatNight, 29=22-24
+    pson BATmAh;// 0..23=hour, 25=current, 26=BATmAh 24h, 27= AhBatDay
     BATmAh["00h"] = AhBat[0];
     BATmAh["01h"] = AhBat[1];
     BATmAh["02h"] = AhBat[2];
