@@ -289,24 +289,24 @@ void data1SRun()
       leq[27] = 0;                              // 27=LequDaylight 6:00 - 22:00
       for  (byte n = 6; n < 22; n++)
       {
-        leq[27] +=  pow(10, leq[n] / 10);
+        leq[27] +=  pow(10, leq[n] / 10);                   //Delogarithmed daytime
       }
       leq[27] = 10 * log10( leq[27] / 16);                  //Leq Daytime
 
       leq[28] = 0;
-      leq[28] = pow(10, leq[22] / 10) + pow(10, leq[23] / 10) ; // Sum of antilogs for 22:00-23:00
+      leq[28] = pow(10, leq[22] / 10) + pow(10, leq[23] / 10) ; // Delogarithmed 22:00-23:00
 
-      leq[30] = 10 * log10( leq[28] / 2);                    // 30= 22:00-23:00
+      leq[30] = 10 * log10( leq[28] / 2);                    // Leq 22:00-23:00 (en passant)
       for  (byte n = 0; n < 6; n++)
       {
-        leq[28] +=  pow(10, leq[n] / 10);                    //Sum of antilogs for the morning hours
+        leq[28] +=  pow(10, leq[n] / 10);                    // adding the Delogarithmed morning hours
       }
       leq[27] = 10 * log10( leq[27] / 8);                    //Leq nighttime
 
-      leq[29] = 2 * pow(10, leq[27] / 10) + pow(10, (leq[28] / 10 + 10)); //Sum of antilogs 2 * daytime + nightime +10 )
+      leq[29] = 2 * pow(10, leq[27] / 10) + pow(10, (leq[28] / 10 + 10)); //Delogarithmed 2 * daytime + (nightime +10dB)
       leq[29] = 10 * log10( leq[29] / 3);                    // 29=Lden
 
-      leq[26] = 2 * pow(10, leq[27] / 10) + pow(10, (leq[28] / 10)); //Sum of antilogs 2 * daytime + nightime)
+      leq[26] = 2 * pow(10, leq[27] / 10) + pow(10, (leq[28] / 10)); //Delogarithmed 2 * daytime + nightime)
       leq[26] = 10 * log10(leq[26] / 3);                    // 26=Leq24h
 
 
@@ -323,9 +323,9 @@ void data1SRun()
       }
       NAT[26] = NAT[27] + NAT[28];                          // 26=NAT24h = NAT Night + NAT DAY
       NAT[29] = (NAT[22] + NAT[23]);                        // 30 =L22-24h
-    } // end if hour expiring
+    } // end if day expiring
 
-  } // end hour expiring
+  } // end if hour expiring
 
   //===============================================
   // Measure Battery
