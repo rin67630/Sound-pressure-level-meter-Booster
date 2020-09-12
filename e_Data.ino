@@ -295,37 +295,37 @@ void data1SRun()
 
       leq[28] = 0;
       leq[28] = pow(10, leq[22] / 10) + pow(10, leq[23] / 10) ; // Sum of antilogs for 22:00-23:00
-    }
-    leq[30] = 10 * log10( leq[28] / 2);                    // 30= 22:00-23:00
-    for  (byte n = 0; n < 6; n++)
-    {
-      leq[28] +=  pow(10, leq[n] / 10);                    //Sum of antilogs for the morning hours
-    }
-    leq[27] = 10 * log10( leq[27] / 8);                    //Leq nighttime
 
-    leq[29] = 2 * pow(10, leq[27] / 10) + pow(10, (leq[28] / 10 + 10)); //Sum of antilogs 2 * daytime + nightime +10 )
-    leq[29] = 10 * log10( leq[29] / 3);                    // 29=Lden
+      leq[30] = 10 * log10( leq[28] / 2);                    // 30= 22:00-23:00
+      for  (byte n = 0; n < 6; n++)
+      {
+        leq[28] +=  pow(10, leq[n] / 10);                    //Sum of antilogs for the morning hours
+      }
+      leq[27] = 10 * log10( leq[27] / 8);                    //Leq nighttime
 
-    leq[26] = 2 * pow(10, leq[27] / 10) + pow(10, (leq[28] / 10)); //Sum of antilogs 2 * daytime + nightime)
-    leq[26] = 10 * log10(leq[26] / 3);                    // 26=Leq24h
+      leq[29] = 2 * pow(10, leq[27] / 10) + pow(10, (leq[28] / 10 + 10)); //Sum of antilogs 2 * daytime + nightime +10 )
+      leq[29] = 10 * log10( leq[29] / 3);                    // 29=Lden
+
+      leq[26] = 2 * pow(10, leq[27] / 10) + pow(10, (leq[28] / 10)); //Sum of antilogs 2 * daytime + nightime)
+      leq[26] = 10 * log10(leq[26] / 3);                    // 26=Leq24h
 
 
-    // NAT 0...23= hourly NAT , 25=current event 26=Nat24h 27= Daytime 28= Nighttime 29= 22h-24h
-    NAT[27] = 0;                                          // 27=NATuDaylight 6:00 - 22:00
-    for  (byte n = 6; n < 22; n++)
-    {
-      NAT[27] = NAT[27] + NAT[n];
-    }
-    NAT[28] = NAT[22] + NAT[23] ;                         // 28=NATuNight 22:00 - 06:00
-    for  (byte n = 0; n < 6; n++)                         // adding the 6 hours 0:00..6:00
-    {
-      NAT[28] = NAT[28] + NAT[n];
-    }
-    NAT[26] = NAT[27] + NAT[28];                          // 26=NAT24h = NAT Night + NAT DAY
-    NAT[29] = (NAT[22] + NAT[23]);                        // 30 =L22-24h
-  } // end if hour expiring
+      // NAT 0...23= hourly NAT , 25=current event 26=Nat24h 27= Daytime 28= Nighttime 29= 22h-24h
+      NAT[27] = 0;                                          // 27=NATuDaylight 6:00 - 22:00
+      for  (byte n = 6; n < 22; n++)
+      {
+        NAT[27] = NAT[27] + NAT[n];
+      }
+      NAT[28] = NAT[22] + NAT[23] ;                         // 28=NATuNight 22:00 - 06:00
+      for  (byte n = 0; n < 6; n++)                         // adding the 6 hours 0:00..6:00
+      {
+        NAT[28] = NAT[28] + NAT[n];
+      }
+      NAT[26] = NAT[27] + NAT[28];                          // 26=NAT24h = NAT Night + NAT DAY
+      NAT[29] = (NAT[22] + NAT[23]);                        // 30 =L22-24h
+    } // end if hour expiring
 
-  // end of just before new hour
+  } // end hour expiring
 
   //===============================================
   // Measure Battery
