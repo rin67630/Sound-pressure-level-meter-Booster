@@ -257,6 +257,7 @@ void data1SRun()
           aboveThreshLEq = 10 * log10(l / k);
           aboveThreshDuration = k;
           trigNAT = true;
+          
           state = 'e';
         }
         break;
@@ -301,9 +302,9 @@ void data1SRun()
     {
       leq[28] +=  pow(10, leq[n] / 10);                    // adding the delogarithmed morning hours
     }
-    leq[27] = 10 * log10( leq[27] / 8);                    //Leq nighttime
+    leq[28] = 10 * log10( leq[28] / 8);                    //Leq nighttime
 
-    leq[29] = 2 * pow(10, leq[27] / 10) + pow(10, (leq[28] / 10 + 10)); //Delogarithmed 2 * daytime + (nightime +10dB)
+    leq[29] = 2 * pow(10, leq[27] / 10) + pow(10, ((leq[28] + 10) / 10)); //Delogarithmed 2 * daytime + (nightime +10dB)
     leq[29] = 10 * log10( leq[29] / 3);                    // 29=Lden
 
     leq[26] = 2 * pow(10, leq[27] / 10) + pow(10, (leq[28] / 10)); //Delogarithmed 2 * daytime + nightime)
@@ -324,8 +325,6 @@ void data1SRun()
     NAT[26] = NAT[27] + NAT[28];                          // 26=NAT24h = NAT Night + NAT DAY
     NAT[29] = (NAT[22] + NAT[23]);                        // 30 =L22-24h
   } // end if day expiring
-
-
 
   //===============================================
   // Measure Battery
