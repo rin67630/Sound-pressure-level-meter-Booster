@@ -179,12 +179,13 @@ void data1SRun()
         maxExceedingTimer = 0;
         listeningTimer = 0;
         aboveThreshDuration = 0;
+        less10dBDuration = 0;        
         peakValue = 0;
 
         if (sound.A0dBSlow >= MEASUREMENT_THRESHOLD_LEVEL)
         {
           state = 'a';
-          for  (byte n = 0; n < MAX_EXCEEDANCE_TIME; n++)
+          for  (byte n = 0; n <= MAX_EXCEEDANCE_TIME; n++)
           {
             EVENT[n] = 0; // clear flashback record
           }
@@ -222,42 +223,50 @@ void data1SRun()
         }
         break;
       case 'd':
-        if (not listeningTimer) // just wait for MAX_EXCEEDANCE_TIME to expire
+        if (not listeningTimer) // after MAX_EXCEEDANCE_TIME 
         {
+    // Event evaluation according to Lmax-10dB
           float m = 0;    // determining the max-10 Leq.
-          float l = 0;    // delogarithmed sound energy
-          byte k = 0;     // counter for Less10dBDuration
-          for  (byte n = 0; n < MAX_EXCEEDANCE_TIME; n++)
+          for  (byte n = 0; n <= MAX_EXCEEDANCE_TIME; n++)
           {
             m = max(EVENT[n], m); //scan flashback for max
           }
           m = m - 10; //substract 10dB  //peakValue - 10dB
+          float l = 0;    // delogarithmed sound energy
+          byte k = 0;     // counter for Less10dBDuration              
           for  (byte n = 0; n < MAX_EXCEEDANCE_TIME; n++)
           {
             if (EVENT[n] >= m)
             {
               //rescan flashback to integrate 10dBdown LEq
-              l =  l + pow(10, EVENT[n] / 10);   // integration of delogarithmed sound energy
+              l +=  pow(10, EVENT[n] / 10);   // integration of delogarithmed sound energy (l is a letter, not 1)
               k++;
             }
           }
-          less10dBLEq = 10 * log10(l / k);
+          less10dBLEint   += l;                     //integration of the sound energy for the whole day
           less10dBDuration = k;
-
+          less10dBLE       = 10 * log10(l);         //Single  event  sound  exposure  level measured from Lmax-10dB
+          less10dBLEq      = 10 * log10(l / k);     //Equivalent steady noise for the duration measured from Lmax-10dB
+                
+    // Event evaluation according to EVENT_THRESHOLD_LEVEL
           m = EVENT_THRESHOLD_LEVEL;
+          l = 0;    // delogarithmed sound energy
+          k = 0;     // counter for Less10dBDuration
           for  (byte n = 0; n < MAX_EXCEEDANCE_TIME; n++)
           {
             if (EVENT[n] >= m)
             {
               //rescan flashback to integrate aboveThreshLEq
-              l =  l + pow(10, EVENT[n] / 10);   // integration of delogarithmed sound energy
+              l +=  pow(10, EVENT[n] / 10);   // integration of delogarithmed sound energy (l is a letter, not 1)
               k++;
             }
           }
-          aboveThreshLEq = 10 * log10(l / k);
-          aboveThreshDuration = k;
-          trigNAT = true;
+          aboveThreshLEint   += l;                 //integration of the sound energy for the whole day
+          aboveThreshDuration = k; 
+          aboveThreshLE       = 10 * log10(l);     //Single  event  sound  exposure  level measured from EVENT_THRESHOLD_LEVEL
+          aboveThreshLEq      = 10 * log10(l / k); //Equivalent steady noise for the duration measured from EVENT_THRESHOLD_LEVEL 
           
+          trigNAT = true;
           state = 'e';
         }
         break;
@@ -309,7 +318,10 @@ void data1SRun()
 
     leq[26] = 2 * pow(10, leq[27] / 10) + pow(10, (leq[28] / 10)); //Delogarithmed 2 * daytime + nightime)
     leq[26] = 10 * log10(leq[26] / 3);                    // 26=Leq24h
-
+    leq[31] = 10 * log10 (aboveThreshLEint / 864000);     // 31=Leq24h, only events over Threshold
+    aboveThreshLEint = 0;  // reset integration
+    leq[32] = 10 * log10 (less10dBLEint    / 864000);     // 32=Leq24h, only events by Max-10dB method
+    less10dBLEint    = 0;  // reset integration
 
     // NAT 0...23= hourly NAT , 25=current event 26=Nat24h 27= Daytime 28= Nighttime 29= 22h-24h
     NAT[27] = 0;                                          // 27=NATuDaylight 6:00 - 22:00
@@ -323,7 +335,7 @@ void data1SRun()
       NAT[28] = NAT[28] + NAT[n];
     }
     NAT[26] = NAT[27] + NAT[28];                          // 26=NAT24h = NAT Night + NAT DAY
-    NAT[29] = (NAT[22] + NAT[23]);                        // 30 =L22-24h
+    NAT[29] = (NAT[22] + NAT[23]);                        // 29 =L22-24h
   } // end if day expiring
 
   //===============================================
