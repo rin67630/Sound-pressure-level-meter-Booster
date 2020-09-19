@@ -28,11 +28,11 @@ void wirelessRun()
           UDP.printf("%02u  | %02.1f |  %03u  | %+02.3f |\n", n, leq[n], NAT[n], AhBat[n]);
         }
       }
-      UDP.print("\nNAT|PKTime  |PKdB|Leq4|t10|Leq3|tAT|\n");
+      UDP.print("\nNAT|PKTime  |PKdB|Le4 |Leq4|t10|Le3 |Leq3|tAT|\n");
     }
     if (trigNAT)
     {
-      UDP.printf(" %02u|", NAT[Hour]);  UDP.print(peakTime);  UDP.printf("|%2.1f|%2.1f|%03u|%2.1f|%03u|\n", peakValue , less10dBLEq , less10dBDuration,  aboveThreshLEq , aboveThreshDuration);
+      UDP.printf(" %02u|", NAT[Hour]);  UDP.print(peakTime);  UDP.printf("|%2.1f|%2.1f|%2.1f|%03u|%2.1f|%2.1f|%03u|\n", peakValue , less10dBLE, less10dBLEq , less10dBDuration,  aboveThreshLE , aboveThreshLEq ,aboveThreshDuration);
     }
     UDP.endPacket();
   }
@@ -89,6 +89,8 @@ if (MinuteExpiring) thing.stream("energy");
     persistance["resistance"]    = internal_resistance;
 #endif
     persistance["A0dBSumExp"]    = A0dBSumExp60min;
+    persistance["aboveThreshLEint"] = aboveThreshLEint;
+    persistance["less10dBLEint"] = less10dBLEint;
     persistance["A0dBBgr"]       = sound.A0dBBgr;
     persistance["corrdB"]        = corrdB;
     persistance["A094"]          = A094;
@@ -135,7 +137,9 @@ if (MinuteExpiring) thing.stream("energy");
     lequ["Daytime"] = leq[27];
     lequ["Nighttime"] = leq[28];
     lequ["Lden"] = leq[29];
-    lequ["L22-24h"] = leq[30];
+    lequ["L22-24h"] = leq[30];   
+    lequ["EvOT"] = leq[31]; 
+    lequ["EV10"] = leq[32]; 
     thing.set_property("lequ", lequ);
   }
   if (Minute % 6 == 4)           //every 6 minutes update persistance data
