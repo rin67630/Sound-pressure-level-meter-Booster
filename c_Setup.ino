@@ -14,15 +14,15 @@ void setup()
   return;
 }
   pinMode(RELAY , OUTPUT);  
- 
-  /*
+
+ /*
   // Witty Color LEDs
   pinMode(STDLED, OUTPUT);
   pinMode(REDLED, OUTPUT);
   pinMode(GRNLED, OUTPUT);
   pinMode(BLULED, OUTPUT); 
-  */   
- 
+*/
+
    // Networking and Time
   getWiFi();
   ArduinoOTA.setHostname(HOST_NAME);
@@ -230,19 +230,21 @@ void setup()
     out["backgr"]  = sound.A0dBBgr;
 
 #if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
-    out["voltage"] = battery.voltage;
-    out["power"]   = battery.power;
+    out["voltage"]     = battery.voltage;
+    out["power"]       = battery.power;
     out["voltage"]     = battery.voltage;    
 #endif
   };
 
   thing["EVENT"] >> [](pson & out)
   {
-    out["peakTime"] = peakTime;
-    out["peakValue"] = peakValue;
-    out["aboveThreshLeq"] =  aboveThreshLEq;
+    out["peakTime"]         = peakTime;
+    out["peakValue"]        = peakValue;
+    out["aboveThreshLe"]    = aboveThreshLE;
+    out["aboveThreshLeq"]   = aboveThreshLEq;
     out["aboveThreshDuration"] = aboveThreshDuration;
-    out["less10dBLeq"] =  less10dBLEq;
+    out["less10dBLe"]       = less10dBLE;
+    out["less10dBLeq"]      = less10dBLEq;
     out["less10dBDuration"] = less10dBDuration;
     out["NAT"] = NAT[Hour];
   };
@@ -256,8 +258,8 @@ void setup()
 #if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
   thing.get_property("persistance", persistance);
   currentInt          = persistance["currentInt"];
-  nCurrent            = persistance["nCurrent"];;
-  AhBat[27]           = persistance["Ah/hour"];
+  nCurrent            = persistance["nCurrent"];
+  AhBat[25]           = persistance["Ah/hour"];
   AhBat[26]           = persistance["Ah/yesterday"];
   voltageDelta        = persistance["voltageDelta"];
   voltageAt4h         = persistance["voltageAt4h"];
@@ -265,6 +267,8 @@ void setup()
 #endif
   leq[25]             = persistance["A0dBLEQ"];
   A0dBSumExp60min     = persistance["A0dBSumExp"];
+  aboveThreshLEint    = persistance["aboveThreshLEint"];
+  less10dBLEint       = persistance["less10dBLEint"];
   sound.A0dBBgr       = persistance["A0dBBgr"];
   corrdB              = persistance["corrdB"];
   A094                = persistance["A094"];
@@ -309,6 +313,8 @@ void setup()
   leq[28] = lequ["Nighttime"];
   leq[29] = lequ["Lden"];
   leq[30] = lequ["L22-24h"];
+  leq[31] = lequ["EvOT"];
+  leq[32] = lequ["EV10"];
 
   pson NATu;
   thing.get_property("NATu", NATu);  // 0..23=hour, 25=current, 26=NATu 24h, 27= NATDay, 28=NATNight, 29=NAT22-24
@@ -388,7 +394,7 @@ EEPROM.commit();
 
   state = 'e';
   serialPage = 'A';           // default reporting page
-  if (sound.A0dBBgr < LOWER_LIMIT_DB) sound.A0dBBgr = LOWER_LIMIT_DB;   // default background and minimum level
+  if (sound.A0dBBgr < LOWER_LIMIT_DB) sound.A0dBBgr = LOWER_LIMIT_DB;    // default background and minimum level
 //  digitalWrite(STDLED, true);
   
 #if defined (OFFLINE)
