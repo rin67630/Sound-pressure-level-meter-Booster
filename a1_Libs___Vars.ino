@@ -136,11 +136,12 @@ float   A0dBSumExp1min;
 float   A0dBLeq1min;
 float   A0dBMin1min;
 float   A0dBMax1min;
+
 byte    nA0dB6S;
 int     corrdB;
 int     A094;
 int     A047;
-float   leq[31];         // 0..23=hour, 25=current, 26=Lequ 24h, 27= LeqDay, 28=LeqNight, 29=Lden, 30=L22-24h
+float   leq[33];         // 0..23=hour, 25=current, 26=Lequ 24h, 27= LeqDay, 28=LeqNight, 29=Lden, 30 =L22-24h ,31=Leq Events over Thresh, 32=Leq Events by max-10dB
 
 // Number above threshold
 float   maxLevelNAT;
@@ -149,14 +150,20 @@ byte    minExceedingTimer;
 byte    maxExceedingTimer;
 
 unsigned int  aboveThreshDuration;
-float   aboveThreshLEq;
+float   aboveThreshLEq;       //Equivalent sound exposure  level above threshold
+float   aboveThreshLE;        //Single  event (1s) sound  exposure  level above threshold
+float   aboveThreshLEint;     //Single  event sound  exposure integration level above threshold
+
 unsigned int  less10dBDuration;
-float   less10dBLEq;
+float   less10dBLEq;          //Equivalent sound  exposure  level measured from Lmax-10dB
+float   less10dBLE;           //Single  event  (1s) sound  exposure  level measured from Lmax-10dB
+float   less10dBLEint;        //Single  event  integration  level measured from Lmax-10dB
+
 float   peakValue;
 char    state;
 String  peakTime;
 float   EVENT[MAX_EXCEEDANCE_TIME];     // flashback record of an event
-byte    NAT[31];        // Number Above Treshold 0..23=hour 25=current event 26=Nat24h 27= Daytime 28= Nighttime
+byte    NAT[31];        // Number Above Treshold 0..23=hour 25=current event 26=Nat24h 27= Daytime 28= Nighttime, 
 
 
 //Sound level from URL
