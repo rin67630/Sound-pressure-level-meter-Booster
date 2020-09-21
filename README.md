@@ -22,10 +22,9 @@ Evaluate the noise level according to following time response standards (simulta
 -	Real peak value by the minute (not the maximum of readings)
 - Background level (low pass filter 2000s, ignoring events above threshold)
  
- 
 Statistics according to residential aircraft noise standards:
 
-(steady noise equivalents)
+Timed metrics
 -	Leq 1 minute
 -	Leq for each hour of the day
 -	Leq for 24h
@@ -34,12 +33,21 @@ Statistics according to residential aircraft noise standards:
 -	Leq 22:00 to 24:00
 -	Lden
 
-(number above threshold)
+Event related metrics:
 -	NAT for each hour of the day
 -	NAT for 24h
 -	NAT daytime 06:00 to 22:00
 -	NAT nighttime 22:00 to 6:00
 -	NAT 22:00 to 24:00
+
+For each event:
+- time of the peak
+- duration above a fixed threshold
+- duration above the criterium "max-10dB"
+- Leq for the event according to a fixed threshold
+- Leq for the event according to the criterium "max-10dB"
+- LE for the event according to a fixed threshold
+- LE for the event according to the criterium "max-10dB"
 Additionally the program can grab weather information from openweathermap.org and provide the corresponding meteorological conditions.
 
 With a little more hardware and a separate casing, you may also build the system with the ability to be solar powered including a solar power monitor to report all information about the battery condition and the power fed by the solar panel.
