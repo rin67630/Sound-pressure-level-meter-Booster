@@ -6,14 +6,12 @@ The cheap ones have frequently a sufficient accuracy for many purposes (albeit n
 
 Most of them have however either no, or extremely primitive reporting abilities.
 
-The purpose of this development is to provide networking and reporting abilities as close to 
-IEC 61672-1:2013 specifications as possible to an extremely cheap sound pressure level meter 
-GM1358, by adding a ESP8266 WiFi microcontroller to it.
+The purpose of this development is to provide networking and reporting abilities as close to IEC 61672-1:2013 specifications as possible to (preferably) an extremely cheap sound pressure level meter GM1358, by adding a ESP8266 WiFi microcontroller to it. Other SPL meters can be used as well, albeit requiring more components and soldering.
 
 In the first variant sound pressure level meter + WiFi adapter + Online Dashboard the total value of the bill of material will be below 30€ !
 
-The ESP8266 microcontroller will be small enough to fit into the original case of the GM1358 and the requested soldiering will be limited to three wires.
-With soldiering skills, you can do the job in less than 10 minutes.
+With the GM1358, the ESP8266 microcontroller will be small enough to fit into its original case and the requested soldering will be limited to three wires.
+With appropriate skills, you can do the job in less than 10 minutes.
 
 Your modified GM1358 will then provide USB and WiFi connectivity and be programmable to do the coolest things that only high-end devices will provide:
 
