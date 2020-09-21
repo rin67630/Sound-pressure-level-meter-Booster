@@ -47,6 +47,8 @@ You will then operate the system without electrical connection to your computer,
 
 You can also build a split system with the SPL meter (+ the solar power circuitry) being located outside gathering and transmitting the sound (and battery)  values over WiFi/ UDP (Long Range LoRa is planned)  to  another bare ESP8266 located inside that will provide the statistics over USB.
 
+Please look at the PDF manual for an extensive description of all features and reports: the list is quite impressive!
+
 Last but not least, and back to the historical roots of the whole concept, the system is able to transmit over USB a single byte per second according to a proprietary "AK-Modulbus protocol" to a feeder program running e.g on a Raspberry Pi forwarding hourly reports to  the European aircraft noise network . http://www.eans.net/EANSindex.php  
 This network is providing a very long time lobby-independent storage of aircraft noise information managed by residentials, totaling about 700 privately and communal operated noise stations throughout Europa.
 
