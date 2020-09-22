@@ -268,7 +268,7 @@ void data1SRun()
       }
       break;
     case 'e':                                                           // waiting for listening time before reurning to idle
-      if (not listeningTimer)                                           // after MAX_EXCEEDANCE_TIME state = 'o';
+      if (not listeningTimer)  state = 'o';                             // after MAX_EXCEEDANCE_TIME state = 'o';
         break;
     default:   // catch evtl. wrong states
       state = 'o';
