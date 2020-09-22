@@ -392,7 +392,7 @@ EEPROM.commit();
   if (A094 == 0) A094 = Ao94; // uninitialized or no Thinger
   if (A047 == 0) A047 = Ao47; // uninitialized or no Thinger
 
-  state = 'e';
+  state = 'o';                // event detection idle
   serialPage = 'A';           // default reporting page
   if (sound.A0dBBgr < LOWER_LIMIT_DB) sound.A0dBBgr = LOWER_LIMIT_DB;    // default background and minimum level
 //  digitalWrite(STDLED, true);
