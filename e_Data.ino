@@ -154,7 +154,7 @@ void data1SRun()
 
 
   // === (Process NAT statistics
-  if (wind_speed < WIND_LIMIT) state = 'o';     // forcing idle if wind too strong.
+  if (wind_speed > WIND_LIMIT) state = 'o';     // forcing idle if wind too strong.
   if (sound.A0dBSlow > EVENT_THRESHOLD_LEVEL && state != 'o') //
   {
     if (sound.A0dBSlow > peakValue)
@@ -183,7 +183,6 @@ void data1SRun()
       aboveThreshDuration = 0;
       less10dBDuration = 0;
       peakValue = 0;
-
       if (sound.A0dBSlow >= MEASUREMENT_THRESHOLD_LEVEL)
       {
         for  (n = 0; n <= MAX_EXCEEDANCE_TIME; n++)
@@ -194,16 +193,17 @@ void data1SRun()
       }
       break;
     case 'a':
-      if (sound.A0dBSlow < MEASUREMENT_THRESHOLD_LEVEL) state = 'o'; // return to idle
+      if (sound.A0dBSlow < MEASUREMENT_THRESHOLD_LEVEL) state = 'o';    // return to idle
       if (sound.A0dBSlow > EVENT_THRESHOLD_LEVEL)
       {
         minExceedingTimer = MIN_EXCEEDANCE_TIME;
         maxExceedingTimer = MAX_EXCEEDANCE_TIME;
         state = 'b';
       }
+
       break;
     case 'b':
-      if (sound.A0dBSlow < MEASUREMENT_THRESHOLD_LEVEL)
+      if (sound.A0dBSlow < EVENT_THRESHOLD_LEVEL)
       {
         if (not minExceedingTimer && maxExceedingTimer)                 //(longer than min and less than max time)
         {
@@ -219,57 +219,55 @@ void data1SRun()
     case 'c':                                                          // wait for MAX_EXCEEDANCE_TIME to expire
       if (not maxExceedingTimer)                                       // after MAX_EXCEEDANCE_TIME expired
       {
-        listeningTimer = LISTENING_TIME;
         state = 'd';
       }
       break;
-    case 'd':
-      { // Event evaluation according to Lmax-10dB
-        reference = 0;                                                // determining the max-10 Leq reference.
-        for  ( n = 0; n <= MAX_EXCEEDANCE_TIME; n++)
-        {
-          reference = max(EVENT[n], reference);                        //scan flashback for max
-        }
-        reference = reference - 10;
-
-        soundEnergy = 0;
-        eventDuration = 0;
-        for  (n = 0; n < MAX_EXCEEDANCE_TIME; n++)
-        {
-          if (EVENT[n] >= reference)
-          { //rescan flashback to integrate 10dBdown LEq
-            soundEnergy +=  pow(10, EVENT[n] / 10);                     // integration of delogarithmed soundEnergy
-            eventDuration++;
-          }
-        }
-        less10dBLEint   += soundEnergy;                                 //integration of the soundEnergy for the whole day
-        less10dBDuration = eventDuration;
-        less10dBLE       = 10 * log10(soundEnergy);                     //Single event  sound  exposure  level measured from Lmax-10dB
-        less10dBLEq      = 10 * log10(soundEnergy / eventDuration);     //Equivalent noise for the duration measured from Lmax-10dB
-
-        // Event evaluation according to EVENT_THRESHOLD_LEVEL
-        reference = EVENT_THRESHOLD_LEVEL;
-        soundEnergy = 0;
-        eventDuration = 0;
-        for  (byte n = 0; n < MAX_EXCEEDANCE_TIME; n++)
-        {
-          if (EVENT[n] >= reference)
-          { //rescan flashback to integrate aboveThreshLEq
-            soundEnergy +=  pow(10, EVENT[n] / 10);                     // integration of delogarithmed soundEnergy
-            eventDuration++;
-          }
-        }
-        aboveThreshLEint   += soundEnergy;                              //integration of the soundEnergy for the whole day
-        aboveThreshDuration = eventDuration;
-        aboveThreshLE       = 10 * log10(soundEnergy);                  //Single  event  sound  exposure  level measured from EVENT_THRESHOLD_LEVEL
-        aboveThreshLEq      = 10 * log10(soundEnergy / eventDuration);  //Equivalent noise for the duration measured from EVENT_THRESHOLD_LEVEL
-        trigNAT = true;
-        state = 'e';
+    case 'd':                                                        // Event evaluation according to Lmax-10dB
+      reference = 0;                                                 // determining the max-10 Leq reference.
+      for  ( n = 0; n <= MAX_EXCEEDANCE_TIME; n++)
+      {
+        reference = max(EVENT[n], reference);                        //scan flashback for max
       }
+      reference = reference - 10;
+
+      soundEnergy = 0;
+      eventDuration = 0;
+      for  (n = 0; n < MAX_EXCEEDANCE_TIME; n++)
+      {
+        if (EVENT[n] >= reference)
+        { //rescan flashback to integrate 10dBdown LEq
+          soundEnergy +=  pow(10, EVENT[n] / 10);                     // integration of delogarithmed soundEnergy
+          eventDuration++;
+        }
+      }
+      less10dBLEint   += soundEnergy;                                 //integration of the soundEnergy for the whole day
+      less10dBDuration = eventDuration;
+      less10dBLE       = 10 * log10(soundEnergy);                     //Single event  sound  exposure  level measured from Lmax-10dB
+      less10dBLEq      = 10 * log10(soundEnergy / eventDuration);     //Equivalent noise for the duration measured from Lmax-10dB
+
+      // Event evaluation according to EVENT_THRESHOLD_LEVEL
+      reference = EVENT_THRESHOLD_LEVEL;
+      soundEnergy = 0;
+      eventDuration = 0;
+      for  (byte n = 0; n < MAX_EXCEEDANCE_TIME; n++)
+      {
+        if (EVENT[n] >= reference)
+        { //rescan flashback to integrate aboveThreshLEq
+          soundEnergy +=  pow(10, EVENT[n] / 10);                     // integration of delogarithmed soundEnergy
+          eventDuration++;
+        }
+      }
+      aboveThreshLEint   += soundEnergy;                              //integration of the soundEnergy for the whole day
+      aboveThreshDuration = eventDuration;
+      aboveThreshLE       = 10 * log10(soundEnergy);                  //Single  event  sound  exposure  level measured from EVENT_THRESHOLD_LEVEL
+      aboveThreshLEq      = 10 * log10(soundEnergy / eventDuration);  //Equivalent noise for the duration measured from EVENT_THRESHOLD_LEVEL
+      trigNAT = true;
+      listeningTimer = LISTENING_TIME;
+      state = 'e';
       break;
     case 'e':                                                           // waiting for listening time before reurning to idle
-      if (not listeningTimer)  state = 'o';                             // after MAX_EXCEEDANCE_TIME state = 'o';
-        break;
+      if (not listeningTimer) state = 'o';                              // after MAX_EXCEEDANCE_TIME state = 'o';
+      break;
     default:   // catch evtl. wrong states
       state = 'o';
   } // end Switch
