@@ -23,7 +23,7 @@ void serialRun()
   }
   if (trigNAT)
   {
-    Console2.printf(" %02u|", NAT[Hour]);  UDP.print(peakTime);  UDP.printf("|%2.1f|%2.1f|%03u|%2.1f|\n", peakValue , less10dBLEq , less10dBDuration,  aboveThreshLEq);
+    Console2.printf(" %02u|", NAT[Hour]);  Console2.print(peakTime);  Console2.printf("|%2.1f|%2.1f|%03u|%2.1f|\n", peakValue , less10dBLEq , less10dBDuration,  aboveThreshLEq);
   }
   switch (serialPage)
   {
