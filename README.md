@@ -1,6 +1,6 @@
-# Swiss-Army-Knife-for-GM1380-Sound-Pressure-Meter
+# SPL-Booster: the Swiss-Army-Knife-for-Sound-Pressure-Meters
 The solution for grassroots communities impacted by noise to visualize your annoyance level: 
-Pimp a cheap GM1380 Sound Pressure Meter with professional features...
+Pimp a cheap GM1380 Sound Pressure Meter (or another one) with professional networked features...
 
 There is a large choice of sound pressure level meters on the market, from pretty cheap to awfully expensive ones.
 The cheap ones have frequently a sufficient accuracy for many purposes (albeit not being suitable for a legal enforcement). 
