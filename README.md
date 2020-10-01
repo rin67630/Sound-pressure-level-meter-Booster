@@ -1,4 +1,4 @@
-# SPL-Booster: the Swiss-Army-Knife-for-Sound-Pressure-Meters
+# SPL-Booster: the Swiss-Army-Knife-for-Sound-Pressure-Level Meters
 The solution for grassroots communities impacted by noise to visualize your annoyance level: 
 Pimp a cheap GM1380 Sound Pressure Meter (or another one) with professional networked features...
 
