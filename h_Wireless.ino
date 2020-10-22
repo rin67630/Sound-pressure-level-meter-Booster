@@ -66,12 +66,16 @@ void wirelessRun()
 #if (defined (SOUND_SOURCE_IS_URL) || defined (SOUND_SOURCE_IS_A0))
   thing.stream("noise");
 #endif
-if (MinuteExpiring) thing.stream("energy");
+
+#if (defined (BATTERY_SOURCE_IS_URL) || defined (BATTERY_SOURCE_IS_INA))
+//if (MinuteExpiring) thing.stream("energy"); // Slow update
+thing.stream("energy");                       // Fast update
+#endif
 
 #if defined (WRITE_BUCKETS)
   if (trigNAT)   thing.write_bucket("EVENT", "EVENT");
   if (NewDay)    thing.write_bucket("DAY", "DAY");
-  if (NewHour)   thing.write_bucket("HOUR", "HOUR");
+  if (HourExpiring)   thing.write_bucket("HOUR", "HOUR");
   if (NewMinute) thing.write_bucket("MIN", "MIN");
 #endif
 
@@ -85,8 +89,8 @@ if (MinuteExpiring) thing.stream("energy");
     persistance["Ah/hour"]       = AhBat[25];
     persistance["Ah/yesterday"]  = AhBat[26];
     persistance["voltageDelta"]  = voltageDelta;
-    persistance["voltageAt4h"]   = voltageAt4h;
-    persistance["resistance"]    = internal_resistance;
+    persistance["voltageAt0H"]   = voltageAt0H;
+    persistance["resistance"]    = battery.ohm;
 #endif
     persistance["A0dBSumExp"]    = A0dBSumExp60min;
     persistance["aboveThreshLEint"] = aboveThreshLEint;
