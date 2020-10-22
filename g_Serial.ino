@@ -149,9 +149,8 @@ void serialRun()
       serialPage = 0;
       break;
 
-    case 'T': //Trace noise
-      Console1.printf("A0dB=%2.1f ADC=%u @47=%u @94=%u A0dBAK= %u Hex= %X\n", sound.A0dBSlow , A0Raw, A047, A094, sound.A0dBAK, sound.A0dBAK);
-      serialPage = 0;
+    case 'T': //Trace
+      Console1.printf("A0dB=%2.1f ADC=%u @47=%u @94=%u A0dBAK= %u Hex= %X State= %c\n", sound.A0dBSlow , A0Raw, A047, A094, sound.A0dBAK, sound.A0dBAK, state);
       break;
 
     case 'B':  //Battery Report
@@ -179,8 +178,7 @@ void serialRun()
       serialPage = 0;
       break;
     case 'b':
-      Console1.printf("Ah: %+2.3f, Volt: %2.3f, Amp: %2.3f, Watt: %2.3f, %%Batt: %2.1f IntRes: %1.3f\n", AhBat[27], battery.voltage , battery.current , battery.power , percent_charged, internal_resistance);
-      serialPage = 0;
+      Console1.printf("Ah: %+2.3f, Panel: %2.3f, Volt: %2.3f, Amp: %2.3f, Watt: %2.3f, microV: %6.0f,%%Batt: %2.1f IntRes: %1.3f\n", AhBat[27], battery.panel, battery.voltage, battery.current, battery.power, ina_shunt, percent_charged, battery.ohm);
       break;
   }  // end switch (serialPage)
 
