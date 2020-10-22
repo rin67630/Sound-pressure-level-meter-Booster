@@ -353,21 +353,22 @@ void data1SRun()
   ina_shunt     = INA.getShuntMicroVolts(0);
   ina_current   = INA.getBusMicroAmps(0);     // scaled to 1/10th of the value
   ina_power     = INA.getBusMicroWatts(0);
+  delta_voltage = ina_voltage - v;          // mV
+  delta_current = (ina_current - w) /100;   // mA
+  
   voltage += (ina_voltage / 1000   - voltage) / 10; // Volt Smoothed 10seconds
   current += (ina_current / 100000 - current) / 10; // Ampere Smoothed 10seconds, set divisor negative to reverse current if required
   battery.voltage = voltage;
   battery.current = current;
   battery.power = voltage * current;
-  delta_voltage = ina_voltage - v;          // mV
-  delta_current = (ina_current - w) * 10;   // mA
+  
   if (Hour < 4)   //Internal resistance evaluated during night, when no solar influence is expected. A load that generates sometimes peaks >50mA is requested for entropy.
     {
-      // Evaluate battery internal resistance (r = dv / di) if deltaCurrent > 100mA.
-      if (fabs(delta_current) > 100) battery.ohm = fabs(delta_voltage / delta_current);
+      // Evaluate battery internal resistance (r = dv / di) if deltaCurrent > 50mA.
+      if (fabs(delta_current) > 50) battery.ohm = fabs(delta_voltage / delta_current);
     }
-
 #endif
-
+  
   // continuing either with values from above, or from UDP transmission
   if (NewMinute)
   {
