@@ -85,9 +85,8 @@ float delta_current;
 float delta_voltage;
 float ina_shunt;
 float ina_power;
-float internal_resistance = 0;
 float percent_charged = 50;
-float voltageAt4h ;
+float voltageAt0H ;
 float voltageDelta ;
 float currentInt = 0;
 int   nCurrent;
@@ -97,6 +96,8 @@ struct battery {
 float current ;
 float voltage ;
 float power = 0;
+float ohm   = 0;
+float panel ;
 } battery;
 char batteryPayload[sizeof(battery)];  //  Array of characters as image of the structure for UDP xmit/rcv
 
@@ -127,6 +128,7 @@ struct  sound {
   char  tResponse = 'S';
 }sound;
 char soundPayload[sizeof(sound)];  //  Array of characters as image of the structure for UDP xmit/rcv
+
 float   A0dB60;
 float   A0dB6S;
 byte    A0dBArray[3610];  // one hour of A0dBAK values
