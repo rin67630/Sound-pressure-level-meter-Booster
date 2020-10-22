@@ -110,7 +110,7 @@ void setup()
   thing["noise"] >> [](pson & out)
   {
     out["min"]       = sound.A0dBMin;
-    out["noise"]     = sound.A0dBSlow;
+    out["slow"]      = sound.A0dBSlow;
     out["backgr"]    = sound.A0dBBgr;
     out["max"]       = sound.A0dBMax;
     out["fast"]      = sound.A0dBFast;
@@ -120,18 +120,43 @@ void setup()
 
   thing["energy"] >> [](pson & out)
   {
-    out["voltage"]           = battery.voltage;
-    out["current"]           = battery.current;
-    out["power"]             = battery.power;
-    out["interal_resitance"] = internal_resistance;
-    out["percent_charged"]   = percent_charged;
+    out["voltage"]         = battery.voltage;
+    out["panel"]           = battery.panel;
+    out["current"]         = battery.current;
+    out["power"]           = battery.power;
+    out["int_resistance"]  = battery.ohm;
+    out["percent_charged"] = percent_charged;
   };
 
   thing["DAY"] >> [](pson & out)
   {
-    out["AhBat[26]"] = AhBat[26];
-    out["voltageAt4h"] = voltageAt4h;
-    out["voltageDelta"] = voltageDelta;
+    out["BAhDay"] = AhBat[26];
+    out["BV@0h"]  = voltageAt0H;
+    out["BVDiff"] = voltageDelta;
+    out["B00h"] = AhBat[0];
+    out["B01h"] = AhBat[1];
+    out["B02h"] = AhBat[2];
+    out["B03h"] = AhBat[3];
+    out["B04h"] = AhBat[4];
+    out["B05h"] = AhBat[5];
+    out["B06h"] = AhBat[6];
+    out["B07h"] = AhBat[7];
+    out["B08h"] = AhBat[8];
+    out["B09h"] = AhBat[9];
+    out["B10h"] = AhBat[10];
+    out["B11h"] = AhBat[11];
+    out["B12h"] = AhBat[12];
+    out["B13h"] = AhBat[13];
+    out["B14h"] = AhBat[14];
+    out["B15h"] = AhBat[15];
+    out["B16h"] = AhBat[16];
+    out["B17h"] = AhBat[17];
+    out["B18h"] = AhBat[18];
+    out["B19h"] = AhBat[19];
+    out["B20h"] = AhBat[20];
+    out["B21h"] = AhBat[21];
+    out["B22h"] = AhBat[22];
+    out["B23h"] = AhBat[23];
     out["L00h"] = leq[0];
     out["L01h"] = leq[1];
     out["L02h"] = leq[2];
@@ -180,30 +205,6 @@ void setup()
     out["N21h"] = NAT[21];
     out["N22h"] = NAT[22];
     out["N23h"] = NAT[23];
-    out["B00h"] = AhBat[0];
-    out["B01h"] = AhBat[1];
-    out["B02h"] = AhBat[2];
-    out["B03h"] = AhBat[3];
-    out["B04h"] = AhBat[4];
-    out["B05h"] = AhBat[5];
-    out["B06h"] = AhBat[6];
-    out["B07h"] = AhBat[7];
-    out["B08h"] = AhBat[8];
-    out["B09h"] = AhBat[9];
-    out["B10h"] = AhBat[10];
-    out["B11h"] = AhBat[11];
-    out["B12h"] = AhBat[12];
-    out["B13h"] = AhBat[13];
-    out["B14h"] = AhBat[14];
-    out["B15h"] = AhBat[15];
-    out["B16h"] = AhBat[16];
-    out["B17h"] = AhBat[17];
-    out["B18h"] = AhBat[18];
-    out["B19h"] = AhBat[19];
-    out["B20h"] = AhBat[20];
-    out["B21h"] = AhBat[21];
-    out["B22h"] = AhBat[22];
-    out["B23h"] = AhBat[23];
   };
 
   thing["HOUR"] >> [](pson & out)
@@ -215,10 +216,10 @@ void setup()
     out["direction"]   = wind_direction;
     out["summary"]     = weather_summary;
 #if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
-    out["current"]     = battery.current;
-    out["voltage"]     = battery.voltage;
-    out["resistance"]  = internal_resistance;
-    out["percent"]     = percent_charged;
+    out["voltage"]         = battery.voltage;
+    out["current"]         = battery.current;
+    out["power"]           = battery.power;
+    out["percent_charged"] = percent_charged; 
 #endif
   };
 
@@ -230,9 +231,11 @@ void setup()
     out["backgr"]  = sound.A0dBBgr;
 
 #if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
-    out["voltage"]     = battery.voltage;
-    out["power"]       = battery.power;
-    out["voltage"]     = battery.voltage;    
+    out["voltage"]         = battery.voltage;
+    out["panel"]           = battery.panel;
+    out["current"]         = battery.current;
+    out["power"]           = battery.power;
+    out["percent_charged"] = percent_charged; 
 #endif
   };
 
@@ -262,8 +265,8 @@ void setup()
   AhBat[25]           = persistance["Ah/hour"];
   AhBat[26]           = persistance["Ah/yesterday"];
   voltageDelta        = persistance["voltageDelta"];
-  voltageAt4h         = persistance["voltageAt4h"];
-  internal_resistance = persistance["resistance"];
+  voltageAt0H          = persistance["voltageAt0H"];
+  battery.ohm = persistance["resistance"];
 #endif
   leq[25]             = persistance["A0dBLEQ"];
   A0dBSumExp60min     = persistance["A0dBSumExp"];
@@ -279,7 +282,6 @@ void setup()
   outdoor_pressure    = persistance["pressure"];
   wind_speed  = persistance["wind"];
   wind_direction = persistance["direction"];
-  // weather_summary     = persistance["summary"];  //ambiguous overload for 'operator=' (operand types are 'String' and 'protoson::pson')
 
   pson lequ;
   thing.get_property("lequ", lequ);  // 0..23=hour, 25=current, 26=Lequ 24h, 27= LeqDay, 28=LeqNight, 29=Lden
@@ -393,7 +395,7 @@ EEPROM.commit();
   if (A047 == 0) A047 = Ao47; // uninitialized or no Thinger
 
   state = 'o';                // event detection idle
-  serialPage = 'A';           // default reporting page
+  serialPage = 'A';           // default reporting page AK Modulbus
   if (sound.A0dBBgr < LOWER_LIMIT_DB) sound.A0dBBgr = LOWER_LIMIT_DB;    // default background and minimum level
 //  digitalWrite(STDLED, true);
   
