@@ -4,6 +4,7 @@
 #define WEATHER_SOURCE_IS_URL   //_URL _NONE              Change end accordingly
 #define BATTERY_SOURCE_IS_NONE  //_INA _UDP _NONE         Change end accordingly
 #define SOUND_SOURCE_IS_URL     //_A0 _URL _UDP _NONE     Change end accordingly
+#define PANEL_VOLTAGE_IS_A0    //_A0 _NONE 
 
 #define THINGER            //(Comment out, if no thinger used)
 #define WRITE_BUCKETS      //(Comment out, if this is the second device for Thinger)
@@ -37,7 +38,7 @@
 #define OPEN_WEATHER_MAP_UNITS       "metric"
 
 #define DFLD_REGION  "001"
-#define DFLD_STATION "061"
+#define DFLD_STATION "001"
 
 #define THINGER_USERNAME    "User"     
 #define THINGER_CREDENTIALS "Credential"  
@@ -62,11 +63,13 @@
 #define  LISTENING_TIME              30 // mimimum time between events
 
 // ***Electrical parameters***
-#define SHUNT    40000    // 16666 = 0,1 Ohm +// 0,02Ohm  or 40000
-#define AMPERE   5        // 10 or 5
-#define MIN_VOLT 11.8     // 11.8 for Lead Battery,  9.6 for 3x18360 Lithium
-#define MAX_VOLT 14.2     // 14.2 for Lead Battery, 12.8 for 3x18360 Lithium
-#define MIN_AMP  -0.8
-#define MAX_AMP  +0.8
-#define MIN_WATT -1
-#define MAX_WATT +20
+//#define DEVICES_FOUND INA.begin(10, 8000) //10A Max, 8milliOhm Shunt 
+#define SHUNT    90000     // Shunt resitor value in microOhm (scaled x 10)
+#define AMPERE   1        // 10 or 1 (scaled x 10)
+#define MIN_VOLT 11.0      // 11.0   9.6
+#define MAX_VOLT 14.4      // 14.4  12.8
+#define MIN_AMP  -6
+#define MAX_AMP  +6
+#define MIN_WATT -40
+#define MAX_WATT -40
+#define PANEL_MAX 23500 // mV panel voltage
