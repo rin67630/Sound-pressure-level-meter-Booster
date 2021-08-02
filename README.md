@@ -22,6 +22,8 @@ Evaluate the noise level according to following time response standards (simulta
 -	Impulse  (attack no filter,          decay linear 2,9dB/Sec)
 -	Real peak value by the minute (not the maximum of readings)
 - Background level (low pass filter 2000s, ignoring events above threshold)
+
+![image](https://user-images.githubusercontent.com/14197155/127849033-777ff7cd-66ec-44c8-b6fa-3488e27fa861.png)
  
 Statistics according to residential aircraft noise standards:
 
@@ -51,6 +53,9 @@ For each event:
 - LE for the event according to the criterium "max-10dB"
 Additionally the program can grab weather information from openweathermap.org and provide the corresponding meteorological conditions.
 
+![image](https://user-images.githubusercontent.com/14197155/127849258-713dad08-c1ca-47cf-92c1-a6851341be9e.png)
+
+
 With a little more hardware and a separate casing, you may also build the system with the ability to be solar powered including a solar power monitor to report all information about the battery condition and the power fed by the solar panel.
 You will then operate the system without electrical connection to your computer, using the Cloud service Thinger.io (free for 2 devices and 4 dashboards...)
 
@@ -61,4 +66,4 @@ Please look at the PDF manual for an extensive description of all features and r
 Last but not least, and back to the historical roots of the whole concept, the system is able to transmit over USB a single byte per second according to a proprietary "AK-Modulbus protocol" to a feeder program running e.g on a Raspberry Pi forwarding hourly reports to  the European aircraft noise network . http://www.eans.net/EANSindex.php  
 This network is providing a very long time lobby-independent storage of aircraft noise information managed by residentials, totaling about 700 privately and communal operated noise stations throughout Europa.
 
-
+http://www.dfld.de/Mess/Messwerte.php?R=004&S=008&D=02.08.2021&ZT=06
