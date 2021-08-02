@@ -23,6 +23,16 @@ Evaluate the noise level according to following time response standards (simulta
 -	Real peak value by the minute (not the maximum of readings)
 - Background level (low pass filter 2000s, ignoring events above threshold)
 
+
+For each event:
+- time of the peak
+- duration above a fixed threshold
+- duration above the criterium "max-10dB"
+- Leq for the event according to a fixed threshold
+- Leq for the event according to the criterium "max-10dB"
+- LE for the event according to a fixed threshold
+- LE for the event according to the criterium "max-10dB"
+
 ![image](https://user-images.githubusercontent.com/14197155/127849033-777ff7cd-66ec-44c8-b6fa-3488e27fa861.png)
  
 Statistics according to residential aircraft noise standards:
@@ -43,14 +53,6 @@ Event related metrics:
 -	NAT nighttime 22:00 to 6:00
 -	NAT 22:00 to 24:00
 
-For each event:
-- time of the peak
-- duration above a fixed threshold
-- duration above the criterium "max-10dB"
-- Leq for the event according to a fixed threshold
-- Leq for the event according to the criterium "max-10dB"
-- LE for the event according to a fixed threshold
-- LE for the event according to the criterium "max-10dB"
 Additionally the program can grab weather information from openweathermap.org and provide the corresponding meteorological conditions.
 
 ![image](https://user-images.githubusercontent.com/14197155/127849258-713dad08-c1ca-47cf-92c1-a6851341be9e.png)
