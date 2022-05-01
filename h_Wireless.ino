@@ -1,13 +1,13 @@
 void wirelessRun()
 {
   yield();
-#if defined (PUBLISH_DFLD)
+#if defined (PUBLISH_DFLD) && defined (UDP)
   UDP.beginPacket(UDP_TARGET, UDP_PORT);
   UDP.write(sound.A0dBAK);
   UDP.endPacket();
 #endif
 
-#if defined (PUBLISH_REPORT)  // Read with NetCat Bash command nc -u -l [UDP_PORT +1]
+#if defined (PUBLISH_REPORT) && defined (UDP)   // Read with NetCat Bash command nc -u -l [UDP_PORT +1]
   if (DayExpiring || trigNAT)
   {
     UDP.beginPacket(UDP_TARGET, UDP_PORT + 1);
@@ -30,17 +30,19 @@ void wirelessRun()
       }
       UDP.print("\nNAT|PKTime  |PKdB|Le4 |Leq4|t10|Le3 |Leq3|tAT|\n");
     }
+
     if (trigNAT)
     {
       UDP.printf(" %02u|", NAT[Hour]);  UDP.print(peakTime);  UDP.printf("|%2.1f|%2.1f|%2.1f|%03u|%2.1f|%2.1f|%03u|\n", peakValue , less10dBLE, less10dBLEq , less10dBDuration,  aboveThreshLE , aboveThreshLEq ,aboveThreshDuration);
     }
     UDP.endPacket();
+#
   }
 #endif
 
   if (NewMinute)
   {
-#if defined (PUBLISH_BATTERY)
+#if defined (PUBLISH_BATTERY) && defined (UDP)
     memcpy(batteryPayload, &battery, sizeof(battery));
     UDP.beginPacket(UDP_TARGET, UDP_PORT);
     UDP.write(batteryPayload, sizeof(battery));
@@ -50,7 +52,7 @@ void wirelessRun()
 #endif
   } else {
 
-#if defined (PUBLISH_SOUND)
+#if defined (PUBLISH_SOUND) && defined (UDP)
     memcpy(soundPayload, &sound, sizeof(sound));
     UDP.beginPacket(UDP_TARGET, UDP_PORT);
     UDP.write(soundPayload, sizeof(sound));
@@ -66,11 +68,7 @@ void wirelessRun()
 #if (defined (SOUND_SOURCE_IS_URL) || defined (SOUND_SOURCE_IS_A0))
   thing.stream("noise");
 #endif
-
-#if (defined (BATTERY_SOURCE_IS_URL) || defined (BATTERY_SOURCE_IS_INA))
-//if (MinuteExpiring) thing.stream("energy"); // Slow update
-thing.stream("energy");                       // Fast update
-#endif
+if (MinuteExpiring) thing.stream("energy");
 
 #if defined (WRITE_BUCKETS)
   if (trigNAT)   thing.write_bucket("EVENT", "EVENT");
@@ -89,8 +87,8 @@ thing.stream("energy");                       // Fast update
     persistance["Ah/hour"]       = AhBat[25];
     persistance["Ah/yesterday"]  = AhBat[26];
     persistance["voltageDelta"]  = voltageDelta;
-    persistance["voltageAt0H"]   = voltageAt0H;
-    persistance["resistance"]    = battery.ohm;
+    persistance["voltageAt2355h"]   = voltageAt2355h;
+    persistance["resistance"]    = internal_resistance;
 #endif
     persistance["A0dBSumExp"]    = A0dBSumExp60min;
     persistance["aboveThreshLEint"] = aboveThreshLEint;
