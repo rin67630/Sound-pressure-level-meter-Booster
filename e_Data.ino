@@ -51,7 +51,7 @@ void data1SRun()
   if (Minute % 5 == 1 && Second == 32)                    // call every 5 minutes
   {
     HTTPClient http;
-    http.begin(OPEN_WEATHER_MAP_URL);
+    http.begin(WifiClient, OPEN_WEATHER_MAP_URL);
     int httpCode2 = http.GET();
     if (httpCode2 == HTTP_CODE_OK)
     {
@@ -78,7 +78,7 @@ void data1SRun()
   // === (Fetching Noise level from URL with reduced resolution
 #if defined (SOUND_SOURCE_IS_URL)   // must be a JSON from DFLD.de
   HTTPClient http;
-  http.begin(DFLD_URL);             //Specify request destination
+  http.begin(WifiClient, DFLD_URL);             //Specify request destination
   int httpCode1 = http.GET();       //Send the request
   if (httpCode1 == HTTP_CODE_OK)    //Check the returning code
   {
@@ -122,8 +122,12 @@ void data1SRun()
   }
   if (packetSize == sizeof(battery))
   {
+    float m = battery.voltage;
+    float n = battery.current;
     UDP.read(batteryPayload, UDP_TX_PACKET_MAX_SIZE);
     memcpy(&battery, batteryPayload, sizeof(battery));
+    delta_voltage = battery.voltage - m;
+    delta_current = battery.current - n;
     // Console1.printf("Ah: %2.1f, Volt: %2.1f, Amp: %2.1f, Watt: %2.1f, %%Batt: %2.1f\n", AhBat, battery.voltage , battery.current , battery.power , percent_charged);
     delay(3);    // let built-in LED blink slightly stronger on battery packet
   }
@@ -181,7 +185,7 @@ void data1SRun()
       peakValue = 0;
       if (sound.A0dBSlow >= MEASUREMENT_THRESHOLD_LEVEL)
       {
-        for  (n = 0; n <= MAX_EXCEEDANCE_TIME; n++)
+        for  (n = 0; n < MAX_EXCEEDANCE_TIME; n++)
         {
           EVENT[n] = 0; // clear flashback record
         }
@@ -332,43 +336,27 @@ void data1SRun()
     NAT[29] = (NAT[22] + NAT[23]);                                  // 29 =L22-24h
   } // end if day expiring
 
-  // === ( Getting panel voltage from A0 ) ===
-#if defined (PANEL_VOLTAGE_IS_A0)
-  // Performing 3 reads to get a reliable reading.
-  A0Raw = analogRead(A0); // 1st read  0...1V = 0 ..1023
-  delay(3);
-  A0Raw += analogRead(A0); // 2nd read
-  delay(3);
-  A0Raw += analogRead(A0); // 3rd read
-  A0Raw = A0Raw / 3;
-  battery.panel += (float(map(A0Raw, 0, 1023, 0, PANEL_MAX))/1000 - battery.panel) /10; // Volt Smoothed 10seconds
-#endif
-
   //=== ( Measure Battery
 #if defined BATTERY_SOURCE_IS_INA
   // Battery measurements from INA226
-  float v = ina_voltage;
-  float w = ina_current;
   ina_voltage   = INA.getBusMilliVolts(0);
   ina_shunt     = INA.getShuntMicroVolts(0);
-  ina_current   = INA.getBusMicroAmps(0);     // scaled to 1/10th of the value
+  ina_current   = INA.getBusMicroAmps(0) ;
   ina_power     = INA.getBusMicroWatts(0);
-  delta_voltage = ina_voltage - v;          // mV
-  delta_current = (ina_current - w) /100;   // mA
-  
-  voltage += (ina_voltage / 1000   - voltage) / 10; // Volt Smoothed 10seconds
-  current += (ina_current / 100000 - current) / 10; // Ampere Smoothed 10seconds, set divisor negative to reverse current if required
-  battery.voltage = voltage;
-  battery.current = current;
-  battery.power = voltage * current;
-  
-  if (Hour < 4)   //Internal resistance evaluated during night, when no solar influence is expected. A load that generates sometimes peaks >50mA is requested for entropy.
-    {
-      // Evaluate battery internal resistance (r = dv / di) if deltaCurrent > 50mA.
-      if (fabs(delta_current) > 50) battery.ohm = fabs(delta_voltage / delta_current);
-    }
+  voltage += (ina_voltage / 1000 - voltage) / 10;                  // Low Pass filter 2min
+  current += (ina_current / 1000000 - current) / 10;               // Set divisor negative to reverse current if required
+  if (NewMinute)
+  {
+    float m = battery.voltage;
+    float n = battery.current;
+    battery.voltage = voltage;
+    battery.current = current;
+    battery.power = voltage * current;
+    delta_voltage = battery.voltage - m;
+    delta_current = battery.current - n;
+  }// end if new minute
 #endif
-  
+
   // continuing either with values from above, or from UDP transmission
   if (NewMinute)
   {
@@ -384,12 +372,17 @@ void data1SRun()
     }
     percent_charged = map(battery.voltage * 1000, MIN_VOLT * 1000 + d, MAX_VOLT * 1000 + d - 800, 0, 100);
     percent_charged = constrain( percent_charged, 0, 100);
+    if (battery.voltage < (MAX_VOLT - 1) &&  battery.voltage > (MIN_VOLT + 0.3))
+    {
+      // Evaluate battery internal resistance (r = dv / di) if inside regular limits and smooth it.
+      if (fabs(delta_current) > 0.05) internal_resistance = fabs(delta_voltage / delta_current);
+    }
   }// end if new minute
 
 
   //=== ( Daily Battery voltage comparison just before midnight
-  if (SecondOfDay == 86000) voltageAt0H  = battery.voltage;               // taking the voltage at 23:55 to evaluate if the battery gained/lost during the previous day.
-  if (SecondOfDay == 85899) voltageDelta = battery.voltage - voltageAt0H; // set ranges at 33:53:59
+  if (SecondOfDay == 86000) voltageAt2355h  = battery.voltage;               // taking the voltage at 23:55 to evaluate if the battery gained/lost during the previous day.
+  if (SecondOfDay == 85899) voltageDelta = battery.voltage - voltageAt2355h; // set ranges at 33:53:59
 
   //=== ( Battery Stat integration
   currentInt += battery.current;
