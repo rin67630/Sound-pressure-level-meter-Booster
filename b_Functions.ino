@@ -4,8 +4,13 @@
                          _lasttime += (t))
 
 // Instantiate classes
+#if defined (UDP)
 WiFiUDP UDP;
+#endif
+#if defined (BATTERY_SOURCE_IS_INA)
 INA_Class INA;
+#endif
+WiFiClient WifiClient;
 
 #if defined(THINGER)
 ThingerESP8266 thing(THINGER_USERNAME, THINGER_DEVICE, THINGER_CREDENTIALS);
@@ -25,7 +30,7 @@ void getWiFi()
   {
     delay(500);
     int cnt = 0;
-    //    Console3.print(".");
+    Console3.print(".");
     if (cnt++ >= wifiMaxTries) {
       WiFi.beginSmartConfig();
       while (1) {
@@ -34,6 +39,10 @@ void getWiFi()
         {
           Console3.println("SmartConfig Success");
           break;
+        }
+        else
+        {
+         Console3.print("+") 
         }
       }
     }
