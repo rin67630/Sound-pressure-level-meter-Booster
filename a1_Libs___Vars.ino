@@ -1,18 +1,24 @@
 // *** libraries***
 #include <Wire.h>          // Libs for I2C
-#include <INA.h>           // Zanshin INA Library
+#if defined (BATTERY_SOURCE_IS_INA)
+#include <INA.h> // Zanshin INA Library
+#endif
 #include <ArduinoJson.h>   // Libs for Webscraping
+#if defined (UDP)
 #include <WiFiUdp.h>
+#endif
+#if defined (OTA)
 #include <ArduinoOTA.h>
+#endif
 #include <ESP8266WiFi.h>   // default from Espressif
 #include <ESP8266HTTPClient.h>
 #include <TZ.h>            // default from Espressif
 #include <FS.h>
-#if defined(THINGER)
+#if defined (THINGER)
 #include <ThingerESP8266.h>
 //#include <ThingerConsole.h>
 #endif
-#include <EEPROM.h>
+//#include <EEPROM.h>
 
 // ESP8266 Lolin / D1 /Witty (see definitions for other boards in Parked code)
 #define SCL 5           // D1 GPIO05 for I2C (Wire) System Clock
@@ -85,8 +91,9 @@ float delta_current;
 float delta_voltage;
 float ina_shunt;
 float ina_power;
+float internal_resistance = 0;
 float percent_charged = 50;
-float voltageAt0H ;
+float voltageAt2355h ;
 float voltageDelta ;
 float currentInt = 0;
 int   nCurrent;
@@ -96,8 +103,6 @@ struct battery {
 float current ;
 float voltage ;
 float power = 0;
-float ohm   = 0;
-float panel ;
 } battery;
 char batteryPayload[sizeof(battery)];  //  Array of characters as image of the structure for UDP xmit/rcv
 
@@ -128,7 +133,6 @@ struct  sound {
   char  tResponse = 'S';
 }sound;
 char soundPayload[sizeof(sound)];  //  Array of characters as image of the structure for UDP xmit/rcv
-
 float   A0dB60;
 float   A0dB6S;
 byte    A0dBArray[3610];  // one hour of A0dBAK values
