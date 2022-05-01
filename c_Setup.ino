@@ -39,7 +39,7 @@ void setup()
   getEpoch();            // writes the Epoch (Numbers of seconds till 1.1.1970...
   Console3.println("Got Epoch");
   getTimeData();         // breaks down the Epoch into discrete values.
-  sprintf(charbuff, "Now is %02d:%02d:%02d.\r\nDate is %s, %02d %s %04d", Hour, Minute, Second, DayName, Day, MonthName, Year);
+  ssprintf(charbuff, "Now is %02d:%02d:%02d.\r\nEpoch is %llu\nDate is %s, %02d %s %04d", Hour, Minute, Second, Epoch, DayName, Day, MonthName, Year);
   Console3.println(charbuff);
 
   // Over the Air Framework
