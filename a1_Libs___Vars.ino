@@ -177,4 +177,4 @@ String  JSONpayload;
 byte    wifiConnectCounter;
 
 //*** Buffers ***
-static char charbuff[80];    //Char buffer for many functions
+static char charbuff[100];    //Char buffer for many functions
