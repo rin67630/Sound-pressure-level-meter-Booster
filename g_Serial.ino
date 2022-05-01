@@ -55,10 +55,12 @@ void serialRun()
       {
         Console1.printf("BatAhBat:%1.3f A0dBLEQ:%2.1f WindSpeed:%2.1f Direction:%3.0f\n", AhBat, leq[25] , wind_speed , wind_direction);
       }
+      #ifndef BATTERY_SOURCE_IS_NONE
       if (MinuteExpiring && serialMin)
       {
         Console1.printf("Bat_Volt:1%2.3f Bat_Watt:%2.3f Bat_Level:%2.1f \n", battery.voltage - 10, battery.power, percent_charged / 10);
       }
+      #endif
       if (serialNAT && trigNAT)
       {
         // Console1.print(peakTime);  Console1.printf(" NAT:%u PKdB:%2.1f ATdB: %2.1f ATsec:%u PK-10dB: %2.1f PK-10sec: %u \n" , NAT[Hour], peakValue , aboveThreshLEq , aboveThreshDuration, less10dBLEq , less10dBDuration);
@@ -178,7 +180,8 @@ void serialRun()
       serialPage = 0;
       break;
     case 'b':
-      Console1.printf("Ah: %+2.3f, Panel: %2.3f, Volt: %2.3f, Amp: %2.3f, Watt: %2.3f, microV: %6.0f,%%Batt: %2.1f IntRes: %1.3f\n", AhBat[27], battery.panel, battery.voltage, battery.current, battery.power, ina_shunt, percent_charged, battery.ohm);
+      Console1.printf("Ah: %+2.3f, Volt: %2.3f, Amp: %2.3f, Watt: %2.3f, %%Batt: %2.1f IntRes: %1.3f\n", AhBat[27], battery.voltage , battery.current , battery.power , percent_charged, internal_resistance);
+      serialPage = 0;
       break;
   }  // end switch (serialPage)
 
