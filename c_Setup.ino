@@ -7,12 +7,13 @@ void setup()
   Wire.begin(SDA, SCL);
   Console3.printf("\n\n\nESP-Karajan at work,\nSerial @ %u Baud\n", SERIAL_SPEED);
 
-  EEPROM.begin(512);
-  if (!SPIFFS.begin()) 
+ /* EEPROM.begin(512);
+ if (!SPIFFS.begin()) 
 {
   Console3.println("Failed to mount file system");
   return;
 }
+*/
   pinMode(RELAY , OUTPUT);  
 
  /*
@@ -25,20 +26,24 @@ void setup()
 
    // Networking and Time
   getWiFi();
+  #if defined (OTA)
   ArduinoOTA.setHostname(HOST_NAME);
+  #endif
 
   //WiFi.printDiag(Serial);
-  Console3.printf("MAC address: %s , \nHostname: %s \nIP address::", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
+  Console3.printf("\nMAC address: %s , \nHostname: %s \nIP address::", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
   Console3.println(WiFi.localIP());
   getNTP();
   delay(3000);
 
   getEpoch();            // writes the Epoch (Numbers of seconds till 1.1.1970...
+  Console3.println("Got Epoch");
   getTimeData();         // breaks down the Epoch into discrete values.
-  sprintf(charbuff, "Now is %02d:%02d:%02d. The Epoch is: %10lu\r\nDate is %s, %02d %s %04d", Hour, Minute, Second, Epoch, DayName, Day, MonthName, Year);
+  sprintf(charbuff, "Now is %02d:%02d:%02d.\r\nDate is %s, %02d %s %04d", Hour, Minute, Second, DayName, Day, MonthName, Year);
   Console3.println(charbuff);
 
   // Over the Air Framework
+ #if defined (OTA) 
   ArduinoOTA.onStart([]() {
     String type;
     if (ArduinoOTA.getCommand() == U_FLASH) {
@@ -69,11 +74,14 @@ void setup()
       Console3.println("End Failed");
     }
   });
+#endif
 
+#if defined (UDP)
   // Begin listening to UDP port
   UDP.begin(UDP_PORT);
   Console3.print("Communicating on UDP port: ");
   Console3.print(UDP_PORT);
+#endif
 
   // Weather
   //myPlace.setLocation( 51.3683, 6.9293 );
@@ -110,7 +118,7 @@ void setup()
   thing["noise"] >> [](pson & out)
   {
     out["min"]       = sound.A0dBMin;
-    out["slow"]      = sound.A0dBSlow;
+    out["noise"]     = sound.A0dBSlow;
     out["backgr"]    = sound.A0dBBgr;
     out["max"]       = sound.A0dBMax;
     out["fast"]      = sound.A0dBFast;
@@ -120,43 +128,18 @@ void setup()
 
   thing["energy"] >> [](pson & out)
   {
-    out["voltage"]         = battery.voltage;
-    out["panel"]           = battery.panel;
-    out["current"]         = battery.current;
-    out["power"]           = battery.power;
-    out["int_resistance"]  = battery.ohm;
-    out["percent_charged"] = percent_charged;
+    out["voltage"]           = battery.voltage;
+    out["current"]           = battery.current;
+    out["power"]             = battery.power;
+    out["interal_resitance"] = internal_resistance;
+    out["percent_charged"]   = percent_charged;
   };
 
   thing["DAY"] >> [](pson & out)
   {
-    out["BAhDay"] = AhBat[26];
-    out["BV@0h"]  = voltageAt0H;
-    out["BVDiff"] = voltageDelta;
-    out["B00h"] = AhBat[0];
-    out["B01h"] = AhBat[1];
-    out["B02h"] = AhBat[2];
-    out["B03h"] = AhBat[3];
-    out["B04h"] = AhBat[4];
-    out["B05h"] = AhBat[5];
-    out["B06h"] = AhBat[6];
-    out["B07h"] = AhBat[7];
-    out["B08h"] = AhBat[8];
-    out["B09h"] = AhBat[9];
-    out["B10h"] = AhBat[10];
-    out["B11h"] = AhBat[11];
-    out["B12h"] = AhBat[12];
-    out["B13h"] = AhBat[13];
-    out["B14h"] = AhBat[14];
-    out["B15h"] = AhBat[15];
-    out["B16h"] = AhBat[16];
-    out["B17h"] = AhBat[17];
-    out["B18h"] = AhBat[18];
-    out["B19h"] = AhBat[19];
-    out["B20h"] = AhBat[20];
-    out["B21h"] = AhBat[21];
-    out["B22h"] = AhBat[22];
-    out["B23h"] = AhBat[23];
+    out["AhBat[26]"] = AhBat[26];
+    out["voltageAt2355h"] = voltageAt2355h;
+    out["voltageDelta"] = voltageDelta;
     out["L00h"] = leq[0];
     out["L01h"] = leq[1];
     out["L02h"] = leq[2];
@@ -205,6 +188,30 @@ void setup()
     out["N21h"] = NAT[21];
     out["N22h"] = NAT[22];
     out["N23h"] = NAT[23];
+    out["B00h"] = AhBat[0];
+    out["B01h"] = AhBat[1];
+    out["B02h"] = AhBat[2];
+    out["B03h"] = AhBat[3];
+    out["B04h"] = AhBat[4];
+    out["B05h"] = AhBat[5];
+    out["B06h"] = AhBat[6];
+    out["B07h"] = AhBat[7];
+    out["B08h"] = AhBat[8];
+    out["B09h"] = AhBat[9];
+    out["B10h"] = AhBat[10];
+    out["B11h"] = AhBat[11];
+    out["B12h"] = AhBat[12];
+    out["B13h"] = AhBat[13];
+    out["B14h"] = AhBat[14];
+    out["B15h"] = AhBat[15];
+    out["B16h"] = AhBat[16];
+    out["B17h"] = AhBat[17];
+    out["B18h"] = AhBat[18];
+    out["B19h"] = AhBat[19];
+    out["B20h"] = AhBat[20];
+    out["B21h"] = AhBat[21];
+    out["B22h"] = AhBat[22];
+    out["B23h"] = AhBat[23];
   };
 
   thing["HOUR"] >> [](pson & out)
@@ -216,10 +223,10 @@ void setup()
     out["direction"]   = wind_direction;
     out["summary"]     = weather_summary;
 #if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
-    out["voltage"]         = battery.voltage;
-    out["current"]         = battery.current;
-    out["power"]           = battery.power;
-    out["percent_charged"] = percent_charged; 
+    out["current"]     = AhBat[Hour];
+    out["voltage"]     = battery.voltage;
+    out["resistance"]  = internal_resistance;
+    out["percent"]     = percent_charged;
 #endif
   };
 
@@ -231,11 +238,9 @@ void setup()
     out["backgr"]  = sound.A0dBBgr;
 
 #if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
-    out["voltage"]         = battery.voltage;
-    out["panel"]           = battery.panel;
-    out["current"]         = battery.current;
-    out["power"]           = battery.power;
-    out["percent_charged"] = percent_charged; 
+    out["voltage"]     = battery.voltage;
+    out["power"]       = battery.power;
+    out["voltage"]     = battery.voltage;    
 #endif
   };
 
@@ -265,8 +270,8 @@ void setup()
   AhBat[25]           = persistance["Ah/hour"];
   AhBat[26]           = persistance["Ah/yesterday"];
   voltageDelta        = persistance["voltageDelta"];
-  voltageAt0H          = persistance["voltageAt0H"];
-  battery.ohm = persistance["resistance"];
+  voltageAt2355h      = persistance["voltageAt2355h"];
+  internal_resistance = persistance["resistance"];
 #endif
   leq[25]             = persistance["A0dBLEQ"];
   A0dBSumExp60min     = persistance["A0dBSumExp"];
@@ -282,6 +287,7 @@ void setup()
   outdoor_pressure    = persistance["pressure"];
   wind_speed  = persistance["wind"];
   wind_direction = persistance["direction"];
+  // weather_summary     = persistance["summary"];  //ambiguous overload for 'operator=' (operand types are 'String' and 'protoson::pson')
 
   pson lequ;
   thing.get_property("lequ", lequ);  // 0..23=hour, 25=current, 26=Lequ 24h, 27= LeqDay, 28=LeqNight, 29=Lden
@@ -395,7 +401,11 @@ EEPROM.commit();
   if (A047 == 0) A047 = Ao47; // uninitialized or no Thinger
 
   state = 'o';                // event detection idle
-  serialPage = 'A';           // default reporting page AK Modulbus
+  serialPage = 'P';           // default reporting page AK Modulbus
+  serialDay = true;
+  serialHur = true;
+  serialMin = true;
+  
   if (sound.A0dBBgr < LOWER_LIMIT_DB) sound.A0dBBgr = LOWER_LIMIT_DB;    // default background and minimum level
 //  digitalWrite(STDLED, true);
   
@@ -404,9 +414,10 @@ EEPROM.commit();
   WiFi.mode(WIFI_OFF); 
   Console3.println (F("Sketch is now running offline with own time"));
 #endif
-
+#if defined (OTA)
   ArduinoOTA.begin();
   Console3.println("\nOTA-Ready");
+#endif
   Console2.print("\nNAT|PKTime  |PKdB|Leq4|t10|Leq3|\n");
 }
 //end Setup
