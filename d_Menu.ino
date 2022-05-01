@@ -61,7 +61,7 @@ void menuRun()
       A047 = A0Raw;
       Console1.println (A047);
       break;
-    case 'U': //Apply 94&47dB Defaults
+    case 'U': //Uncalbrated apply 94&47dB Defaults from Program
     case 'u':
       A094 = Ao94;
       A047 = Ao47;
