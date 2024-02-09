@@ -4,71 +4,86 @@
                          _lasttime += (t))
 
 // Instantiate classes
-#if defined (UDP)
-WiFiUDP UDP;
-#endif
-#if defined (BATTERY_SOURCE_IS_INA)
-INA_Class INA;
+WiFiUDP    UDP;
+#if defined(BATTERY_SOURCE_IS_INA)
+INA_Class  INA;
 #endif
 WiFiClient WifiClient;
+HTTPClient http;
 
-#if defined(THINGER)
+#if defined (THINGER)
 ThingerESP8266 thing(THINGER_USERNAME, THINGER_DEVICE, THINGER_CREDENTIALS);
 #endif
 
 // Functions
 
 // WiFi Managemement
-#if defined (SMARTCONFIG)
-void getWiFi()
+void getWiFi()              // From Memory , Using Defaults, or using SmartConfig
 {
-  WiFi.mode(WIFI_STA);
-  //WiFi.disconnect();
-  wifi_station_set_auto_connect(true);
+  int retry = 0;
+  WiFi.mode(WIFI_STA);      // configure WiFi in Station Mode
   wifi_station_set_hostname(HOST_NAME);
+  wifi_station_set_auto_connect(true);
+  delay(wifiRepeatInterval);
+  Console3.println("Attempt to connect to WiFi network from EEPROM");
+  WiFi.begin();
+  delay(wifiRepeatInterval);
   while (WiFi.status() != WL_CONNECTED)
   {
-    delay(500);
-    int cnt = 0;
     Console3.print(".");
-    if (cnt++ >= wifiMaxTries) {
-      WiFi.beginSmartConfig();
-      while (1) {
-        delay(wifiRepeatInterval);
-        if (WiFi.smartConfigDone())
-        {
-          Console3.println("SmartConfig Success");
-          break;
-        }
-        else
-        {
-         Console3.print("+") 
-        }
+    digitalWrite(STDLED, not digitalRead(STDLED));
+    delay(wifiRepeatInterval) ;
+    if (retry++ >= wifiMaxTries) break;
+  }
+
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    Console3.println("\nConnection timeout expired! Start with default");
+    retry = 0;
+    WiFi.begin(WIFI_SSID, WIFI_PASS);
+    delay(wifiRepeatInterval * 2 );
+    while (WiFi.status() != WL_CONNECTED)
+    {
+      Console3.print(".");
+      digitalWrite(STDLED, not digitalRead(STDLED));
+      delay(wifiRepeatInterval);
+      if (retry++ >= wifiMaxTries) break;
+    }
+  }
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    Console3.println("Connection timeout expired! Start SmartConfig…");
+    retry = 0;
+    WiFi.beginSmartConfig();
+    digitalWrite(STDLED, false);
+    while (WiFi.status() != WL_CONNECTED)
+    {
+      Console3.print(".");
+      digitalWrite(STDLED, not digitalRead(STDLED));
+      delay(wifiRepeatInterval * 4);
+      if (retry++ >= wifiMaxTries) break;
+      if (WiFi.smartConfigDone())
+      {
+        Console3.println("SmartConfig success!");
+        break; // exit from loop
       }
     }
   }
-  ip = WiFi.localIP();
-}
-#else
-void getWiFi()
-{
-  WiFi.begin(WIFI_SSID, WIFI_PASS);
-  wifi_station_set_auto_connect(true);
-  wifi_station_set_hostname(HOST_NAME);
-  wifiConnectCounter = 1;
-  Console3.println();
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(wifiRepeatInterval);
-    Console3.print(".");
-    wifiConnectCounter++;
-    if (wifiConnectCounter > wifiMaxTries) {
-      delay(wifiRepeatInterval * 1000 * 1000);
-      wifiConnectCounter = 0;
-    }
+
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    Console3.println("Connection timeout expired! Running without Network");
+    WiFi.mode(WIFI_OFF);
+  } else {
+    ip = WiFi.localIP();
+    Console3.println("Connection succeeded");
+    WiFi.printDiag(Console3);
+
+    // show the IP address assigned to our device
+    Console3.println(WiFi.localIP());
+    digitalWrite(STDLED, true);
   }
-  ip = WiFi.localIP();
-}
-#endif
+} // End Void GetWiFi
 
 void disConnect()
 {
@@ -86,7 +101,11 @@ void myIP()
 // Time management
 void getNTP()
 {
-  configTime(MYTZ, NTP_SERVER);
+  if (WiFi.status() == WL_CONNECTED)
+  {
+    configTime(MYTZ, NTP_SERVER);
+    now = 1577833200000;   //01 Jan 2020 12:00
+  }
   now = time(nullptr);
   Epoch = now;
 }
@@ -107,6 +126,7 @@ void getTimeData()
   Day       = timeinfo->tm_mday;
   Month     = timeinfo->tm_mon + 1;
   Year      = timeinfo->tm_year + 1900; //returns years since 1900
+
   strftime (DayName , 12, "%A", timeinfo); //cf: https://www.cplusplus.com/reference/ctime/strftime/
   strftime (MonthName, 12, "%B", timeinfo);
   strftime (Time, 10, "%T", timeinfo);

@@ -3,47 +3,46 @@ void setup()
   delay(3000); // Wait for serial monitor to be started
   // Serial initialisation
   Serial.begin (SERIAL_SPEED); // On USB port
-  Serial1.begin(SERIAL_SPEED); // On GPIO2 / D4
+  //Serial1.begin(SERIAL_SPEED); // On GPIO2 / D4
+
+#if defined(BATTERY_SOURCE_IS_INA) | defined(WEATHER_SOURCE_IS_BME680)
   Wire.begin(SDA, SCL);
+#endif
+
+#if defined(WEATHER_SOURCE_IS_BME680)
+  bme.setTemperatureOversampling(BME680_OS_8X);
+  bme.setHumidityOversampling(BME680_OS_2X);
+  bme.setPressureOversampling(BME680_OS_4X);
+#endif
+
   Console3.printf("\n\n\nESP-Karajan at work,\nSerial @ %u Baud\n", SERIAL_SPEED);
 
- /* EEPROM.begin(512);
- if (!SPIFFS.begin()) 
-{
-  Console3.println("Failed to mount file system");
-  return;
-}
-*/
-  pinMode(RELAY , OUTPUT);  
-
- /*
-  // Witty Color LEDs
   pinMode(STDLED, OUTPUT);
-  pinMode(REDLED, OUTPUT);
-  pinMode(GRNLED, OUTPUT);
-  pinMode(BLULED, OUTPUT); 
-*/
-
-   // Networking and Time
+  /*
+    // Witty Color LEDs
+    pinMode(REDLED, OUTPUT);
+    pinMode(GRNLED, OUTPUT);
+    pinMode(BLULED, OUTPUT);
+  */
+  // Networking and Time
   getWiFi();
-  #if defined (OTA)
   ArduinoOTA.setHostname(HOST_NAME);
-  #endif
 
   //WiFi.printDiag(Serial);
-  Console3.printf("\nMAC address: %s , \nHostname: %s \nIP address::", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
-  Console3.println(WiFi.localIP());
+  Console3.printf("MAC address: %s , \nHostname: %s", WiFi.macAddress().c_str(), WiFi.hostname().c_str());
+  digitalWrite(STDLED, true);
+
   getNTP();
   delay(3000);
 
   getEpoch();            // writes the Epoch (Numbers of seconds till 1.1.1970...
-  Console3.println("Got Epoch");
+  Console3.println("\nGot Epoch");
   getTimeData();         // breaks down the Epoch into discrete values.
-  sprintf(charbuff, "Now is %02d:%02d:%02d.\r\nEpoch is %llu\nDate is %s, %02d %s %04d", Hour, Minute, Second, Epoch, DayName, Day, MonthName, Year);
+  sprintf(charbuff, "Now is %02d:%02d:%02d, Date is %s, %02d %s %04d", Hour, Minute, Second, DayName, Day, MonthName, Year);
   Console3.println(charbuff);
 
+#if defined (USE_OTA)
   // Over the Air Framework
- #if defined (OTA) 
   ArduinoOTA.onStart([]() {
     String type;
     if (ArduinoOTA.getCommand() == U_FLASH) {
@@ -76,25 +75,25 @@ void setup()
   });
 #endif
 
-#if defined (UDP)
-  // Begin listening to UDP port
-  UDP.begin(UDP_PORT);
-  Console3.print("Communicating on UDP port: ");
-  Console3.print(UDP_PORT);
+#if defined (TELNET)
+  TelnetStream.begin();
+  Console3.println("Console available on Telnet");
 #endif
 
-  // Weather
-  //myPlace.setLocation( 51.3683, 6.9293 );
-  //myPlace.setUnit("metric");
+#if defined (USE_UDP)
+  // Begin listening to UDP port
+  UDP.begin(UDP_PORT);
+  Console3.printf("Sending on UDP ports %u and ff.", UDP_PORT);
+#endif
 
-#if defined BATTERY_SOURCE_IS_INA
+#if defined (BATTERY_SOURCE_IS_INA)
   // INA 226 Battery Sensor
   devicesFound = INA.begin( AMPERE , SHUNT); // Define max Ampere and Shunt value
   INA.setBusConversion(8500);            // Maximum conversion time 8.244ms
   INA.setShuntConversion(8500);          // Maximum conversion time 8.244ms
   INA.setAveraging(100);                 // Average each reading n-times
   INA.setMode(INA_MODE_CONTINUOUS_BOTH); // Bus/shunt measured continuously
-  INA.AlertOnBusOverVoltage(true, 13900); // Trigger alert if over 13,8V on bus
+  INA.alertOnBusOverVoltage(true, 14300); // Trigger alert if over 13,8V on bus
 
   ina_voltage = INA.getBusMilliVolts(0);
   ina_current = INA.getBusMicroAmps(0);
@@ -109,16 +108,19 @@ void setup()
 #if defined (THINGER)
   // definition of structures for transmission
   // digital pin control example (i.e. turning on/off a light, a relay, configuring a parameter, etc)
-  thing["Relay"] << digitalPin(RELAY);
-  //thing["Relay"] << invertedDigitalPin(RELAY);
-
   // resource output example (i.e. reading a sensor value) https://docs.thinger.io/coding#define-output-resources
   //https://docs.thinger.io/coding#read-multiple-data
+
+  thing["control"] << [](pson & in) {
+    displayPage    = in["displayPage"];
+    displaySubPage = in["displaySubPage"];
+    serialPage     = in["serialPage"];
+  };
 
   thing["noise"] >> [](pson & out)
   {
     out["min"]       = sound.A0dBMin;
-    out["noise"]     = sound.A0dBSlow;
+    out["slow"]      = sound.A0dBSlow;
     out["backgr"]    = sound.A0dBBgr;
     out["max"]       = sound.A0dBMax;
     out["fast"]      = sound.A0dBFast;
@@ -128,18 +130,19 @@ void setup()
 
   thing["energy"] >> [](pson & out)
   {
-    out["voltage"]           = battery.voltage;
-    out["current"]           = battery.current;
-    out["power"]             = battery.power;
-    out["interal_resitance"] = internal_resistance;
-    out["percent_charged"]   = percent_charged;
+    out["voltage"]         = battery.voltage;
+    out["panel"]           = battery.panel;
+    out["current"]         = battery.current;
+    out["power"]           = battery.power;
+    out["int_resistance"]  = battery.ohm;
+    out["percent_charged"] = percent_charged;
   };
 
   thing["DAY"] >> [](pson & out)
   {
-    out["AhBat[26]"] = AhBat[26];
-    out["voltageAt2355h"] = voltageAt2355h;
-    out["voltageDelta"] = voltageDelta;
+    out["Device"] = HOST_NAME;
+    out["L0-24h"] = leq[26];
+    out["Lnight"] = leq[28];     
     out["L00h"] = leq[0];
     out["L01h"] = leq[1];
     out["L02h"] = leq[2];
@@ -164,6 +167,8 @@ void setup()
     out["L21h"] = leq[21];
     out["L22h"] = leq[22];
     out["L23h"] = leq[23];
+    out["N0-24h"] = NAT[26];
+    out["Nnight"] = NAT[28];    
     out["N00h"] = NAT[0];
     out["N01h"] = NAT[1];
     out["N02h"] = NAT[2];
@@ -188,6 +193,10 @@ void setup()
     out["N21h"] = NAT[21];
     out["N22h"] = NAT[22];
     out["N23h"] = NAT[23];
+#ifndef BATTERY_SOURCE_IS_NONE
+    out["BAhDay"] = AhBat[26];
+    out["BV@0h"]  = voltageAt0H;
+    out["BVDiff"] = voltageDelta;
     out["B00h"] = AhBat[0];
     out["B01h"] = AhBat[1];
     out["B02h"] = AhBat[2];
@@ -212,49 +221,53 @@ void setup()
     out["B21h"] = AhBat[21];
     out["B22h"] = AhBat[22];
     out["B23h"] = AhBat[23];
+#endif
   };
 
   thing["HOUR"] >> [](pson & out)
   {
-    out["temperature"] = outdoor_temperature;
-    out["humidity"]    = outdoor_humidity;
-    out["pressure"]    = outdoor_pressure;
+    out["temperature"] = temperature;
+    out["humidity"]    = humidity;
+    out["pressure"]    = pressure;
     out["wind"]        = wind_speed;
     out["direction"]   = wind_direction;
     out["summary"]     = weather_summary;
-#if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
-    out["current"]     = AhBat[Hour];
-    out["voltage"]     = battery.voltage;
-    out["resistance"]  = internal_resistance;
-    out["percent"]     = percent_charged;
+
+#ifndef BATTERY_SOURCE_IS_NONE
+    out["voltage"]         = battery.voltage;
+    out["current"]         = battery.current;
+    out["power"]           = battery.power;
+    out["percent_charged"] = percent_charged;
 #endif
   };
 
-  thing["MIN"] >> [](pson & out)
+  thing[BUCKET_MIN] >> [](pson & out)
   {
     out["min"]     = A0dBMin1min;
     out["LEq"]     = A0dBLeq1min;
+    out["LEtr"]    = A0dBtrend;    
     out["max"]     = A0dBMax1min;
     out["backgr"]  = sound.A0dBBgr;
-
-#if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
-    out["voltage"]     = battery.voltage;
-    out["power"]       = battery.power;
-    out["voltage"]     = battery.voltage;    
+#ifndef BATTERY_SOURCE_IS_NONE
+    out["voltage"]         = battery.voltage;
+    out["panel"]           = battery.panel;
+    out["current"]         = battery.current;
+    out["power"]           = battery.power;
+    out["percent_charged"] = percent_charged;
 #endif
   };
 
-  thing["EVENT"] >> [](pson & out)
+  thing[BUCKET_EVENT] >> [](pson & out)
   {
     out["peakTime"]         = peakTime;
-    out["peakValue"]        = peakValue;
+    out["eventPeak"]        = peakValue;
     out["aboveThreshLe"]    = aboveThreshLE;
     out["aboveThreshLeq"]   = aboveThreshLEq;
     out["aboveThreshDuration"] = aboveThreshDuration;
     out["less10dBLe"]       = less10dBLE;
     out["less10dBLeq"]      = less10dBLEq;
     out["less10dBDuration"] = less10dBDuration;
-    out["NAT"] = NAT[Hour];
+    out["NAT"]              = NAT[Hour];
   };
 
   //Communication with Thinger.io
@@ -263,15 +276,15 @@ void setup()
   // Retrieve Persistance values
 
   pson persistance;
-#if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
   thing.get_property("persistance", persistance);
+#if (defined BATTERY_SOURCE_IS_INA) || (defined BATTERY_SOURCE_IS_UDP)
   currentInt          = persistance["currentInt"];
   nCurrent            = persistance["nCurrent"];
   AhBat[25]           = persistance["Ah/hour"];
   AhBat[26]           = persistance["Ah/yesterday"];
   voltageDelta        = persistance["voltageDelta"];
-  voltageAt2355h      = persistance["voltageAt2355h"];
-  internal_resistance = persistance["resistance"];
+  voltageAt0H          = persistance["voltageAt0H"];
+  battery.ohm = persistance["resistance"];
 #endif
   leq[25]             = persistance["A0dBLEQ"];
   A0dBSumExp60min     = persistance["A0dBSumExp"];
@@ -282,12 +295,11 @@ void setup()
   A094                = persistance["A094"];
   A047                = persistance["A047"];
 
-  outdoor_temperature = persistance["temperature"];
-  outdoor_humidity    = persistance["humidity"];
-  outdoor_pressure    = persistance["pressure"];
+  temperature = persistance["temperature"];
+  humidity            = persistance["humidity"];
+  pressure    = persistance["pressure"];
   wind_speed  = persistance["wind"];
   wind_direction = persistance["direction"];
-  // weather_summary     = persistance["summary"];  //ambiguous overload for 'operator=' (operand types are 'String' and 'protoson::pson')
 
   pson lequ;
   thing.get_property("lequ", lequ);  // 0..23=hour, 25=current, 26=Lequ 24h, 27= LeqDay, 28=LeqNight, 29=Lden
@@ -386,14 +398,6 @@ void setup()
   AhBat[26] = BATmAh["Yesterday"];
   AhBat[27] = BATmAh["Today"];
 
-#else // no Thinger
-/*
-  // Persistance over Structure and memcpy.
-EEPROM.get(addr,data);
-EEPROM.put(addr,data);
-EEPROM.commit();
-*/
-
 #endif  //end if defined THINGER
 
   // Initialisations.
@@ -401,23 +405,18 @@ EEPROM.commit();
   if (A047 == 0) A047 = Ao47; // uninitialized or no Thinger
 
   state = 'o';                // event detection idle
-  serialPage = 'P';           // default reporting page AK Modulbus
-  serialDay = true;
-  serialHur = true;
-  serialMin = true;
-  
+  serialPage = 'A';           // Always start with AK Modulbus
   if (sound.A0dBBgr < LOWER_LIMIT_DB) sound.A0dBBgr = LOWER_LIMIT_DB;    // default background and minimum level
-//  digitalWrite(STDLED, true);
-  
+  //  digitalWrite(STDLED, true);
+
 #if defined (OFFLINE)
   Console3.println(F("Going off-line "));
-  WiFi.mode(WIFI_OFF); 
+  WiFi.mode(WIFI_OFF);
   Console3.println (F("Sketch is now running offline with own time"));
 #endif
-#if defined (OTA)
+
   ArduinoOTA.begin();
-  Console3.println("\nOTA-Ready");
-#endif
+  Console3.println("\nOTA-Ready\n\n\n\n");
   Console2.print("\nNAT|PKTime  |PKdB|Leq4|t10|Leq3|\n");
 }
 //end Setup
