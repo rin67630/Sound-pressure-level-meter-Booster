@@ -9,6 +9,9 @@ Most of them have however either no, or extremely primitive reporting abilities.
 
 The purpose of this development is to provide networking and reporting abilities as close to IEC 61672-1:2013 specifications as possible to (preferably) an extremely cheap sound pressure level meter GM1358, by adding a ESP8266 WiFi microcontroller to it. Other SPL meters can be used as well, albeit requiring more components and soldering.
 
+(Remark: Currently the GM1358 Sound pressure level meter is hard to source. You may use an alternative: the gravity sound pressure sensor. 
+e.g. to be procured from Mouser https://www.mouser.de/ProductDetail/DFRobot/SEN0232?qs=r5DSvlrkXmJSkxvy12pSNQ%3D%3D. )
+
 In the first variant sound pressure level meter + WiFi adapter + Online Dashboard the total value of the bill of material will be below 30€ !
 
 With the GM1358, the ESP8266 microcontroller will be small enough to fit into its original case and the requested soldering will be limited to three wires.
