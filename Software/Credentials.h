@@ -10,8 +10,8 @@
 #define THINGER_CREDENTIALS  "Thinger Credentials"// Must match Thinger device credentials (Not user password)
 #define DFLD_REGION         "???"                 // Airport region at DFLD
 #define DFLD_STATION        "???"                 // Station number at DFLD
-#define Ao94                 747                    // 747  Input AK with offset and 2,5v
-#define Ao47                 461                    // 461  Input AK with offset and 2,5v  
+#define Ao94                 747                    // 747  (AK Modulbus)  747 Gravity  952 GM1358(without voltage reducer)
+#define Ao47                 461                    // 461  (AK Modulbus)  373 Gravity  475 GM1358(without voltage reducer)
   // ***Event parameters***
 #define  WIND_LIMIT                  15 // upper limit of Wind speed to record NATs
 #define  UPPER_LIMIT_DB              88 // upper limit of Thinger plots
