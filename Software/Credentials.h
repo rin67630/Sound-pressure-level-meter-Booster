@@ -4,6 +4,7 @@
 #define WIFI_PASS           "Secret Password"     //default Password
 #define UDP_TARGET          "192.168.?.?"         // Destination IP for your own Raspberry Pi
 #define HOST_NAME            "Thinger_Device"     // Must match Thinger device name
+//#define HOST_NAME            WiFi.getHostname() // This variant uses the ESP-ABCDEF (Mac Address) name for Thinger)
 #define THINGER_USERNAME     "Thinger_User"       // Must match Thinger user name
 #define UDP_TARGET           "192.168.001.001"    // Destination IP for Raspberry Pi (enter real local IP)
 #define UDP_PORT             4321                 // Port to send data, next port to send reports 
