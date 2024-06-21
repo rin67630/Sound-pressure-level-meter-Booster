@@ -59,8 +59,7 @@ Event related metrics:
 
 Additionally the program can grab weather information from openweathermap.org and provide the corresponding meteorological conditions.
 
-![image](https://user-images.githubusercontent.com/14197155/127849258-713dad08-c1ca-47cf-92c1-a6851341be9e.png)
-
+<img width="802" alt="image" src="https://github.com/rin67630/Sound-pressure-level-meter-Booster/assets/14197155/feff52f2-507b-4433-9b1a-75420242a148">
 
 With a little more hardware and a separate casing, you may also build the system with the ability to be solar powered including a solar power monitor to report all information about the battery condition and the power fed by the solar panel.
 You will then operate the system without electrical connection to your computer, using the Cloud service Thinger.io (free for 2 devices and 4 dashboards...)
