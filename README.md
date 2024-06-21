@@ -36,7 +36,8 @@ For each event:
 - LE for the event according to a fixed threshold
 - LE for the event according to the criterium "max-10dB"
 
-![image](https://user-images.githubusercontent.com/14197155/127849033-777ff7cd-66ec-44c8-b6fa-3488e27fa861.png)
+<img width="802" alt="image" src="https://github.com/rin67630/Sound-pressure-level-meter-Booster/assets/14197155/7eb2e0c8-2a78-4ba1-94a5-a0f50410762f">
+
  
 Statistics according to residential aircraft noise standards:
 
