@@ -20,12 +20,12 @@ void statsRun()
   if (NewHour) NAT[Hour] = 0;
 
   // === Process Weather
-#if defined WEATHER_SOURCE_IS_URL
-  if (wind_speed > WIND_LIMIT) state = 'o';     // forcing idle if wind too strong.
+#if defined WEATHER_SOURCE_IS_OWM
+  if (wind_speed > WIND_LIMIT) OFD_state ='o';     // forcing idle if wind too strong.
 #endif
 
   // === Process DIN/IEC Overflight detection/evaluation
-  if (sound.A0dBSlow > EVENT_THRESHOLD_LEVEL && state != 'o') //
+  if (sound.A0dBSlow > EVENT_THRESHOLD_LEVEL && OFD_state != 'o') //
   {
     if (sound.A0dBSlow > peakValue)
     {
@@ -40,9 +40,9 @@ void statsRun()
 
   Event[maxExceedingTimer] = sound.A0dBSlow;        //Recording flashback (in reverse order, but it does not matter)
 
-  // === (Handling of states
+  // === (Handling of Overflight Detection states
   byte n;              //Looping index
-  switch (state)
+  switch (OFD_state)
   {
     case 'o':  // Idle state Waiting for exceeding Threshold
       minExceedingTimer = 0;
@@ -57,49 +57,49 @@ void statsRun()
         {
           Event[n] = 0; // clear flashback record
         }
-        state = 'a';
+        OFD_state ='a';
       }
       break;
-    case 'a':
-      if (sound.A0dBSlow < MEASUREMENT_THRESHOLD_LEVEL) state = 'o';    // return to idle
+    case 'a':   //Init Event threshold, start timers
+      if (sound.A0dBSlow < MEASUREMENT_THRESHOLD_LEVEL) OFD_state ='o';    // return to idle
       if (sound.A0dBSlow > EVENT_THRESHOLD_LEVEL)
       {
         // start timers
         minExceedingTimer = MIN_EXCEEDANCE_TIME;
         maxExceedingTimer = MAX_EXCEEDANCE_TIME;
-        state = 'b';
+        OFD_state ='b';
       }
       break;
-    case 'b':  // Qualifying Duration above Threshold
+    case 'b':    // Qualifying Duration above Threshold
       Event[maxExceedingTimer] = sound.A0dBSlow;                        //Recording first second
       if (sound.A0dBSlow < EVENT_THRESHOLD_LEVEL)                       // Event finished
       {
         if (not minExceedingTimer && maxExceedingTimer)                 //(longer than min and less than max time)
         {
           if (peakValue >= NAT_THRESHOLD_LEVEL) NAT[Hour]++;            // we have an event qualifying for NAT recording
-          state = 'c';
+          OFD_state ='c';
         }
         if ( minExceedingTimer || not maxExceedingTimer)                //(less than min or longer than max time)
         {
-          state = 'o';                                                  // event does not qualify, retuning to idle
+          OFD_state ='o';                                                  // event does not qualify, retuning to idle
         }
       }
       break;
-    case 'c':   // wait for MAX_EXCEEDANCE_TIME to expire
+    case 'c':   // Wait for MAX_EXCEEDANCE_TIME to expire
       if (not maxExceedingTimer)                                       // after MAX_EXCEEDANCE_TIME expired
       {
         //       listeningTimer = LISTENING_TIME;
-        state = 'd';
+        OFD_state ='d';
       }
       break;
-    case 'd':                                                       // Retrospective analysis according to Lmax-10dB
+    case 'd':   // Retrospective analysis according to Lmax-10dB
       eventPeak = 0;                                                // determining the max-10 Leq reference.
       for  ( n = 0; n < MAX_EXCEEDANCE_TIME; n++)
       {
         eventPeak = max(Event[n], eventPeak);                        //scan flashback for max
       }
 
-      // Event evaluation according to eventPeak level (peak - 10dB)
+                   // Event evaluation according to eventPeak level (peak - 10dB)
       soundEnergy = 0;
       eventDuration = 0;
       for  (n = 0; n < MAX_EXCEEDANCE_TIME; n++)
@@ -133,16 +133,16 @@ void statsRun()
 
       // Event classsification by dB class
       maxLevelClass[constrain (int (eventPeak - 60), 0, 34)] ++;
-      trigEvent = true;
+      TrigEvent = true;
       thingerNAT = true;
       listeningTimer = LISTENING_TIME;
-      state = 'e';
+      OFD_state ='e';
       break;
-    case 'e':                                                           // waiting for listening time before reurning to idle
-      if (not listeningTimer) state = 'o';                              // after MAX_EXCEEDANCE_TIME state = 'o';
+    case 'e':    // Waiting for listening time before returning to idle
+      if (not listeningTimer) OFD_state ='o';                              // after MAX_EXCEEDANCE_TIME OFD_state ='o';
       break;
     default:   // catch evtl. wrong states
-      state = 'o';
+      OFD_state ='o';
   } // end Switch
 
   if (thingerNAT)
