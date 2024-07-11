@@ -9,7 +9,8 @@ Get your devie up and running including cloud dashboards at a breeze!
 The files provided are:
 
 ## Precompiled binary demo 
-(Requires only a blank ESP8266 to deliver live data)
+(Requires only a blank ESP8266 to deliver live data).  
+
       ESP_SwissArmyKnife_RevO6_2024.ino.bin
 ## Python script to patch the bove file with your credentials. 
        PythonPatcherTE.py
