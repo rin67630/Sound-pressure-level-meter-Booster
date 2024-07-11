@@ -12,7 +12,7 @@ The files provided are:
 (Requires only a blank ESP8266 to deliver live data).  
 
       ESP_SwissArmyKnife_RevO6_2024.ino.bin
-## Python script to patch the bove file with your credentials. 
+## Python script to patch that file with your credentials. 
        PythonPatcherTE.py
 ## Standard scripts from Espressif to flash devices
       espota.py
