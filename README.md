@@ -56,6 +56,7 @@ Event related metrics:
 -	NAT daytime 06:00 to 22:00
 -	NAT nighttime 22:00 to 6:00
 -	NAT 22:00 to 24:00
+- NAT distribution by dB classes
 
 Additionally the program can grab weather information from openweathermap.org and provide the corresponding meteorological conditions.
 
