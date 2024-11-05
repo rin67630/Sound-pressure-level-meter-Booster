@@ -20,5 +20,6 @@ The files provided are:
 ## Templates for dashboards at thinger.io
       z_Thinger.Min.h
       z_Thinger.Sec.h
+      Z_Thinger_Stats.h
 
 Download all files to a directory of your computer 
