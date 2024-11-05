@@ -12,8 +12,8 @@
 			"value": 24
 		}
 	},
-	"description": "ESP-E45566 Echtzeit",
-	"name": "Echtzeit (Sekundentakt)",
+	"description": "Realtime (by the second)",
+	"name": "Realtime",
 	"placeholders": {
 		"sources": []
 	},
@@ -27,12 +27,12 @@
 	"tabs": [
 		{
 			"icon": "fas fa-tachometer-alt",
-			"name": "TAGESSTATISTIK",
+			"name": "RealTime",
 			"widgets": [
 				{
 					"layout": {
 						"col": 5,
-						"row": 41,
+						"row": 31,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -52,10 +52,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "17h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -74,10 +74,11 @@
 					},
 					"panel": {
 						"color": "#c2e7fa",
+						"currentColor": "#c2e7fa",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Nacht"
+						"title": "Night"
 					},
 					"properties": {
 						"color": "#1E313E",
@@ -91,10 +92,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "Nighttime",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -107,7 +108,7 @@
 				{
 					"layout": {
 						"col": 10,
-						"row": 41,
+						"row": 31,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -127,10 +128,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "22h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -143,7 +144,7 @@
 				{
 					"layout": {
 						"col": 5,
-						"row": 39,
+						"row": 29,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -163,10 +164,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "05h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -179,7 +180,7 @@
 				{
 					"layout": {
 						"col": 4,
-						"row": 39,
+						"row": 29,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -199,10 +200,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "04h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -215,7 +216,7 @@
 				{
 					"layout": {
 						"col": 3,
-						"row": 39,
+						"row": 29,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -235,10 +236,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "03h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -251,7 +252,7 @@
 				{
 					"layout": {
 						"col": 2,
-						"row": 39,
+						"row": 29,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -271,10 +272,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "02h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -287,7 +288,7 @@
 				{
 					"layout": {
 						"col": 1,
-						"row": 39,
+						"row": 29,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -307,10 +308,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "01h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -323,7 +324,7 @@
 				{
 					"layout": {
 						"col": 4,
-						"row": 41,
+						"row": 31,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -343,10 +344,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "16h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -359,7 +360,7 @@
 				{
 					"layout": {
 						"col": 3,
-						"row": 41,
+						"row": 31,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -379,10 +380,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "15h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -395,7 +396,7 @@
 				{
 					"layout": {
 						"col": 2,
-						"row": 41,
+						"row": 31,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -415,10 +416,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "14h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -431,7 +432,7 @@
 				{
 					"layout": {
 						"col": 0,
-						"row": 41,
+						"row": 31,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -451,10 +452,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "12h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -467,7 +468,7 @@
 				{
 					"layout": {
 						"col": 9,
-						"row": 41,
+						"row": 31,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -487,10 +488,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "21h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -502,56 +503,8 @@
 				},
 				{
 					"layout": {
-						"col": 11,
-						"row": 9,
-						"sizeX": 1,
-						"sizeY": 3
-					},
-					"panel": {
-						"color": "#fdffc5",
-						"showOffline": {
-							"type": "none"
-						},
-						"title": "Vergleich"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB ( A)",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"device": {
-								"id": "Witty",
-								"interval": 1,
-								"mapping": "impulse",
-								"resource": "noise",
-								"update": "interval",
-								"user": "spThinger5"
-							},
-							"device_property": {
-								"device": "Witty",
-								"mapping": "11h",
-								"property": "lequ",
-								"user": "spThinger5"
-							},
-							"skipCurrent": 1,
-							"source": "device",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
 						"col": 10,
-						"row": 39,
+						"row": 29,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -571,10 +524,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "10h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -587,7 +540,7 @@
 				{
 					"layout": {
 						"col": 9,
-						"row": 39,
+						"row": 29,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -607,10 +560,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "09h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -623,7 +576,7 @@
 				{
 					"layout": {
 						"col": 8,
-						"row": 39,
+						"row": 29,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -643,10 +596,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "08h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -659,7 +612,7 @@
 				{
 					"layout": {
 						"col": 7,
-						"row": 39,
+						"row": 29,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -679,10 +632,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "07h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -695,7 +648,7 @@
 				{
 					"layout": {
 						"col": 6,
-						"row": 39,
+						"row": 29,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -715,10 +668,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "06h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -731,7 +684,7 @@
 				{
 					"layout": {
 						"col": 8,
-						"row": 41,
+						"row": 31,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -751,10 +704,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "20h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -773,10 +726,11 @@
 					},
 					"panel": {
 						"color": "#d0ffd5",
+						"currentColor": "#d0ffd5",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "letztens um..."
+						"title": "last one at..."
 					},
 					"properties": {
 						"color": "#1E313E",
@@ -794,13 +748,13 @@
 								"id": "EVENT",
 								"mapping": "peakTime",
 								"tags": {},
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "19h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "bucket",
 							"timespan": {
@@ -813,7 +767,7 @@
 				{
 					"layout": {
 						"col": 6,
-						"row": 41,
+						"row": 31,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -833,10 +787,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "18h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -849,7 +803,7 @@
 				{
 					"layout": {
 						"col": 1,
-						"row": 41,
+						"row": 31,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -869,10 +823,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "13h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -885,12 +839,13 @@
 				{
 					"layout": {
 						"col": 0,
-						"row": 37,
+						"row": 27,
 						"sizeX": 12,
 						"sizeY": 2
 					},
 					"panel": {
 						"color": "#ffffff",
+						"currentColor": "#ffffff",
 						"showOffline": {
 							"type": "none"
 						}
@@ -906,7 +861,7 @@
 					"sources": [
 						{
 							"source": "value",
-							"value": "Äquivalenter Dauerschallpegel  pro Stunde (Laufend)"
+							"value": "Equivalent Sound Level Leq (per hour)"
 						}
 					],
 					"type": "text"
@@ -914,12 +869,13 @@
 				{
 					"layout": {
 						"col": 0,
-						"row": 43,
+						"row": 33,
 						"sizeX": 12,
 						"sizeY": 2
 					},
 					"panel": {
 						"color": "#ffffff",
+						"currentColor": "#ffffff",
 						"showOffline": {
 							"type": "none"
 						}
@@ -935,7 +891,7 @@
 					"sources": [
 						{
 							"source": "value",
-							"value": "Erkannte Überflüge pro Stunde (Laufend)"
+							"value": "Number Above Treshold (NAT)"
 						}
 					],
 					"type": "text"
@@ -943,7 +899,7 @@
 				{
 					"layout": {
 						"col": 0,
-						"row": 39,
+						"row": 29,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -963,10 +919,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "00h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -979,7 +935,7 @@
 				{
 					"layout": {
 						"col": 9,
-						"row": 47,
+						"row": 37,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -999,10 +955,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "21h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1015,7 +971,7 @@
 				{
 					"layout": {
 						"col": 4,
-						"row": 45,
+						"row": 35,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1035,10 +991,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "04h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1051,7 +1007,7 @@
 				{
 					"layout": {
 						"col": 3,
-						"row": 45,
+						"row": 35,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1071,10 +1027,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "03h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1087,7 +1043,7 @@
 				{
 					"layout": {
 						"col": 2,
-						"row": 45,
+						"row": 35,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1107,10 +1063,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "02h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1123,7 +1079,7 @@
 				{
 					"layout": {
 						"col": 1,
-						"row": 45,
+						"row": 35,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1143,10 +1099,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "01h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1159,7 +1115,7 @@
 				{
 					"layout": {
 						"col": 11,
-						"row": 47,
+						"row": 37,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1179,10 +1135,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "23h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1195,7 +1151,7 @@
 				{
 					"layout": {
 						"col": 5,
-						"row": 45,
+						"row": 35,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1215,10 +1171,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "05h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1231,7 +1187,7 @@
 				{
 					"layout": {
 						"col": 11,
-						"row": 45,
+						"row": 35,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1251,10 +1207,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "11h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1267,7 +1223,7 @@
 				{
 					"layout": {
 						"col": 10,
-						"row": 45,
+						"row": 35,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1287,10 +1243,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "10h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1303,7 +1259,7 @@
 				{
 					"layout": {
 						"col": 9,
-						"row": 45,
+						"row": 35,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1323,10 +1279,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "09h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1339,7 +1295,7 @@
 				{
 					"layout": {
 						"col": 8,
-						"row": 45,
+						"row": 35,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1359,10 +1315,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "08h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1375,7 +1331,7 @@
 				{
 					"layout": {
 						"col": 7,
-						"row": 45,
+						"row": 35,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1395,10 +1351,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "07h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1411,7 +1367,7 @@
 				{
 					"layout": {
 						"col": 6,
-						"row": 45,
+						"row": 35,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1431,10 +1387,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "06h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1447,7 +1403,7 @@
 				{
 					"layout": {
 						"col": 7,
-						"row": 47,
+						"row": 37,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1467,10 +1423,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "19h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1483,7 +1439,7 @@
 				{
 					"layout": {
 						"col": 5,
-						"row": 47,
+						"row": 37,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1503,10 +1459,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "17h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1519,7 +1475,7 @@
 				{
 					"layout": {
 						"col": 4,
-						"row": 47,
+						"row": 37,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1539,10 +1495,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "16h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1555,7 +1511,7 @@
 				{
 					"layout": {
 						"col": 3,
-						"row": 47,
+						"row": 37,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1575,10 +1531,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "15h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1591,7 +1547,7 @@
 				{
 					"layout": {
 						"col": 2,
-						"row": 47,
+						"row": 37,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1611,10 +1567,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "14h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1627,7 +1583,7 @@
 				{
 					"layout": {
 						"col": 1,
-						"row": 47,
+						"row": 37,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1647,10 +1603,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "13h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1663,7 +1619,7 @@
 				{
 					"layout": {
 						"col": 0,
-						"row": 47,
+						"row": 37,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1683,10 +1639,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "12h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1699,7 +1655,7 @@
 				{
 					"layout": {
 						"col": 6,
-						"row": 47,
+						"row": 37,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1719,10 +1675,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "18h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1735,7 +1691,7 @@
 				{
 					"layout": {
 						"col": 8,
-						"row": 47,
+						"row": 37,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1755,10 +1711,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "20h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1771,7 +1727,7 @@
 				{
 					"layout": {
 						"col": 10,
-						"row": 47,
+						"row": 37,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1791,10 +1747,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "22h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1807,7 +1763,7 @@
 				{
 					"layout": {
 						"col": 0,
-						"row": 45,
+						"row": 35,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -1827,10 +1783,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "00h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1841,24 +1797,34 @@
 					"type": "text"
 				},
 				{
+					"api": {},
 					"layout": {
 						"col": 0,
-						"row": 6,
+						"row": 5,
 						"sizeX": 11,
-						"sizeY": 21
+						"sizeY": 22
 					},
 					"panel": {
 						"color": "#ffffff",
+						"colors": [
+							{
+								"color": "#000000",
+								"max": 10,
+								"min": 0
+							}
+						],
+						"currentColor": "#ffffff",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Nur erkannte Überflüge"
+						"title": ""
 					},
 					"properties": {
 						"axis": true,
 						"fill": true,
-						"legend": true,
-						"multiple_axes": false
+						"legend": false,
+						"multiple_axes": false,
+						"options": "var options = {\n    series: series,\n    chart: {\n        type: 'line',\n        zoom: {\n            enabled: true\n        }\n    },\n    zoom: {\n        type: 'x',\n        enabled: true,\n        autoScaleYaxis: true\n    },\n    toolbar: {\n        autoSelected: 'zoom'\n    },\n    stroke: {\n        curve: 'smooth',\n        width: 4\n    },\n    grid: {\n        row: {\n            colors: ['#f3f3f3', 'transparent'],\n            opacity: 0.5\n        },\n    },\n    xaxis: {\n        type: 'datetime',\n        tooltip: {\n            enabled: false\n        },\n        labels: {\n            datetimeUTC: false\n        }\n    },\n    yaxis: {\n        labels: {\n            \"formatter\": function (val) {\n                return val.toFixed(1);\n            }\n        }\n    },\n    tooltip: {\n        x: {\n            format: 'dd/MM/yyyy HH:mm:ss'\n        }\n    }\n};"
 					},
 					"sources": [
 						{
@@ -1867,25 +1833,26 @@
 								"id": "MIN",
 								"mapping": "backgr",
 								"tags": {},
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"color": "#fdfbff",
 							"device": {
-								"id": "Witty",
+								"id": "DEVCNAME         ",
 								"interval": 20,
 								"mapping": "limit",
 								"resource": "noise",
 								"update": "interval",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"name": "Limit",
-							"skipCurrent": 6,
-							"source": "device",
+							"skipCurrent": 20,
+							"source": "value",
 							"timespan": {
 								"magnitude": "minute",
 								"mode": "configurable",
 								"value": 15
-							}
+							},
+							"value": 85
 						},
 						{
 							"bucket": {
@@ -1893,16 +1860,16 @@
 								"id": "MIN",
 								"mapping": "LEtr",
 								"tags": {},
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"color": "#3e1505",
 							"device": {
-								"id": "Witty",
+								"id": "DEVCNAME         ",
 								"interval": 1,
 								"mapping": "slow",
 								"resource": "noise",
 								"update": "interval",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"name": "Slow db(A)",
 							"skipCurrent": 1,
@@ -1910,26 +1877,26 @@
 							"timespan": {
 								"magnitude": "minute",
 								"mode": "configurable",
-								"value": 15
+								"value": 30
 							}
 						},
 						{
 							"bucket": {},
 							"color": "#edd7b0",
 							"device": {
-								"id": "Witty",
+								"id": "DEVCNAME         ",
 								"interval": 1,
 								"mapping": "impulse",
 								"resource": "noise",
 								"update": "interval",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"name": "Compare",
 							"skipCurrent": 1,
 							"source": "device",
 							"timespan": {
 								"magnitude": "minute",
-								"value": 15
+								"value": 30
 							}
 						},
 						{
@@ -1938,25 +1905,27 @@
 								"id": "MIN",
 								"mapping": "backgr",
 								"tags": {},
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"color": "#e5e852",
 							"device": {
-								"id": "Witty",
+								"id": "DEVCNAME         ",
+								"interval": 1,
 								"mapping": "backgr",
 								"resource": "noise",
-								"user": "spThinger5"
+								"update": "interval",
+								"user": "CLOUDNAM        "
 							},
 							"name": "Background",
 							"source": "device",
 							"timespan": {
 								"magnitude": "minute",
 								"mode": "latest",
-								"value": 15
+								"value": 30
 							}
 						}
 					],
-					"type": "chart"
+					"type": "apex_charts"
 				},
 				{
 					"layout": {
@@ -1967,6 +1936,7 @@
 					},
 					"panel": {
 						"color": "#dcdfdc",
+						"currentColor": "#dcdfdc",
 						"showOffline": {
 							"type": "none"
 						}
@@ -1982,7 +1952,7 @@
 					"sources": [
 						{
 							"source": "value",
-							"value": "Tageswerte"
+							"value": "Day stats"
 						}
 					],
 					"type": "text"
@@ -1992,7 +1962,7 @@
 						"col": 0,
 						"row": 0,
 						"sizeX": 1,
-						"sizeY": 6
+						"sizeY": 5
 					},
 					"panel": {
 						"color": "#ffffff",
@@ -2022,11 +1992,12 @@
 					"layout": {
 						"col": 1,
 						"row": 0,
-						"sizeX": 3,
+						"sizeX": 2,
 						"sizeY": 3
 					},
 					"panel": {
 						"color": "#d0ffd5",
+						"currentColor": "#d0ffd5",
 						"showOffline": {
 							"type": "none"
 						},
@@ -2036,14 +2007,14 @@
 						"color": "#1E313E",
 						"decimal_places": 2,
 						"icon": "",
-						"size": "40px",
+						"size": "32px",
 						"unit_size": "20px",
 						"weight": "font-thin"
 					},
 					"sources": [
 						{
 							"source": "value",
-							"value": "Letzte Überflugerkennung"
+							"value": "Peak Event Detection"
 						}
 					],
 					"type": "text"
@@ -2051,7 +2022,7 @@
 				{
 					"layout": {
 						"col": 11,
-						"row": 39,
+						"row": 29,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -2071,10 +2042,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "11h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2087,41 +2058,54 @@
 				{
 					"layout": {
 						"col": 11,
-						"row": 6,
+						"row": 12,
 						"sizeX": 1,
 						"sizeY": 3
 					},
 					"panel": {
-						"color": "#fdffc5",
+						"color": "#1dc40f",
+						"colors": [
+							{
+								"color": "#ff0000",
+								"max": 11.5,
+								"min": 0
+							},
+							{
+								"color": "#ffff00",
+								"max": 12,
+								"min": 11.5
+							}
+						],
+						"currentColor": "#1dc40f",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Slow"
+						"title": "Battery"
 					},
 					"properties": {
 						"color": "#1E313E",
 						"decimal_places": 2,
 						"icon": "",
 						"size": "40px",
-						"unit": "dB ( A)",
+						"unit": "V",
 						"unit_size": "20px",
 						"weight": "font-thin"
 					},
 					"sources": [
 						{
 							"device": {
-								"id": "Witty",
+								"id": "DEVCNAME         ",
 								"interval": 1,
-								"mapping": "slow",
-								"resource": "noise",
+								"mapping": "voltage",
+								"resource": "energy",
 								"update": "interval",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "11h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"skipCurrent": 1,
 							"source": "device",
@@ -2135,7 +2119,7 @@
 				{
 					"layout": {
 						"col": 7,
-						"row": 41,
+						"row": 31,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -2155,10 +2139,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "19h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2198,13 +2182,13 @@
 								"id": "EVENT",
 								"mapping": "less10dBLeq",
 								"tags": {},
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "19h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "bucket",
 							"timespan": {
@@ -2223,10 +2207,11 @@
 					},
 					"panel": {
 						"color": "#d0ffd5",
+						"currentColor": "#d0ffd5",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "NAT in Stunde"
+						"title": "NAT in Hour"
 					},
 					"properties": {
 						"color": "#1E313E",
@@ -2244,13 +2229,13 @@
 								"id": "EVENT",
 								"mapping": "NAT",
 								"tags": {},
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "19h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "bucket",
 							"timespan": {
@@ -2269,10 +2254,11 @@
 					},
 					"panel": {
 						"color": "#d0ffd5",
+						"currentColor": "#d0ffd5",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Spitze"
+						"title": "Peak"
 					},
 					"properties": {
 						"color": "#1E313E",
@@ -2290,13 +2276,13 @@
 								"id": "EVENT",
 								"mapping": "eventPeak",
 								"tags": {},
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "19h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "bucket",
 							"timespan": {
@@ -2315,6 +2301,7 @@
 					},
 					"panel": {
 						"color": "#d0ffd5",
+						"currentColor": "#d0ffd5",
 						"showOffline": {
 							"type": "none"
 						},
@@ -2336,13 +2323,13 @@
 								"id": "EVENT",
 								"mapping": "aboveThreshLeq",
 								"tags": {},
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "19h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "bucket",
 							"timespan": {
@@ -2361,10 +2348,11 @@
 					},
 					"panel": {
 						"color": "#d0ffd5",
+						"currentColor": "#d0ffd5",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Für___Max-10dB"
+						"title": "> Max-10dB for..."
 					},
 					"properties": {
 						"color": "#1E313E",
@@ -2382,13 +2370,13 @@
 								"id": "EVENT",
 								"mapping": "less10dBDuration",
 								"tags": {},
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "19h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "bucket",
 							"timespan": {
@@ -2407,10 +2395,11 @@
 					},
 					"panel": {
 						"color": "#d0ffd5",
+						"currentColor": "#d0ffd5",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Für____>58dB"
+						"title": ">58dB for..."
 					},
 					"properties": {
 						"color": "#1E313E",
@@ -2428,13 +2417,13 @@
 								"id": "EVENT",
 								"mapping": "aboveThreshDuration",
 								"tags": {},
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "19h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "bucket",
 							"timespan": {
@@ -2447,7 +2436,7 @@
 				{
 					"layout": {
 						"col": 11,
-						"row": 12,
+						"row": 9,
 						"sizeX": 1,
 						"sizeY": 3
 					},
@@ -2470,18 +2459,18 @@
 					"sources": [
 						{
 							"device": {
-								"id": "Witty",
+								"id": "DEVCNAME         ",
 								"interval": 1,
 								"mapping": "impulse",
 								"resource": "noise",
 								"update": "interval",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "11h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"skipCurrent": 1,
 							"source": "device",
@@ -2518,18 +2507,18 @@
 					"sources": [
 						{
 							"device": {
-								"id": "Witty",
-								"interval": 1,
+								"id": "DEVCNAME         ",
+								"interval": 5,
 								"mapping": "backgr",
 								"resource": "noise",
 								"update": "interval",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "11h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"skipCurrent": 1,
 							"source": "device",
@@ -2543,7 +2532,7 @@
 				{
 					"layout": {
 						"col": 11,
-						"row": 41,
+						"row": 31,
 						"sizeX": 1,
 						"sizeY": 2
 					},
@@ -2563,10 +2552,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "23h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2602,10 +2591,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "Daytime",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2624,6 +2613,7 @@
 					},
 					"panel": {
 						"color": "#fdffc5",
+						"currentColor": "#fdffc5",
 						"showOffline": {
 							"type": "none"
 						}
@@ -2639,7 +2629,7 @@
 					"sources": [
 						{
 							"source": "value",
-							"value": "Messwerte"
+							"value": "Current"
 						}
 					],
 					"type": "text"
@@ -2670,10 +2660,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "Day",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2686,7 +2676,7 @@
 				{
 					"layout": {
 						"col": 0,
-						"row": 49,
+						"row": 39,
 						"sizeX": 12,
 						"sizeY": 2
 					},
@@ -2717,10 +2707,11 @@
 						"col": 9,
 						"row": 3,
 						"sizeX": 2,
-						"sizeY": 3
+						"sizeY": 2
 					},
 					"panel": {
 						"color": "#7f7f7f",
+						"currentColor": "#7f7f7f",
 						"showOffline": {
 							"type": "none"
 						}
@@ -2736,7 +2727,7 @@
 					"sources": [
 						{
 							"source": "value",
-							"value": "Hintergrund"
+							"value": "Background"
 						}
 					],
 					"type": "text"
@@ -2767,10 +2758,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "L22-24h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2783,16 +2774,17 @@
 				{
 					"layout": {
 						"col": 0,
-						"row": 27,
+						"row": 41,
 						"sizeX": 2,
 						"sizeY": 10
 					},
 					"panel": {
 						"color": "#dddddd",
+						"currentColor": "#dddddd",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Temperatur"
+						"title": "Temperature"
 					},
 					"properties": {
 						"majorTicks": 10,
@@ -2808,10 +2800,10 @@
 						{
 							"color": "#1E313E",
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "temperature",
 								"property": "persistance",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"name": "Default",
 							"source": "device_property"
@@ -2822,16 +2814,17 @@
 				{
 					"layout": {
 						"col": 2,
-						"row": 27,
+						"row": 41,
 						"sizeX": 2,
 						"sizeY": 10
 					},
 					"panel": {
 						"color": "#dddddd",
+						"currentColor": "#dddddd",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Barom. Druck"
+						"title": "Air Pressure"
 					},
 					"properties": {
 						"majorTicks": 50,
@@ -2847,10 +2840,10 @@
 						{
 							"color": "#1E313E",
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "pressure",
 								"property": "persistance",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"name": "Default",
 							"source": "device_property"
@@ -2861,16 +2854,17 @@
 				{
 					"layout": {
 						"col": 4,
-						"row": 27,
+						"row": 41,
 						"sizeX": 2,
 						"sizeY": 10
 					},
 					"panel": {
 						"color": "#dddddd",
+						"currentColor": "#dddddd",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Rel Feuchtigkeit"
+						"title": "Rel. Humidity"
 					},
 					"properties": {
 						"majorTicks": 10,
@@ -2886,10 +2880,10 @@
 						{
 							"color": "#1E313E",
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "humidity",
 								"property": "persistance",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"name": "Default",
 							"source": "device_property"
@@ -2900,12 +2894,13 @@
 				{
 					"layout": {
 						"col": 6,
-						"row": 27,
+						"row": 41,
 						"sizeX": 1,
 						"sizeY": 5
 					},
 					"panel": {
 						"color": "#ffffff",
+						"currentColor": "#ffffff",
 						"showOffline": {
 							"timespan": {
 								"magnitude": "minute",
@@ -2914,7 +2909,7 @@
 							"type": "timespan"
 						},
 						"showTs": true,
-						"title": "Windrichtung"
+						"title": "Wind Direction"
 					},
 					"properties": {
 						"color": "#081fbf",
@@ -2931,10 +2926,10 @@
 						{
 							"color": "#1E313E",
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "direction",
 								"property": "persistance",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"name": "Default",
 							"source": "device_property"
@@ -2945,12 +2940,13 @@
 				{
 					"layout": {
 						"col": 10,
-						"row": 32,
+						"row": 46,
 						"sizeX": 2,
 						"sizeY": 5
 					},
 					"panel": {
 						"color": "#dddddd",
+						"currentColor": "#dddddd",
 						"showOffline": {
 							"type": "none"
 						},
@@ -2966,7 +2962,7 @@
 						"min": 0,
 						"plateColor": "#ffffff",
 						"showValue": true,
-						"size": "64px",
+						"size": "48px",
 						"textColor": "#1E313E",
 						"tickColor": "#000000",
 						"unit": "",
@@ -2977,14 +2973,14 @@
 						{
 							"color": "#1E313E",
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "summary",
 								"property": "persistance",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"name": "Default",
 							"source": "value",
-							"value": "Wetterstation Lohausen"
+							"value": "Weather Station Kettwig"
 						}
 					],
 					"type": "text"
@@ -2992,7 +2988,7 @@
 				{
 					"layout": {
 						"col": 6,
-						"row": 32,
+						"row": 46,
 						"sizeX": 1,
 						"sizeY": 5
 					},
@@ -3006,19 +3002,20 @@
 							},
 							{
 								"color": "#fdfa9a",
-								"max": 10,
+								"max": 15,
 								"min": 5
 							},
 							{
 								"color": "#fc0916",
 								"max": 25,
-								"min": 10
+								"min": 15
 							}
 						],
+						"currentColor": "#ffffff",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Windstärke"
+						"title": "Wind Speed"
 					},
 					"properties": {
 						"color": "#1d2f9b",
@@ -3042,10 +3039,10 @@
 						{
 							"color": "#1E313E",
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "wind",
 								"property": "persistance",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"name": "Default",
 							"source": "device_property"
@@ -3056,12 +3053,13 @@
 				{
 					"layout": {
 						"col": 7,
-						"row": 27,
+						"row": 41,
 						"sizeX": 3,
 						"sizeY": 5
 					},
 					"panel": {
 						"color": "#ffffff",
+						"currentColor": "#ffffff",
 						"showOffline": {
 							"timespan": {
 								"magnitude": "minute",
@@ -3070,7 +3068,7 @@
 							"type": "timespan"
 						},
 						"showTs": true,
-						"title": "Wetter"
+						"title": "Weather"
 					},
 					"properties": {
 						"color": "#293499",
@@ -3093,10 +3091,10 @@
 						{
 							"color": "#1E313E",
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "summary",
 								"property": "persistance",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"name": "Default",
 							"source": "device_property"
@@ -3107,16 +3105,17 @@
 				{
 					"layout": {
 						"col": 10,
-						"row": 27,
+						"row": 41,
 						"sizeX": 2,
 						"sizeY": 5
 					},
 					"panel": {
 						"color": "#242424",
+						"currentColor": "#242424",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Jetzt ist..."
+						"title": "Clock (local time)"
 					},
 					"properties": {
 						"color": "#15f037",
@@ -3139,10 +3138,10 @@
 						{
 							"color": "#1E313E",
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "summary",
 								"property": "persistance",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"name": "Default",
 							"source": "device_property"
@@ -3154,8 +3153,8 @@
 					"layout": {
 						"col": 1,
 						"row": 3,
-						"sizeX": 8,
-						"sizeY": 3
+						"sizeX": 4,
+						"sizeY": 2
 					},
 					"panel": {
 						"color": "#7f7f7f",
@@ -3165,7 +3164,7 @@
 						}
 					},
 					"properties": {
-						"color": "#502612",
+						"color": "#ffffff",
 						"decimal_places": 0,
 						"icon": "",
 						"size": "36px",
@@ -3175,7 +3174,37 @@
 					"sources": [
 						{
 							"source": "value",
-							"value": "Messtelle ESP-E45566"
+							"value": "Measuring values (1second)"
+						}
+					],
+					"type": "text"
+				},
+				{
+					"layout": {
+						"col": 5,
+						"row": 3,
+						"sizeX": 2,
+						"sizeY": 2
+					},
+					"panel": {
+						"color": "#7f7f7f",
+						"currentColor": "#7f7f7f",
+						"showOffline": {
+							"type": "none"
+						}
+					},
+					"properties": {
+						"color": "#674918",
+						"decimal_places": 0,
+						"icon": "",
+						"size": "36px",
+						"unit_size": "20px",
+						"weight": "font-thin"
+					},
+					"sources": [
+						{
+							"source": "value",
+							"value": "Slow"
 						}
 					],
 					"type": "text"
@@ -3206,10 +3235,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "Lden",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -3222,7 +3251,7 @@
 				{
 					"layout": {
 						"col": 7,
-						"row": 32,
+						"row": 46,
 						"sizeX": 3,
 						"sizeY": 5
 					},
@@ -3236,19 +3265,20 @@
 							},
 							{
 								"color": "#fdfa9a",
-								"max": 10,
+								"max": 15,
 								"min": 5
 							},
 							{
 								"color": "#fc0916",
 								"max": 25,
-								"min": 10
+								"min": 15
 							}
 						],
+						"currentColor": "#ffffff",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Windstärke                      ( Grün: Landerichtung beliebig,              Gelb: Landerichtung vorgegeben,          Rot: zu windig für Messtelle)"
+						"title": "Wind Speed"
 					},
 					"properties": {
 						"icon": "",
@@ -3266,10 +3296,10 @@
 						{
 							"color": "#1E313E",
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME         ",
 								"mapping": "wind",
 								"property": "persistance",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"name": "Default",
 							"source": "device_property"
@@ -3278,257 +3308,124 @@
 					"type": "progressbar"
 				},
 				{
+					"$loadAttemps": 15,
 					"layout": {
-						"col": 10,
-						"row": 51,
-						"sizeX": 2,
-						"sizeY": 8
+						"col": 3,
+						"row": 0,
+						"sizeX": 1,
+						"sizeY": 3
 					},
 					"panel": {
-						"color": "#c0c0c0",
-						"currentColor": "#c0c0c0",
+						"color": "#d0ffd5",
+						"currentColor": "#d0ffd5",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Internal Resistance"
+						"subtitle": "",
+						"title": "Overflight Recognition"
 					},
 					"properties": {
-						"majorTicks": 10,
-						"max": 100,
-						"min": 0,
-						"plateColor": "#eadbc8",
-						"showValue": true,
-						"textColor": "#1E313E",
-						"tickColor": "#804000",
-						"unit": "Milliohm"
+						"color": "#1E313E",
+						"decimal_places": 0,
+						"icon": "",
+						"size": "48px",
+						"unit": "step",
+						"unit_size": "20px",
+						"weight": "font-thin"
 					},
 					"sources": [
 						{
 							"color": "#1abc9c",
 							"device": {
-								"id": "Witty",
-								"interval": 300,
-								"mapping": "int_resistance",
-								"resource": "energy",
+								"id": "DEVCNAME         ",
+								"interval": 1,
+								"mapping": "OFD_state",
+								"resource": "noise",
 								"update": "interval"
 							},
 							"name": "Source 1",
 							"source": "device"
 						}
 					],
-					"type": "tachometer"
+					"type": "text"
 				},
 				{
 					"layout": {
-						"col": 0,
-						"row": 51,
-						"sizeX": 2,
-						"sizeY": 8
+						"col": 11,
+						"row": 6,
+						"sizeX": 1,
+						"sizeY": 3
 					},
 					"panel": {
-						"color": "#c0c0c0",
-						"colors": [
-							{
-								"color": "#000000",
-								"max": 10,
-								"min": 0
+						"color": "#fdffc5",
+						"showOffline": {
+							"type": "none"
+						},
+						"title": "Slow"
+					},
+					"properties": {
+						"color": "#1E313E",
+						"decimal_places": 2,
+						"icon": "",
+						"size": "40px",
+						"unit": "dB ( A)",
+						"unit_size": "20px",
+						"weight": "font-thin"
+					},
+					"sources": [
+						{
+							"device": {
+								"id": "DEVCNAME         ",
+								"interval": 1,
+								"mapping": "slow",
+								"resource": "noise",
+								"update": "interval",
+								"user": "CLOUDNAM        "
+							},
+							"device_property": {
+								"device": "DEVCNAME         ",
+								"mapping": "11h",
+								"property": "lequ",
+								"user": "CLOUDNAM        "
+							},
+							"skipCurrent": 1,
+							"source": "device",
+							"timespan": {
+								"mode": "latest"
 							}
-						],
-						"currentColor": "#c0c0c0",
-						"showOffline": {
-							"type": "none"
-						},
-						"title": "Panel Volt"
-					},
-					"properties": {
-						"majorTicks": 2,
-						"max": 40,
-						"min": 0,
-						"plateColor": "#ffffae",
-						"showValue": true,
-						"textColor": "#1E313E",
-						"tickColor": "#dede03",
-						"unit": "Volt"
-					},
-					"sources": [
-						{
-							"color": "#1abc9c",
-							"device": {
-								"id": "Witty",
-								"interval": 60,
-								"mapping": "panel",
-								"resource": "energy",
-								"update": "interval"
-							},
-							"name": "Source 1",
-							"source": "device"
 						}
 					],
-					"type": "tachometer"
+					"type": "text"
 				},
 				{
 					"layout": {
-						"col": 2,
-						"row": 51,
+						"col": 7,
+						"row": 3,
 						"sizeX": 2,
-						"sizeY": 8
+						"sizeY": 2
 					},
 					"panel": {
-						"color": "#c0c0c0",
-						"currentColor": "#c0c0c0",
+						"color": "#7f7f7f",
+						"currentColor": "#7f7f7f",
 						"showOffline": {
 							"type": "none"
-						},
-						"title": "Battery Volt"
+						}
 					},
 					"properties": {
-						"majorTicks": 2,
-						"max": 20,
-						"min": 0,
-						"plateColor": "#caffca",
-						"showValue": true,
-						"textColor": "#1E313E",
-						"tickColor": "#00ca00",
-						"unit": "Volt"
+						"color": "#edd8b4",
+						"decimal_places": 0,
+						"icon": "",
+						"size": "36px",
+						"unit_size": "20px",
+						"weight": "font-thin"
 					},
 					"sources": [
 						{
-							"color": "#1abc9c",
-							"device": {
-								"id": "Witty",
-								"interval": 60,
-								"mapping": "voltage",
-								"resource": "energy",
-								"update": "interval"
-							},
-							"name": "Source 1",
-							"source": "device"
+							"source": "value",
+							"value": "Fast"
 						}
 					],
-					"type": "tachometer"
-				},
-				{
-					"layout": {
-						"col": 6,
-						"row": 51,
-						"sizeX": 2,
-						"sizeY": 8
-					},
-					"panel": {
-						"color": "#c0c0c0",
-						"currentColor": "#c0c0c0",
-						"showOffline": {
-							"type": "none"
-						},
-						"title": "Battery Ampere"
-					},
-					"properties": {
-						"majorTicks": 2,
-						"max": 20,
-						"min": -1,
-						"plateColor": "#ffe2c6",
-						"showValue": true,
-						"textColor": "#1E313E",
-						"tickColor": "#e17202",
-						"unit": "Ampere"
-					},
-					"sources": [
-						{
-							"color": "#1abc9c",
-							"device": {
-								"id": "Witty",
-								"interval": 60,
-								"mapping": "current",
-								"resource": "energy",
-								"update": "interval"
-							},
-							"name": "Source 1",
-							"source": "device"
-						}
-					],
-					"type": "tachometer"
-				},
-				{
-					"layout": {
-						"col": 4,
-						"row": 51,
-						"sizeX": 2,
-						"sizeY": 8
-					},
-					"panel": {
-						"color": "#c0c0c0",
-						"currentColor": "#c0c0c0",
-						"showOffline": {
-							"type": "none"
-						},
-						"title": "Battery Watt"
-					},
-					"properties": {
-						"majorTicks": 50,
-						"max": 500,
-						"min": -5,
-						"plateColor": "#c1e0ff",
-						"showValue": true,
-						"textColor": "#1E313E",
-						"tickColor": "#0075ea",
-						"unit": "Watt"
-					},
-					"sources": [
-						{
-							"color": "#1abc9c",
-							"device": {
-								"id": "Witty",
-								"interval": 60,
-								"mapping": "power",
-								"resource": "energy",
-								"update": "interval"
-							},
-							"name": "Source 1",
-							"source": "device"
-						}
-					],
-					"type": "tachometer"
-				},
-				{
-					"layout": {
-						"col": 8,
-						"row": 51,
-						"sizeX": 2,
-						"sizeY": 8
-					},
-					"panel": {
-						"color": "#c0c0c0",
-						"currentColor": "#c0c0c0",
-						"showOffline": {
-							"type": "none"
-						},
-						"title": "% Charge"
-					},
-					"properties": {
-						"majorTicks": 10,
-						"max": 100,
-						"min": 0,
-						"plateColor": "#e7ceff",
-						"showValue": true,
-						"textColor": "#1E313E",
-						"tickColor": "#8000ff",
-						"unit": "%  Charge"
-					},
-					"sources": [
-						{
-							"color": "#1abc9c",
-							"device": {
-								"id": "Witty",
-								"interval": 300,
-								"mapping": "percent_charg",
-								"resource": "energy",
-								"update": "interval"
-							},
-							"name": "Source 1",
-							"source": "device"
-						}
-					],
-					"type": "tachometer"
+					"type": "text"
 				}
 			]
 		}
