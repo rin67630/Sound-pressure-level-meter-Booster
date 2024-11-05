@@ -6,14 +6,14 @@
 		},
 		"hide_hours_picker": true,
 		"timespan": {
-			"magnitude": "hour",
 			"mode": "relative",
 			"period": "latest",
-			"value": 24
+			"value": 2,
+			"magnitude": "day"
 		}
 	},
-	"description": "Lintorf Langzeit (Zeitspanne einstellbar) und Statistik",
-	"name": "Lintorf Langzeit (Minutentakt)",
+	"description": "Overview  (by the minute)",
+	"name": "Configurable Dashboard",
 	"placeholders": {
 		"sources": []
 	},
@@ -22,12 +22,12 @@
 		"border_radius": "10px",
 		"columns": 12,
 		"row_height": 40,
-		"update_token": true
+		"show_template": false
 	},
 	"tabs": [
 		{
 			"icon": "fas fa-tachometer-alt",
-			"name": "TAGESSTATISTIK",
+			"name": "Daily Summary",
 			"widgets": [
 				{
 					"layout": {
@@ -52,10 +52,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "17h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -74,10 +74,11 @@
 					},
 					"panel": {
 						"color": "#c2e7fa",
+						"currentColor": "#c2e7fa",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Nacht"
+						"title": "Night"
 					},
 					"properties": {
 						"color": "#1E313E",
@@ -91,10 +92,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "Nighttime",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -127,10 +128,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "22h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -163,10 +164,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "05h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -199,10 +200,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "04h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -235,10 +236,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "03h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -271,10 +272,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "02h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -307,49 +308,12 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "01h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 6,
-						"row": 45,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#fafafa",
-						"title": "L18h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L18h",
-								"user": "spThinger5"
-							},
-							"name": "L18h",
-							"source": "bucket",
 							"timespan": {
 								"mode": "latest"
 							}
@@ -380,10 +344,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "16h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -416,10 +380,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "15h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -452,10 +416,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "14h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -488,10 +452,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "12h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -524,60 +488,12 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "21h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 11,
-						"row": 6,
-						"sizeX": 1,
-						"sizeY": 3
-					},
-					"panel": {
-						"color": "#fdffc5",
-						"showOffline": {
-							"type": "none"
-						},
-						"title": "Fast (125mS)"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB ( A)",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"device": {
-								"id": "Witty",
-								"interval": 1,
-								"mapping": "fast",
-								"resource": "noise",
-								"update": "interval",
-								"user": "spThinger5"
-							},
-							"device_property": {
-								"device": "Witty",
-								"mapping": "11h",
-								"property": "lequ",
-								"user": "spThinger5"
-							},
-							"skipCurrent": 1,
-							"source": "device",
 							"timespan": {
 								"mode": "latest"
 							}
@@ -608,10 +524,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "10h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -644,10 +560,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "09h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -680,10 +596,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "08h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -716,10 +632,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "07h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -738,6 +654,10 @@
 					},
 					"panel": {
 						"color": "#ffffff",
+						"currentColor": "#ffffff",
+						"showOffline": {
+							"type": "none"
+						},
 						"title": "06h"
 					},
 					"properties": {
@@ -752,10 +672,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "06h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -788,10 +708,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "20h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -810,10 +730,11 @@
 					},
 					"panel": {
 						"color": "#d0ffd5",
+						"currentColor": "#d0ffd5",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "letztens um..."
+						"title": "last one at..."
 					},
 					"properties": {
 						"color": "#1E313E",
@@ -828,16 +749,16 @@
 						{
 							"bucket": {
 								"backend": "dynamodb",
-								"id": "EVENT18",
+								"id": "EVENT",
 								"mapping": "peakTime",
 								"tags": {},
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "19h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "bucket",
 							"timespan": {
@@ -870,10 +791,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "18h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -906,10 +827,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "13h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -928,6 +849,7 @@
 					},
 					"panel": {
 						"color": "#ffffff",
+						"currentColor": "#ffffff",
 						"showOffline": {
 							"type": "none"
 						}
@@ -943,887 +865,7 @@
 					"sources": [
 						{
 							"source": "value",
-							"value": "Äquivalenter Schallpegel pro Stunde  (Laufend)"
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 0,
-						"row": 41,
-						"sizeX": 12,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#ffffff",
-						"showOffline": {
-							"type": "none"
-						}
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"source": "value",
-							"value": "Äquivalenter Schallpegel pro Stunde (Tag gestern)"
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 5,
-						"row": 43,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#c2e7fa",
-						"title": "L05h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L05h",
-								"user": "spThinger5"
-							},
-							"name": "L05h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 4,
-						"row": 43,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#c2e7fa",
-						"title": "L04h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L04h",
-								"user": "spThinger5"
-							},
-							"name": "L04h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 3,
-						"row": 43,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#c2e7fa",
-						"title": "L03h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L03h",
-								"user": "spThinger5"
-							},
-							"name": "L03h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 2,
-						"row": 43,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#c2e7fa",
-						"title": "L02h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L02h",
-								"user": "spThinger5"
-							},
-							"name": "L02h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 1,
-						"row": 43,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#c2e7fa",
-						"title": "L01h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L01h",
-								"user": "spThinger5"
-							},
-							"name": "L01h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 11,
-						"row": 45,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#c2e7fa",
-						"title": "L23h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L23h",
-								"user": "spThinger5"
-							},
-							"name": "L23h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 9,
-						"row": 45,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#fafafa",
-						"title": "L21h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L21h",
-								"user": "spThinger5"
-							},
-							"name": "L21h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 0,
-						"row": 45,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#fafafa",
-						"title": "L12h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L12h",
-								"user": "spThinger5"
-							},
-							"name": "L12h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 11,
-						"row": 43,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#fafafa",
-						"title": "L11h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L11h",
-								"user": "spThinger5"
-							},
-							"name": "L11h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 10,
-						"row": 43,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#fafafa",
-						"title": "L10h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L10h",
-								"user": "spThinger5"
-							},
-							"name": "L10h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 9,
-						"row": 43,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#fafafa",
-						"title": "L09h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L09h",
-								"user": "spThinger5"
-							},
-							"name": "L09h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 8,
-						"row": 43,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#fafafa",
-						"title": "L08h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L08h",
-								"user": "spThinger5"
-							},
-							"name": "L08h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 7,
-						"row": 43,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#fafafa",
-						"title": "L07h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L07h",
-								"user": "spThinger5"
-							},
-							"name": "L07h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 6,
-						"row": 43,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#fafafa",
-						"title": "L06h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L06h",
-								"user": "spThinger5"
-							},
-							"name": "L06h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 5,
-						"row": 45,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#fafafa",
-						"title": "L17h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L17h",
-								"user": "spThinger5"
-							},
-							"name": "L17h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 4,
-						"row": 45,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#fafafa",
-						"title": "L16h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L16h",
-								"user": "spThinger5"
-							},
-							"name": "L16h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 3,
-						"row": 45,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#fafafa",
-						"title": "L15h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L15h",
-								"user": "spThinger5"
-							},
-							"name": "L15h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 2,
-						"row": 45,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#fafafa",
-						"title": "L14h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L14h",
-								"user": "spThinger5"
-							},
-							"name": "L14h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 1,
-						"row": 45,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#fafafa",
-						"title": "L13h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L13h",
-								"user": "spThinger5"
-							},
-							"name": "L13h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 8,
-						"row": 45,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#fafafa",
-						"title": "L20h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L20h",
-								"user": "spThinger5"
-							},
-							"name": "L20h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 7,
-						"row": 45,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#fafafa",
-						"title": "L19h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L19h",
-								"user": "spThinger5"
-							},
-							"name": "L19h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 10,
-						"row": 45,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#c2e7fa",
-						"title": "L22h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L22h",
-								"user": "spThinger5"
-							},
-							"name": "L22h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 0,
-						"row": 43,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#c2e7fa",
-						"title": "L00h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit": "dB",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "L00h",
-								"user": "spThinger5"
-							},
-							"name": "L00h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
+							"value": "Equivalent Sound Level Leq (per hour)"
 						}
 					],
 					"type": "text"
@@ -1837,6 +879,7 @@
 					},
 					"panel": {
 						"color": "#ffffff",
+						"currentColor": "#ffffff",
 						"showOffline": {
 							"type": "none"
 						}
@@ -1852,7 +895,7 @@
 					"sources": [
 						{
 							"source": "value",
-							"value": "Erkannte Überflüge  pro Stunde  (Laufend)"
+							"value": "Number Above Treshold (NAT)"
 						}
 					],
 					"type": "text"
@@ -1880,10 +923,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "00h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1916,10 +959,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "21h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1952,10 +995,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "04h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -1988,10 +1031,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "03h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2024,10 +1067,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "02h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2060,10 +1103,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "01h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2096,10 +1139,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "23h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2132,10 +1175,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "05h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2168,10 +1211,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "11h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2204,10 +1247,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "10h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2240,10 +1283,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "09h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2276,10 +1319,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "08h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2312,10 +1355,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "07h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2348,10 +1391,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "06h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2384,10 +1427,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "19h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2420,10 +1463,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "17h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2456,10 +1499,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "16h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2492,10 +1535,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "15h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2528,10 +1571,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "14h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2564,10 +1607,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "13h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2600,10 +1643,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "12h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2636,10 +1679,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "18h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2672,10 +1715,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "20h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2708,81 +1751,15 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "22h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
 								"mode": "latest"
 							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 9,
-						"row": 51,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#f9fafa",
-						"title": "N21h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N21h",
-								"user": "spThinger5"
-							},
-							"name": "N21h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 0,
-						"row": 47,
-						"sizeX": 12,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#ffffff",
-						"showOffline": {
-							"type": "none"
-						}
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 2,
-						"icon": "",
-						"size": "40px",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"source": "value",
-							"value": "Erkannte Überflüge  pro Stunde (Tag gestern)"
 						}
 					],
 					"type": "text"
@@ -2810,10 +1787,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "00h",
 								"property": "NATu",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -2824,905 +1801,120 @@
 					"type": "text"
 				},
 				{
-					"layout": {
-						"col": 4,
-						"row": 49,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#c2e7fa",
-						"title": "N04h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N04h",
-								"user": "spThinger5"
-							},
-							"name": "N04h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 10,
-						"row": 51,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#c2e7fa",
-						"title": "N22h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N22h",
-								"user": "spThinger5"
-							},
-							"name": "N22h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 1,
-						"row": 49,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#c2e7fa",
-						"title": "N01h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N01h",
-								"user": "spThinger5"
-							},
-							"name": "N01h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
+					"$loadAttemps": 300,
 					"layout": {
 						"col": 0,
-						"row": 49,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#c2e7fa",
-						"title": "N00h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N00h",
-								"user": "spThinger5"
-							},
-							"name": "N00h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 5,
-						"row": 49,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#c2e7fa",
-						"title": "N05h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N05h",
-								"user": "spThinger5"
-							},
-							"name": "N05h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 8,
-						"row": 49,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#f9fafa",
-						"title": "N08h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N08h",
-								"user": "spThinger5"
-							},
-							"name": "N08h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 7,
-						"row": 49,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#f9fafa",
-						"title": "N07h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N07h",
-								"user": "spThinger5"
-							},
-							"name": "N07h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 6,
-						"row": 49,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#f9fafa",
-						"title": "N06h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N06h",
-								"user": "spThinger5"
-							},
-							"name": "N06h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 10,
-						"row": 49,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#f9fafa",
-						"title": "N10h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N10h",
-								"user": "spThinger5"
-							},
-							"name": "N10h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 9,
-						"row": 49,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#f9fafa",
-						"title": "N09h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N09h",
-								"user": "spThinger5"
-							},
-							"name": "N09h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 11,
-						"row": 49,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#f9fafa",
-						"title": "N11h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N11h",
-								"user": "spThinger5"
-							},
-							"name": "N11h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 0,
-						"row": 51,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#f9fafa",
-						"title": "N12h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N12h",
-								"user": "spThinger5"
-							},
-							"name": "N12h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 2,
-						"row": 49,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#c2e7fa",
-						"title": "N02h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N02h",
-								"user": "spThinger5"
-							},
-							"name": "N02h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 3,
-						"row": 49,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#c2e7fa",
-						"title": "N03h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N03h",
-								"user": "spThinger5"
-							},
-							"name": "N03h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 6,
-						"row": 51,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#f9fafa",
-						"title": "N18h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N18h",
-								"user": "spThinger5"
-							},
-							"name": "N18h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 5,
-						"row": 51,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#f9fafa",
-						"title": "N17h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N17h",
-								"user": "spThinger5"
-							},
-							"name": "N17h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 4,
-						"row": 51,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#f9fafa",
-						"title": "N16h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N16h",
-								"user": "spThinger5"
-							},
-							"name": "N16h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 3,
-						"row": 51,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#f9fafa",
-						"title": "N15h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N15h",
-								"user": "spThinger5"
-							},
-							"name": "N15h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 2,
-						"row": 51,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#f9fafa",
-						"title": "N14h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N14h",
-								"user": "spThinger5"
-							},
-							"name": "N14h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 1,
-						"row": 51,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#f9fafa",
-						"title": "N13h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N13h",
-								"user": "spThinger5"
-							},
-							"name": "N13h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 8,
-						"row": 51,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#f9fafa",
-						"title": "N20h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N20h",
-								"user": "spThinger5"
-							},
-							"name": "N20h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 7,
-						"row": 51,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#f9fafa",
-						"title": "N19h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N19h",
-								"user": "spThinger5"
-							},
-							"name": "N19h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 11,
-						"row": 51,
-						"sizeX": 1,
-						"sizeY": 2
-					},
-					"panel": {
-						"color": "#c2e7fa",
-						"title": "N23h"
-					},
-					"properties": {
-						"color": "#1E313E",
-						"decimal_places": 0,
-						"icon": "",
-						"size": "40px",
-						"unit": "",
-						"unit_size": "20px",
-						"weight": "font-thin"
-					},
-					"sources": [
-						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "DAY",
-								"mapping": "N23h",
-								"user": "spThinger5"
-							},
-							"name": "N23h",
-							"source": "bucket",
-							"timespan": {
-								"mode": "latest"
-							}
-						}
-					],
-					"type": "text"
-				},
-				{
-					"layout": {
-						"col": 0,
-						"row": 6,
+						"row": 5,
 						"sizeX": 11,
-						"sizeY": 21
+						"sizeY": 22
 					},
 					"panel": {
 						"color": "#ffffff",
+						"currentColor": "#ffffff",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Nur erkannte Überflüge"
+						"title": ""
 					},
 					"properties": {
 						"axis": true,
 						"fill": true,
-						"legend": true,
+						"legend": false,
 						"multiple_axes": false
 					},
 					"sources": [
 						{
+							"$timespan": {
+								"magnitude": "minute",
+								"mode": "configurable",
+								"value": 15
+							},
 							"bucket": {
 								"backend": "dynamodb",
-								"id": "MIN18",
-								"mapping": "backgr",
+								"id": "MIN",
+								"mapping": "Bat%",
 								"tags": {},
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
-							"color": "#bebc11",
-							"name": "Backgr",
+							"color": "#fdfbff",
+							"device": {
+								"id": "DEVCNAME        ",
+								"interval": 20,
+								"mapping": "limit",
+								"resource": "noise",
+								"update": "interval",
+								"user": "CLOUDNAM        "
+							},
+							"name": "Limit",
+							"skipCurrent": 20,
+							"source": "value",
+							"timespan": {
+								"magnitude": "day",
+								"mode": "relative",
+								"period": "latest",
+								"value": 2
+							},
+							"value": 85
+						},
+						{
+							"$timespan": {
+								"magnitude": "minute",
+								"mode": "configurable",
+								"value": 15
+							},
+							"bucket": {
+								"backend": "dynamodb",
+								"id": "MIN",
+								"mapping": "LEtr",
+								"tags": {},
+								"user": "CLOUDNAM        "
+							},
+							"color": "#3e1505",
+							"device": {
+								"id": "DEVCNAME        ",
+								"interval": 1,
+								"mapping": "slow",
+								"resource": "noise",
+								"update": "interval",
+								"user": "CLOUDNAM        "
+							},
+							"name": "Slow db(A)",
+							"skipCurrent": 1,
 							"source": "bucket",
 							"timespan": {
-								"mode": "configurable"
+								"magnitude": "hour",
+								"mode": "relative",
+								"period": "latest",
+								"value": 24
 							}
 						},
 						{
+							"$timespan": {
+								"magnitude": "minute",
+								"mode": "configurable",
+								"value": 15
+							},
 							"bucket": {
 								"backend": "dynamodb",
-								"id": "MIN18",
-								"mapping": "LEtr",
+								"id": "MIN",
+								"mapping": "backgr",
 								"tags": {},
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
-							"color": "#3e1505",
-							"name": "LEmax",
+							"color": "#e5e852",
+							"device": {
+								"id": "DEVCNAME        ",
+								"mapping": "backgr",
+								"resource": "noise",
+								"user": "CLOUDNAM        "
+							},
+							"name": "Background",
 							"source": "bucket",
 							"timespan": {
-								"mode": "configurable"
+								"magnitude": "hour",
+								"mode": "relative",
+								"period": "latest",
+								"value": 24
 							}
 						}
 					],
@@ -3737,6 +1929,7 @@
 					},
 					"panel": {
 						"color": "#dcdfdc",
+						"currentColor": "#dcdfdc",
 						"showOffline": {
 							"type": "none"
 						}
@@ -3752,20 +1945,52 @@
 					"sources": [
 						{
 							"source": "value",
-							"value": "Gestern"
+							"value": "Day stats"
 						}
 					],
 					"type": "text"
 				},
 				{
 					"layout": {
+						"col": 0,
+						"row": 0,
+						"sizeX": 1,
+						"sizeY": 5
+					},
+					"panel": {
+						"color": "#ffffff",
+						"showOffline": {
+							"type": "none"
+						}
+					},
+					"properties": {
+						"color": "#1E313E",
+						"decimal_places": 0,
+						"icon": "",
+						"refresh_interval": 0,
+						"size": "40px",
+						"unit_size": "20px",
+						"weight": "font-thin"
+					},
+					"sources": [
+						{
+							"mjpeg_url": "https://gemeinsam-fuer-stadtwandel.de/wp-content/uploads/2022/07/BgF_Logo.png",
+							"source": "mjpeg_url",
+							"value": "Meerbusch Büderich"
+						}
+					],
+					"type": "image"
+				},
+				{
+					"layout": {
 						"col": 1,
 						"row": 0,
-						"sizeX": 2,
+						"sizeX": 3,
 						"sizeY": 3
 					},
 					"panel": {
 						"color": "#d0ffd5",
+						"currentColor": "#d0ffd5",
 						"showOffline": {
 							"type": "none"
 						},
@@ -3775,14 +2000,14 @@
 						"color": "#1E313E",
 						"decimal_places": 2,
 						"icon": "",
-						"size": "40px",
+						"size": "32px",
 						"unit_size": "20px",
 						"weight": "font-thin"
 					},
 					"sources": [
 						{
 							"source": "value",
-							"value": "Letzte Überflugerkennung"
+							"value": "Last Peak Event Detected"
 						}
 					],
 					"type": "text"
@@ -3810,10 +2035,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "11h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -3826,41 +2051,54 @@
 				{
 					"layout": {
 						"col": 11,
-						"row": 3,
+						"row": 12,
 						"sizeX": 1,
 						"sizeY": 3
 					},
 					"panel": {
-						"color": "#fdffc5",
+						"color": "#1dc40f",
+						"colors": [
+							{
+								"color": "#ff0000",
+								"max": 11.5,
+								"min": 0
+							},
+							{
+								"color": "#ffff00",
+								"max": 12,
+								"min": 11.5
+							}
+						],
+						"currentColor": "#1dc40f",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Slow"
+						"title": "Battery"
 					},
 					"properties": {
 						"color": "#1E313E",
 						"decimal_places": 2,
 						"icon": "",
 						"size": "40px",
-						"unit": "dB ( A)",
+						"unit": "V",
 						"unit_size": "20px",
 						"weight": "font-thin"
 					},
 					"sources": [
 						{
 							"device": {
-								"id": "Witty",
+								"id": "DEVCNAME        ",
 								"interval": 1,
-								"mapping": "slow",
-								"resource": "noise",
+								"mapping": "voltage",
+								"resource": "energy",
 								"update": "interval",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "11h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"skipCurrent": 1,
 							"source": "device",
@@ -3894,10 +2132,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "19h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -3919,7 +2157,7 @@
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Leq (Max-190dB)"
+						"title": "Leq (Max-10dB)"
 					},
 					"properties": {
 						"color": "#1E313E",
@@ -3934,16 +2172,16 @@
 						{
 							"bucket": {
 								"backend": "dynamodb",
-								"id": "EVENT18",
+								"id": "EVENT",
 								"mapping": "less10dBLeq",
 								"tags": {},
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "19h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "bucket",
 							"timespan": {
@@ -3955,7 +2193,7 @@
 				},
 				{
 					"layout": {
-						"col": 3,
+						"col": 4,
 						"row": 0,
 						"sizeX": 1,
 						"sizeY": 3
@@ -3966,8 +2204,7 @@
 						"showOffline": {
 							"type": "none"
 						},
-						"subtitle": "Status",
-						"title": "Ereigniserkennung"
+						"title": "NAT in Hour"
 					},
 					"properties": {
 						"color": "#1E313E",
@@ -3982,23 +2219,18 @@
 						{
 							"bucket": {
 								"backend": "dynamodb",
-								"id": "EVENT18",
+								"id": "EVENT",
 								"mapping": "NAT",
 								"tags": {},
-								"user": "spThinger5"
-							},
-							"device": {
-								"id": "Witty",
-								"mapping": "backgr",
-								"resource": "noise"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "19h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
-							"source": "device",
+							"source": "bucket",
 							"timespan": {
 								"mode": "latest"
 							}
@@ -4015,10 +2247,11 @@
 					},
 					"panel": {
 						"color": "#d0ffd5",
+						"currentColor": "#d0ffd5",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Spitze"
+						"title": "Peak"
 					},
 					"properties": {
 						"color": "#1E313E",
@@ -4033,16 +2266,16 @@
 						{
 							"bucket": {
 								"backend": "dynamodb",
-								"id": "EVENT18",
+								"id": "EVENT",
 								"mapping": "eventPeak",
 								"tags": {},
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "19h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "bucket",
 							"timespan": {
@@ -4061,6 +2294,7 @@
 					},
 					"panel": {
 						"color": "#d0ffd5",
+						"currentColor": "#d0ffd5",
 						"showOffline": {
 							"type": "none"
 						},
@@ -4079,16 +2313,16 @@
 						{
 							"bucket": {
 								"backend": "dynamodb",
-								"id": "EVENT18",
+								"id": "EVENT",
 								"mapping": "aboveThreshLeq",
 								"tags": {},
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "19h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "bucket",
 							"timespan": {
@@ -4107,10 +2341,11 @@
 					},
 					"panel": {
 						"color": "#d0ffd5",
+						"currentColor": "#d0ffd5",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Für___Max-10dB"
+						"title": "> Max-10dB for..."
 					},
 					"properties": {
 						"color": "#1E313E",
@@ -4125,16 +2360,16 @@
 						{
 							"bucket": {
 								"backend": "dynamodb",
-								"id": "EVENT18",
+								"id": "EVENT",
 								"mapping": "less10dBDuration",
 								"tags": {},
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "19h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "bucket",
 							"timespan": {
@@ -4153,10 +2388,11 @@
 					},
 					"panel": {
 						"color": "#d0ffd5",
+						"currentColor": "#d0ffd5",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "Für____>58dB"
+						"title": ">58dB for..."
 					},
 					"properties": {
 						"color": "#1E313E",
@@ -4171,16 +2407,16 @@
 						{
 							"bucket": {
 								"backend": "dynamodb",
-								"id": "EVENT18",
+								"id": "EVENT",
 								"mapping": "aboveThreshDuration",
 								"tags": {},
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "19h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "bucket",
 							"timespan": {
@@ -4216,18 +2452,18 @@
 					"sources": [
 						{
 							"device": {
-								"id": "Witty",
+								"id": "DEVCNAME        ",
 								"interval": 1,
 								"mapping": "impulse",
 								"resource": "noise",
 								"update": "interval",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "11h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"skipCurrent": 1,
 							"source": "device",
@@ -4241,12 +2477,13 @@
 				{
 					"layout": {
 						"col": 11,
-						"row": 12,
+						"row": 3,
 						"sizeX": 1,
 						"sizeY": 3
 					},
 					"panel": {
 						"color": "#fdffc5",
+						"currentColor": "#fdffc5",
 						"showOffline": {
 							"type": "none"
 						},
@@ -4264,18 +2501,18 @@
 					"sources": [
 						{
 							"device": {
-								"id": "Witty",
-								"interval": 1,
+								"id": "DEVCNAME        ",
+								"interval": 5,
 								"mapping": "backgr",
 								"resource": "noise",
 								"update": "interval",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "11h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"skipCurrent": 1,
 							"source": "device",
@@ -4309,10 +2546,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "23h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -4348,10 +2585,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "Daytime",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -4370,6 +2607,7 @@
 					},
 					"panel": {
 						"color": "#fdffc5",
+						"currentColor": "#fdffc5",
 						"showOffline": {
 							"type": "none"
 						}
@@ -4385,7 +2623,7 @@
 					"sources": [
 						{
 							"source": "value",
-							"value": "Aktuell"
+							"value": "Current"
 						}
 					],
 					"type": "text"
@@ -4416,10 +2654,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "Day",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -4463,26 +2701,27 @@
 						"col": 9,
 						"row": 3,
 						"sizeX": 2,
-						"sizeY": 3
+						"sizeY": 2
 					},
 					"panel": {
-						"color": "#808080",
+						"color": "#7f7f7f",
+						"currentColor": "#7f7f7f",
 						"showOffline": {
 							"type": "none"
 						}
 					},
 					"properties": {
-						"color": "#e8df6d",
+						"color": "#fef837",
 						"decimal_places": 0,
 						"icon": "",
-						"size": "48px",
+						"size": "36px",
 						"unit_size": "20px",
 						"weight": "font-thin"
 					},
 					"sources": [
 						{
 							"source": "value",
-							"value": "Hintergrund"
+							"value": "Background"
 						}
 					],
 					"type": "text"
@@ -4513,10 +2752,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "L22-24h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -4528,64 +2767,441 @@
 				},
 				{
 					"layout": {
-						"col": 1,
-						"row": 3,
-						"sizeX": 8,
-						"sizeY": 3
+						"col": 0,
+						"row": 41,
+						"sizeX": 2,
+						"sizeY": 10
 					},
 					"panel": {
-						"color": "#808080",
-						"currentColor": "#808080",
+						"color": "#dddddd",
+						"currentColor": "#dddddd",
 						"showOffline": {
 							"type": "none"
-						}
+						},
+						"title": "Temperature"
 					},
 					"properties": {
-						"color": "#6e341a",
+						"majorTicks": 10,
+						"max": 40,
+						"min": -10,
+						"plateColor": "#ffffff",
+						"showValue": true,
+						"textColor": "#1E313E",
+						"tickColor": "#000000",
+						"unit": "°C"
+					},
+					"sources": [
+						{
+							"color": "#1E313E",
+							"device_property": {
+								"device": "DEVCNAME        ",
+								"mapping": "temperature",
+								"property": "persistance",
+								"user": "CLOUDNAM        "
+							},
+							"name": "Default",
+							"source": "device_property"
+						}
+					],
+					"type": "tachometer"
+				},
+				{
+					"layout": {
+						"col": 2,
+						"row": 41,
+						"sizeX": 2,
+						"sizeY": 10
+					},
+					"panel": {
+						"color": "#dddddd",
+						"currentColor": "#dddddd",
+						"showOffline": {
+							"type": "none"
+						},
+						"title": "Air Pressure"
+					},
+					"properties": {
+						"majorTicks": 50,
+						"max": 1100,
+						"min": 900,
+						"plateColor": "#ffffff",
+						"showValue": true,
+						"textColor": "#1E313E",
+						"tickColor": "#000000",
+						"unit": "mBar"
+					},
+					"sources": [
+						{
+							"color": "#1E313E",
+							"device_property": {
+								"device": "DEVCNAME        ",
+								"mapping": "pressure",
+								"property": "persistance",
+								"user": "CLOUDNAM        "
+							},
+							"name": "Default",
+							"source": "device_property"
+						}
+					],
+					"type": "tachometer"
+				},
+				{
+					"layout": {
+						"col": 4,
+						"row": 41,
+						"sizeX": 2,
+						"sizeY": 10
+					},
+					"panel": {
+						"color": "#dddddd",
+						"currentColor": "#dddddd",
+						"showOffline": {
+							"type": "none"
+						},
+						"title": "Rel. Humidity"
+					},
+					"properties": {
+						"majorTicks": 10,
+						"max": 100,
+						"min": 0,
+						"plateColor": "#ffffff",
+						"showValue": true,
+						"textColor": "#1E313E",
+						"tickColor": "#000000",
+						"unit": "%"
+					},
+					"sources": [
+						{
+							"color": "#1E313E",
+							"device_property": {
+								"device": "DEVCNAME        ",
+								"mapping": "humidity",
+								"property": "persistance",
+								"user": "CLOUDNAM        "
+							},
+							"name": "Default",
+							"source": "device_property"
+						}
+					],
+					"type": "tachometer"
+				},
+				{
+					"layout": {
+						"col": 6,
+						"row": 41,
+						"sizeX": 1,
+						"sizeY": 5
+					},
+					"panel": {
+						"color": "#ffffff",
+						"currentColor": "#ffffff",
+						"showOffline": {
+							"timespan": {
+								"magnitude": "minute",
+								"value": 15
+							},
+							"type": "timespan"
+						},
+						"showTs": true,
+						"title": "Wind Direction"
+					},
+					"properties": {
+						"color": "#081fbf",
+						"majorTicks": 1,
+						"max": 360,
+						"min": 0,
+						"plateColor": "#ffffff",
+						"showValue": true,
+						"textColor": "#1E313E",
+						"tickColor": "#000000",
+						"unit": "deg"
+					},
+					"sources": [
+						{
+							"color": "#1E313E",
+							"device_property": {
+								"device": "DEVCNAME        ",
+								"mapping": "direction",
+								"property": "persistance",
+								"user": "CLOUDNAM        "
+							},
+							"name": "Default",
+							"source": "device_property"
+						}
+					],
+					"type": "donutchart"
+				},
+				{
+					"layout": {
+						"col": 10,
+						"row": 46,
+						"sizeX": 2,
+						"sizeY": 5
+					},
+					"panel": {
+						"color": "#dddddd",
+						"currentColor": "#dddddd",
+						"showOffline": {
+							"type": "none"
+						},
+						"title": "OpenWeatherMap.org"
+					},
+					"properties": {
+						"color": "#2f3afc",
 						"decimal_places": 0,
 						"icon": "",
+						"iconSize": 96,
+						"majorTicks": 1,
+						"max": 15,
+						"min": 0,
+						"plateColor": "#ffffff",
+						"showValue": true,
 						"size": "48px",
+						"textColor": "#1E313E",
+						"tickColor": "#000000",
+						"unit": "",
 						"unit_size": "20px",
 						"weight": "font-thin"
 					},
 					"sources": [
 						{
+							"color": "#1E313E",
+							"device_property": {
+								"device": "DEVCNAME        ",
+								"mapping": "summary",
+								"property": "persistance",
+								"user": "CLOUDNAM        "
+							},
+							"name": "Default",
 							"source": "value",
-							"value": "Messtelle Ratingen Lintorf nah an DUS Station 18 (filtriert auf  Überflüge)"
+							"value": "Weather Station Kettwig"
 						}
 					],
 					"type": "text"
 				},
 				{
 					"layout": {
-						"col": 0,
-						"row": 0,
+						"col": 6,
+						"row": 46,
 						"sizeX": 1,
-						"sizeY": 6
+						"sizeY": 5
 					},
 					"panel": {
 						"color": "#ffffff",
+						"colors": [
+							{
+								"color": "#b3ffc5",
+								"max": 5,
+								"min": 0
+							},
+							{
+								"color": "#fdfa9a",
+								"max": 15,
+								"min": 5
+							},
+							{
+								"color": "#fc0916",
+								"max": 25,
+								"min": 15
+							}
+						],
+						"currentColor": "#ffffff",
 						"showOffline": {
 							"type": "none"
-						}
+						},
+						"title": "Wind Speed"
 					},
 					"properties": {
-						"color": "#1E313E",
+						"color": "#1d2f9b",
+						"decimal_places": 1,
+						"gradient": true,
+						"icon": "",
+						"iconSize": 64,
+						"majorTicks": 1,
+						"max": 20,
+						"min": 0,
+						"plateColor": "#ffffff",
+						"showValue": true,
+						"size": "100px",
+						"textColor": "#1E313E",
+						"tickColor": "#000000",
+						"unit": "m/s",
+						"unit_size": "20px",
+						"weight": "font-normal"
+					},
+					"sources": [
+						{
+							"color": "#1E313E",
+							"device_property": {
+								"device": "DEVCNAME        ",
+								"mapping": "wind",
+								"property": "persistance",
+								"user": "CLOUDNAM        "
+							},
+							"name": "Default",
+							"source": "device_property"
+						}
+					],
+					"type": "text"
+				},
+				{
+					"layout": {
+						"col": 7,
+						"row": 41,
+						"sizeX": 3,
+						"sizeY": 5
+					},
+					"panel": {
+						"color": "#ffffff",
+						"currentColor": "#ffffff",
+						"showOffline": {
+							"timespan": {
+								"magnitude": "minute",
+								"value": 15
+							},
+							"type": "timespan"
+						},
+						"showTs": true,
+						"title": "Weather"
+					},
+					"properties": {
+						"color": "#293499",
 						"decimal_places": 0,
 						"icon": "",
-						"refresh_interval": 0,
-						"size": "40px",
+						"iconSize": 96,
+						"majorTicks": 1,
+						"max": 15,
+						"min": 0,
+						"plateColor": "#ffffff",
+						"showValue": true,
+						"size": "64px",
+						"textColor": "#1E313E",
+						"tickColor": "#000000",
+						"unit": "",
+						"unit_size": "20px",
+						"weight": "font-normal"
+					},
+					"sources": [
+						{
+							"color": "#1E313E",
+							"device_property": {
+								"device": "DEVCNAME        ",
+								"mapping": "summary",
+								"property": "persistance",
+								"user": "CLOUDNAM        "
+							},
+							"name": "Default",
+							"source": "device_property"
+						}
+					],
+					"type": "text"
+				},
+				{
+					"layout": {
+						"col": 10,
+						"row": 41,
+						"sizeX": 2,
+						"sizeY": 5
+					},
+					"panel": {
+						"color": "#242424",
+						"currentColor": "#242424",
+						"showOffline": {
+							"type": "none"
+						},
+						"title": "Clock (local time)"
+					},
+					"properties": {
+						"color": "#15f037",
+						"decimal_places": 0,
+						"icon": "",
+						"iconSize": 96,
+						"majorTicks": 1,
+						"max": 15,
+						"min": 0,
+						"plateColor": "#ffffff",
+						"showValue": true,
+						"size": "75px",
+						"textColor": "#1E313E",
+						"tickColor": "#000000",
+						"unit": "",
 						"unit_size": "20px",
 						"weight": "font-thin"
 					},
 					"sources": [
 						{
-							"image_url": "https://gemeinsam-fuer-stadtwandel.de/wp-content/uploads/2022/07/BgF_Logo.png",
-							"source": "image_url",
-							"value": "Bürger gegen Fluglärm"
+							"color": "#1E313E",
+							"device_property": {
+								"device": "DEVCNAME        ",
+								"mapping": "summary",
+								"property": "persistance",
+								"user": "CLOUDNAM        "
+							},
+							"name": "Default",
+							"source": "device_property"
 						}
 					],
-					"type": "image"
+					"type": "clock"
+				},
+				{
+					"layout": {
+						"col": 1,
+						"row": 3,
+						"sizeX": 6,
+						"sizeY": 2
+					},
+					"panel": {
+						"color": "#7f7f7f",
+						"currentColor": "#7f7f7f",
+						"showOffline": {
+							"type": "none"
+						}
+					},
+					"properties": {
+						"color": "#ffffff",
+						"decimal_places": 0,
+						"icon": "",
+						"size": "36px",
+						"unit_size": "20px",
+						"weight": "font-thin"
+					},
+					"sources": [
+						{
+							"source": "value",
+							"value": "Measuring values (1 minute, timeline configurable)"
+						}
+					],
+					"type": "text"
+				},
+				{
+					"layout": {
+						"col": 7,
+						"row": 3,
+						"sizeX": 2,
+						"sizeY": 2
+					},
+					"panel": {
+						"color": "#7f7f7f",
+						"currentColor": "#7f7f7f",
+						"showOffline": {
+							"type": "none"
+						}
+					},
+					"properties": {
+						"color": "#674918",
+						"decimal_places": 0,
+						"icon": "",
+						"size": "36px",
+						"unit_size": "20px",
+						"weight": "font-thin"
+					},
+					"sources": [
+						{
+							"source": "value",
+							"value": "Slow"
+						}
+					],
+					"type": "text"
 				},
 				{
 					"layout": {
@@ -4613,10 +3229,10 @@
 					"sources": [
 						{
 							"device_property": {
-								"device": "Witty",
+								"device": "DEVCNAME        ",
 								"mapping": "Lden",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
 							"source": "device_property",
 							"timespan": {
@@ -4628,43 +3244,105 @@
 				},
 				{
 					"layout": {
-						"col": 4,
-						"row": 0,
+						"col": 7,
+						"row": 46,
+						"sizeX": 3,
+						"sizeY": 5
+					},
+					"panel": {
+						"color": "#ffffff",
+						"colors": [
+							{
+								"color": "#b3ffc5",
+								"max": 5,
+								"min": 0
+							},
+							{
+								"color": "#fdfa9a",
+								"max": 15,
+								"min": 5
+							},
+							{
+								"color": "#fc0916",
+								"max": 25,
+								"min": 15
+							}
+						],
+						"currentColor": "#ffffff",
+						"showOffline": {
+							"type": "none"
+						},
+						"title": "Wind Speed"
+					},
+					"properties": {
+						"icon": "",
+						"iconSize": 64,
+						"majorTicks": 1,
+						"max": 20,
+						"min": 0,
+						"plateColor": "#ffffff",
+						"showValue": true,
+						"textColor": "#1E313E",
+						"tickColor": "#000000",
+						"unit": "m/s"
+					},
+					"sources": [
+						{
+							"color": "#1E313E",
+							"device_property": {
+								"device": "DEVCNAME        ",
+								"mapping": "wind",
+								"property": "persistance",
+								"user": "CLOUDNAM        "
+							},
+							"name": "Default",
+							"source": "device_property"
+						}
+					],
+					"type": "progressbar"
+				},
+				{
+					"layout": {
+						"col": 11,
+						"row": 6,
 						"sizeX": 1,
 						"sizeY": 3
 					},
 					"panel": {
-						"color": "#d0ffd5",
+						"color": "#fdffc5",
+						"currentColor": "#fdffc5",
 						"showOffline": {
 							"type": "none"
 						},
-						"title": "NAT in Stunde"
+						"title": "Slow"
 					},
 					"properties": {
 						"color": "#1E313E",
-						"decimal_places": 0,
+						"decimal_places": 2,
 						"icon": "",
 						"size": "40px",
-						"unit": "",
+						"unit": "dB ( A)",
 						"unit_size": "20px",
 						"weight": "font-thin"
 					},
 					"sources": [
 						{
-							"bucket": {
-								"backend": "dynamodb",
-								"id": "EVENT18",
-								"mapping": "NAT",
-								"tags": {},
-								"user": "spThinger5"
+							"device": {
+								"id": "DEVCNAME        ",
+								"interval": 1,
+								"mapping": "slow",
+								"resource": "noise",
+								"update": "interval",
+								"user": "CLOUDNAM        "
 							},
 							"device_property": {
-								"device": "Witty",
-								"mapping": "19h",
+								"device": "DEVCNAME        ",
+								"mapping": "11h",
 								"property": "lequ",
-								"user": "spThinger5"
+								"user": "CLOUDNAM        "
 							},
-							"source": "bucket",
+							"skipCurrent": 1,
+							"source": "device",
 							"timespan": {
 								"mode": "latest"
 							}
